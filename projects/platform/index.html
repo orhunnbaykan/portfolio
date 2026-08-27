@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="tr" data-title-tr="Slot Oyun Platformu — Orhun Baykan" data-title-en="Slot Game Platform — Orhun Baykan">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slot Oyun Platformu — Orhun Baykan</title>
+<meta name="description" content="Üç Unity WebGL oyunu, üç .NET servisi, 17 modüllü yönetim paneli. Sunucu otoriteli, seed'li, her turu replay edilebilir bir iGaming sistemi.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23D6A748'/><text y='72' x='50' text-anchor='middle' font-size='58' font-family='monospace' font-weight='700' fill='%2308090B'>OB</text></svg>">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body>
+
+<!-- ==================== UST BAR ==================== -->
+<div class="topbar">
+  <div class="wrap">
+    <a class="brand" href="../../">ORHUN<span>.</span>BAYKAN</a>
+    <nav class="navlinks" id="navlinks">
+      <a href="#mimari"><span data-lang="tr">Mimari</span><span data-lang="en">Architecture</span></a>
+      <a href="#matematik"><span data-lang="tr">Matematik</span><span data-lang="en">Math</span></a>
+      <a href="#oyunlar"><span data-lang="tr">Oyunlar</span><span data-lang="en">Games</span></a>
+      <a href="#panel"><span data-lang="tr">Panel</span><span data-lang="en">Backoffice</span></a>
+      <a href="../otomasyon/"><span data-lang="tr">← Proje 01</span><span data-lang="en">← Project 01</span></a>
+    </nav>
+    <button class="menubtn" id="menubtn" type="button" aria-label="Menu" aria-controls="navlinks" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <button class="langbtn" id="langbtn" type="button" aria-label="Change language">
+      <span data-lang="tr">EN</span><span data-lang="en">TR</span>
+    </button>
+  </div>
+</div>
+
+<!-- ==================== PROJE B: PLATFORM ==================== -->
+<section id="platform" class="phero">
+<div class="wrap">
+  <a class="crumb" href="../../">← <span data-lang="tr">Portföy</span><span data-lang="en">Portfolio</span></a>
+  <div class="shead">
+    <div class="stag"><span data-lang="tr">Kişisel proje · 02</span><span data-lang="en">Personal project · 02</span></div>
+    <h1><span data-lang="tr">Slot Oyun Platformu</span><span data-lang="en">Slot Game Platform</span></h1>
+    <p class="sub">
+      <span data-lang="tr">Üç Unity WebGL oyunu, üç ayrı .NET servisi, 17 modüllü bir yönetim paneli ve bir oyuncu sitesi. Şans oyunları alan bilgimi uçtan uca bir sisteme dönüştürdüğüm kişisel Ar-Ge projem.</span>
+      <span data-lang="en">Three Unity WebGL games, three separate .NET services, a 17-module backoffice and a player site. My personal R&amp;D project, turning years of iGaming domain knowledge into an end-to-end system.</span>
+    </p>
+  </div>
+
+  <div class="badges">
+    <span class="badge g">Unity 6</span>
+    <span class="badge g">.NET 8</span>
+    <span class="badge g">React 19</span>
+    <span class="badge">C# · 46.7K <span data-lang="tr">satır</span><span data-lang="en">lines</span></span>
+    <span class="badge">TypeScript · 15.6K <span data-lang="tr">satır</span><span data-lang="en">lines</span></span>
+    <span class="badge">EF Core</span>
+    <span class="badge">WebSocket</span>
+    <span class="badge">Docker</span>
+    <span class="badge">xUnit</span>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="n">3</div><div class="l"><span data-lang="tr">oyun, 3 farklı matematik modeli<br>payline · cluster · binom</span><span data-lang="en">games, 3 different math models<br>payline · cluster · binomial</span></div></div>
+    <div class="metric"><div class="n">5M</div><div class="l"><span data-lang="tr">spin simülasyonu<br>RTP 0.96787 (hedef 0.965)</span><span data-lang="en">spin simulation<br>RTP 0.96787 (target 0.965)</span></div></div>
+    <div class="metric"><div class="n">62K</div><div class="l"><span data-lang="tr">satır kod<br>C# 46.7K · TypeScript 15.6K</span><span data-lang="en">lines of code<br>C# 46.7K · TypeScript 15.6K</span></div></div>
+    <div class="metric"><div class="n">17</div><div class="l"><span data-lang="tr">modüllü yönetim paneli<br>rol bazlı · canlı WebSocket</span><span data-lang="en">backoffice modules<br>role-based · live WebSocket</span></div></div>
+  </div>
+
+  <div class="note">
+    <b><span data-lang="tr">Durum:</span><span data-lang="en">Status:</span></b>
+    <span data-lang="tr">Bu sistem yerelde ve kendi sunucumda çalıştırıldı, ancak <b>şu anda yayında değil</b> — sunucu kapalı. Aşağıdaki görsellerin tamamı çalışan sistemin gerçek kayıtlarından alınmıştır; adres çubuğundaki <code>localhost</code> bunu doğruluyor. Depolar özeldir.</span>
+    <span data-lang="en">This system ran locally and on my own server, but it is <b>not live right now</b> — the server is off. Every screenshot below is taken from real recordings of the running system; the <code>localhost</code> in the address bar confirms it. The repositories are private.</span>
+  </div>
+
+  <!-- QA GOZUYLE MIMARI -->
+  <h3 style="font-size:1.15rem;margin:38px 0 10px" id="mimari">
+    <span data-lang="tr">QA gözüyle alınmış mimari kararlar</span><span data-lang="en">Architecture decisions made with a QA eye</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:20px">
+    <span data-lang="tr">Bu projede beni asıl ilgilendiren şey oyunu yapmak değildi; <b style="color:var(--ink)">doğrulanabilir</b> bir oyun yapmaktı. Aşağıdaki dört karar, kod yazılmadan önce test edilebilirlik gerekçesiyle alındı.</span>
+    <span data-lang="en">What interested me here was not building a game; it was building a <b style="color:var(--ink)">verifiable</b> one. The four decisions below were taken for testability reasons before any code was written.</span>
+  </p>
+
+  <div class="grid2">
+    <div class="card">
+      <h4><span data-lang="tr">İstemcide rastgelelik yok</span><span data-lang="en">No randomness on the client</span></h4>
+      <p><span data-lang="tr">Sonucu her zaman sunucu üretir; Unity istemcisi yalnızca <b>oynatır</b>. Böylece bir turun doğruluğu istemciye güvenmeden, veritabanından denetlenebilir. İstemci tarafı exploit yüzeyi baştan yok edilmiş olur.</span>
+      <span data-lang="en">The server always produces the outcome; the Unity client only <b>plays it back</b>. A round can therefore be audited from the database without trusting the client, and the client-side exploit surface is removed by construction.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Matematikte <code>UnityEngine.Random</code> yasak</span><span data-lang="en"><code>UnityEngine.Random</code> banned in math</span></h4>
+      <p><span data-lang="tr">Tüm matematik <code>SeededRng</code> üzerinden çalışır. Sebep tek kelimeyle <b>tekrarlanabilirlik</b>: aynı seed aynı turu birebir üretmezse ne replay ne denetim ne de hata yeniden üretimi mümkün olur.</span>
+      <span data-lang="en">All math runs through <code>SeededRng</code>. The reason is one word — <b>reproducibility</b>: if the same seed doesn't reproduce the same round exactly, then replay, audit and bug reproduction are all impossible.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Animasyon saf sıralayıcıdır</span><span data-lang="en">Animation is a pure sequencer</span></h4>
+      <p><span data-lang="tr">Cascade animasyonu önceden hesaplanmış adım dizisini oynatır; içinde matematik ya da RNG bulunmaz. Bunun bedeli tasarım disiplini, karşılığı ise şu oldu: yerel matematikten sunucu otoritesine geçiş <b>animasyon koduna hiç dokunulmadan</b> tamamlandı.</span>
+      <span data-lang="en">The cascade animation replays a precomputed step sequence; it contains no math and no RNG. The price was design discipline; the payoff was that the switch from local math to server authority landed <b>without touching animation code at all</b>.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Her tur replay edilebilir yazılır</span><span data-lang="en">Every round is written replayable</span></h4>
+      <p><span data-lang="tr">Her tur, grid'i ve değerlendirmesi ile birlikte veritabanına kaydedilir. Panelden herhangi bir tur açılıp <b>birebir yeniden oynatılabilir</b>: hangi sembol nereye düştü, hangi hat kazandı, ne ödendi. Şikâyet incelemesi tahmine değil kayda dayanır.</span>
+      <span data-lang="en">Each round is persisted with its grid and its evaluation. Any round can be opened from the panel and <b>replayed exactly</b>: which symbol landed where, which line won, what was paid. Dispute handling rests on the record, not on guesswork.</span></p>
+    </div>
+  </div>
+
+  <!-- REPLAY GORSELI -->
+  <div class="gallery">
+    <div class="shot wide">
+      <a href="../../assets/img/slot-replay.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-replay.jpg" alt="Round replay in the backoffice" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Tur replay — yukarıdaki kararın somut karşılığı</span><span data-lang="en">Round replay — what that decision buys you</span></b>
+        <span data-lang="tr">Tur kimliği, oyuncu, operatör, zaman damgası; gerçek 5×3 grid, kazanan hat (<code>Line 6 · 3× 10</code>) ve ödenen tutar. Sağ altta turu geri alma aksiyonu. Bir QA ya da destek ekibinin “bu turda ne oldu” sorusuna dakikalar değil saniyeler içinde cevap vermesini sağlayan ekran budur.</span>
+        <span data-lang="en">Round id, player, operator, timestamp; the actual 5×3 grid, the winning line (<code>Line 6 · 3× 10</code>) and what was paid. Bottom left, the rollback action. This is the screen that lets QA or support answer “what happened in this round?” in seconds rather than minutes.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOGRULANMIS MATEMATIK -->
+  <h3 style="font-size:1.15rem;margin:38px 0 10px" id="matematik">
+    <span data-lang="tr">Üç farklı matematik modeli, üçü de doğrulanmış</span><span data-lang="en">Three different math models, all three verified</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch">
+    <span data-lang="tr">Her oyun farklı bir kazanç mekaniği kullanıyor, dolayısıyla her biri kendi doğrulama yöntemini gerektirdi. Bir slot matematiğini elle ayarlamak güvenilir değildir — simülasyonla ölçülmesi gerekir.</span>
+    <span data-lang="en">Each game uses a different win mechanic, so each needed its own verification method. Hand-tuning slot math is not reliable — it has to be measured by simulation.</span>
+  </p>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th><span data-lang="tr">Oyun</span><span data-lang="en">Game</span></th>
+          <th><span data-lang="tr">Model</span><span data-lang="en">Model</span></th>
+          <th><span data-lang="tr">Doğrulama</span><span data-lang="en">Verification</span></th>
+          <th class="num"><span data-lang="tr">Sonuç</span><span data-lang="en">Result</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Wild Revolver</b></td>
+          <td><span data-lang="tr">5×3 payline · 10 hat</span><span data-lang="en">5×3 payline · 10 lines</span></td>
+          <td><span data-lang="tr">5.000.000 spin simülasyonu</span><span data-lang="en">5,000,000-spin simulation</span></td>
+          <td class="num"><span class="pass">RTP 0.96787</span><br><span style="color:var(--ink3);font-size:12.5px"><span data-lang="tr">hedef</span><span data-lang="en">target</span> 0.965 ±0.005</span></td>
+        </tr>
+        <tr>
+          <td><b>Sweet Fortune</b></td>
+          <td><span data-lang="tr">6×5 cluster · tumble</span><span data-lang="en">6×5 cluster · tumble</span></td>
+          <td><span data-lang="tr">16 sembol, kademeli ödeme tablosu, jackpot kuralları</span><span data-lang="en">16 symbols, tiered paytable, jackpot rules</span></td>
+          <td class="num"><span data-lang="tr">30 kademe tavanı</span><span data-lang="en">30-cascade cap</span><br><span style="color:var(--ink3);font-size:12.5px"><span data-lang="tr">maks. kazanç</span><span data-lang="en">max win</span> 5000×</span></td>
+        </tr>
+        <tr>
+          <td><b>Plinko</b></td>
+          <td><span data-lang="tr">binom dağılım · gerçek fizik</span><span data-lang="en">binomial · real physics</span></td>
+          <td><span data-lang="tr">28 çarpan tablosu + xUnit</span><span data-lang="en">28 multiplier tables + xUnit</span></td>
+          <td class="num"><span class="pass">~99% RTP</span><br><span style="color:var(--ink3);font-size:12.5px">20/20 <span data-lang="tr">test geçti</span><span data-lang="en">tests pass</span></span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <b>Plinko —</b>
+    <span data-lang="tr">burada ilginç olan kısıt şuydu: top <b>gerçekten</b> Physics2D ile zıplamalı, ama sonucu yine sunucu belirlemeli. Çözüm, sunucunun kutunun yanı sıra pim pim yolu (<code>"LRLLR…"</code>) döndürmesi; istemci her pim çarpışmasında hızı bu yola göre düzeltiyor. Böylece top sahiden sekiyor, 1000 koşum 1000 farklı görsel yol üretiyor — ama hepsi sunucunun seçtiği kutuya iniyor.</span>
+    <span data-lang="en">the interesting constraint here was that the ball had to bounce through <b>real</b> Physics2D, while the server still decided the outcome. The solution: the server returns a per-peg path (<code>"LRLLR…"</code>) alongside the bin, and the client nudges velocity at each peg collision. The ball genuinely bounces, 1000 runs give 1000 distinct visual paths — and every one lands in the server-chosen bin.</span>
+  </div>
+</div>
+</section>
+
+<section style="border-top:none;padding-top:0">
+<div class="wrap">
+
+  <h3 style="font-size:1.15rem;margin:0 0 16px" id="oyunlar">
+    <span data-lang="tr">Üç oyun</span><span data-lang="en">Three games</span>
+  </h3>
+  <div class="gallery">
+    <div class="shot">
+      <a href="../../assets/img/slot-wildrevolver.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-wildrevolver.jpg" alt="Wild Revolver slot game" loading="lazy"></a>
+      <div class="cap">
+        <b>Wild Revolver</b>
+        <span data-lang="tr">5×3 payline slot. Wild çarpanları, scatter ile tetiklenen free spin, bonus satın alma, dikey ve yatay düzen.</span>
+        <span data-lang="en">5×3 payline slot. Wild multipliers, scatter-triggered free spins, buy bonus, portrait and landscape layouts.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-sweetfortune.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-sweetfortune.jpg" alt="Sweet Fortune cluster slot" loading="lazy"></a>
+      <div class="cap">
+        <b>Sweet Fortune</b>
+        <span data-lang="tr">6×5 cluster-pays. Aynı sembolden 8+ adet her yerde kazandırır; kazananlar patlar, üstten yenileri düşer (tumble). Hold &amp; Spin ve dört kademeli jackpot.</span>
+        <span data-lang="en">6×5 cluster-pays. 8+ of a symbol anywhere wins; winners explode and new ones drop in (tumble). Hold &amp; Spin and four jackpot tiers.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-plinko.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-plinko.jpg" alt="Plinko physics game" loading="lazy"></a>
+      <div class="cap">
+        <b>Plinko</b>
+        <span data-lang="tr">Gerçek Physics2D. Dört risk seviyesi, 8–16 sıra, tek bahiste 1–10 top. Kırmızı uç kutular en yüksek çarpanlar.</span>
+        <span data-lang="en">Real Physics2D. Four risk levels, 8–16 rows, 1–10 balls per bet. The red edge bins carry the top multipliers.</span>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-size:1.15rem;margin:38px 0 16px" id="panel">
+    <span data-lang="tr">Yönetim paneli — 17 modül</span><span data-lang="en">Backoffice — 17 modules</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:18px">
+    <span data-lang="tr">Dashboard, oyunlar, operatörler, oyuncular, turlar, oturumlar, işlemler, bonuslar, jackpotlar, raporlar, risk, izleme, denetim kaydı, yapılandırma, kullanıcı ve roller. Rol bazlı yetkilendirme ve canlı WebSocket akışı ile.</span>
+    <span data-lang="en">Dashboard, games, operators, players, rounds, sessions, transactions, bonuses, jackpots, reports, risk, monitoring, audit log, configuration, users and roles. With role-based access and a live WebSocket feed.</span>
+  </p>
+
+  <div class="gallery">
+    <div class="shot wide">
+      <a href="../../assets/img/slot-dashboard.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-dashboard.jpg" alt="Backoffice dashboard" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Dashboard — canlı operatör metrikleri</span><span data-lang="en">Dashboard — live operator metrics</span></b>
+        <span data-lang="tr">Toplam bahis/kazanç, GGR, ortalama RTP, aktif oyuncu ve operatör sayısı; saatlik bahis×kazanç grafiği; canlı spin akışı; isabet frekansı, kazanç kaynağı, bonus oranı ve kazanç kademeleri.</span>
+        <span data-lang="en">Total wager/win, GGR, average RTP, active players and operators; hourly wager×win chart; a live spin feed; hit frequency, win source, bonus rate and win tiers.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-jackpots.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-jackpots.jpg" alt="Jackpot pools" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Jackpot havuzları</span><span data-lang="en">Jackpot pools</span></b>
+        <span data-lang="tr">Her uygun bahis havuza katkı verir; havuz eşiği aşınca tetiklenir. Havuz yapılandırması, katkılar ve kazanımlar panelden izlenir.</span>
+        <span data-lang="en">Every eligible bet contributes to the pool, which fires once its threshold is crossed. Pool config, contributions and wins are all tracked from the panel.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-monitoring.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-monitoring.jpg" alt="Monitoring and wallet callbacks" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">İzleme — cüzdan callback'leri</span><span data-lang="en">Monitoring — wallet callbacks</span></b>
+        <span data-lang="tr">Sistem sağlığı, cüzdan callback kayıtları ve API istek logları. Her çağrının operatörü, metodu, durumu ve süresi görünür.</span>
+        <span data-lang="en">System health, wallet callback logs and API request logs. Each call shows its operator, method, status and duration.</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section style="border-top:none;padding-top:0">
+<div class="wrap">
+  <div class="pnav">
+    <a href="../otomasyon/">
+      <div class="k">← <span data-lang="tr">Geri</span><span data-lang="en">Back</span></div>
+      <div class="t"><span data-lang="tr">Hibrit Mobil Test Otomasyonu</span><span data-lang="en">Hybrid Mobile Test Automation</span></div>
+    </a>
+    <a class="next" href="../../#projeler">
+      <div class="k"><span data-lang="tr">Portföy</span><span data-lang="en">Portfolio</span> →</div>
+      <div class="t"><span data-lang="tr">Tüm projeler</span><span data-lang="en">All projects</span></div>
+    </a>
+  </div>
+</div>
+</section>
+
+<footer>
+  <div class="wrap fgrid">
+    <div>© 2026 Orhun Baykan</div>
+    <div style="color:var(--ink3)"><span data-lang="tr">QA / Test Uzmanı · İstanbul</span><span data-lang="en">QA / Test Specialist · Istanbul</span></div>
+    <div class="sp"></div>
+    <div><a href="#" style="color:var(--ink3)"><span data-lang="tr">Başa dön ↑</span><span data-lang="en">Back to top ↑</span></a></div>
+  </div>
+</footer>
+
+<script src="../../assets/js/site.js"></script>
+</body>
+</html>

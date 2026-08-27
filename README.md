@@ -1,17 +1,25 @@
 # Portföy — Orhun Baykan
 
-Tek dosyalık, iki dilli (TR/EN), tamamen bağımsız bir portföy sayfası.
-Harici CSS/JS/font yok — GitHub Pages'te olduğu gibi çalışır.
+İki dilli (TR/EN), tamamen bağımsız, statik bir portföy sitesi.
+Harici CDN/font bağımlılığı yok — GitHub Pages'te olduğu gibi çalışır.
 
 ## İçerik
 
 ```
-index.html          Portföy sayfası (CSS + JS + diyagramlar gömülü)
-assets/img/         Ekran görüntüleri
-assets/*.pdf        CV
-qa-reports/         Test otomasyonu koşum raporları ve senaryo kataloğu
-.nojekyll           GitHub Pages'in Jekyll işlemesini atlaması için (gerekli)
+index.html                    Ana sayfa: hero, metrikler, proje özetleri, case study, yetkinlik, deneyim, CV
+projects/otomasyon/index.html Proje 01 detay sayfası — Hibrit Mobil Test Otomasyonu
+projects/platform/index.html  Proje 02 detay sayfası — Slot Oyun Platformu
+assets/css/site.css           Ortak stil (üç sayfa da bunu kullanır)
+assets/js/site.js             Dil anahtarı, mobil menü, ekran görüntüsü lightbox'ı
+assets/img/                   Ekran görüntüleri
+assets/*.pdf                  CV
+qa-reports/                   Test otomasyonu koşum raporları ve senaryo kataloğu
+.nojekyll                     GitHub Pages'in Jekyll işlemesini atlaması için (gerekli)
 ```
+
+Ana sayfada projeler yalnızca özet kart olarak yer alır; "Projeyi incele →"
+ile detay sayfasına gidilir. Yeni bir proje eklerken `projects/<ad>/index.html`
+oluşturup ana sayfadaki `#projeler` bölümüne bir `.proj` kartı ekle.
 
 ## GitHub Pages'te yayınlama
 
@@ -45,7 +53,8 @@ python3 -m http.server 8899
 ## Dil
 
 Sayfa ilk açılışta tarayıcı diline göre TR veya EN başlar; sağ üstteki
-düğmeyle değiştirilir ve tercih `localStorage`'da saklanır.
+düğmeyle değiştirilir ve tercih `localStorage`'da saklanır (alt sayfalara da
+taşınır). Sayfa başlığı `<html data-title-tr data-title-en>` özniteliklerinden okunur.
 Çeviriler HTML içinde `data-lang="tr"` / `data-lang="en"` ile işaretli —
 metin güncellerken **iki dili birlikte** güncelle.
 

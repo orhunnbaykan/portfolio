@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="tr" data-title-tr="Hibrit Mobil Test Otomasyonu — Orhun Baykan" data-title-en="Hybrid Mobile Test Automation — Orhun Baykan">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hibrit Mobil Test Otomasyonu — Orhun Baykan</title>
+<meta name="description" content="Bir Unity oyununu Appium ve AltTester ile aynı anda süren uçtan uca test altyapısı: 164 senaryo, 3 platform, gerçek cihazlarda self-hosted CI.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23D6A748'/><text y='72' x='50' text-anchor='middle' font-size='58' font-family='monospace' font-weight='700' fill='%2308090B'>OB</text></svg>">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body>
+
+<!-- ==================== UST BAR ==================== -->
+<div class="topbar">
+  <div class="wrap">
+    <a class="brand" href="../../">ORHUN<span>.</span>BAYKAN</a>
+    <nav class="navlinks" id="navlinks">
+      <a href="#problem"><span data-lang="tr">Problem</span><span data-lang="en">Problem</span></a>
+      <a href="#kurallar"><span data-lang="tr">Tasarım</span><span data-lang="en">Design</span></a>
+      <a href="#sonuclar"><span data-lang="tr">Sonuçlar</span><span data-lang="en">Results</span></a>
+      <a href="#cicd"><span data-lang="tr">CI/CD</span><span data-lang="en">CI/CD</span></a>
+      <a href="#raporlar"><span data-lang="tr">Raporlar</span><span data-lang="en">Reports</span></a>
+      <a href="../platform/"><span data-lang="tr">Proje 02 →</span><span data-lang="en">Project 02 →</span></a>
+    </nav>
+    <button class="menubtn" id="menubtn" type="button" aria-label="Menu" aria-controls="navlinks" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <button class="langbtn" id="langbtn" type="button" aria-label="Change language">
+      <span data-lang="tr">EN</span><span data-lang="en">TR</span>
+    </button>
+  </div>
+</div>
+
+<!-- ==================== PROJE A: OTOMASYON ==================== -->
+<section id="otomasyon" class="phero">
+<div class="wrap">
+  <a class="crumb" href="../../">← <span data-lang="tr">Portföy</span><span data-lang="en">Portfolio</span></a>
+  <div class="shead">
+    <div class="stag"><span data-lang="tr">Kişisel proje · 01</span><span data-lang="en">Personal project · 01</span></div>
+    <h1><span data-lang="tr">Hibrit Mobil Test Otomasyonu</span><span data-lang="en">Hybrid Mobile Test Automation</span></h1>
+    <p class="sub">
+      <span data-lang="tr">Bir Unity oyununu Appium ve AltTester ile <b>aynı anda</b> süren uçtan uca test altyapısı. Oyunu, test paketini, raporlamayı ve CI hattını sıfırdan kendim yazdım.</span>
+      <span data-lang="en">An end-to-end test rig that drives a Unity game with Appium and AltTester <b>at the same time</b>. I wrote the game, the suite, the reporting and the CI pipeline from scratch.</span>
+    </p>
+  </div>
+
+  <div class="badges">
+    <span class="badge g">Python 3.9</span>
+    <span class="badge g">AltTester 2.3.3</span>
+    <span class="badge g">Appium 5.3.1</span>
+    <span class="badge">Unity 2022.3.62f1</span>
+    <span class="badge">C#</span>
+    <span class="badge">Bash</span>
+    <span class="badge">GitHub Actions</span>
+    <span class="badge">XCUITest</span>
+    <span class="badge">uiautomator2</span>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="n">164</div><div class="l"><span data-lang="tr">uçtan uca senaryo<br>18 kategori · 744 adım</span><span data-lang="en">end-to-end cases<br>18 categories · 744 steps</span></div></div>
+    <div class="metric"><div class="n">3</div><div class="l"><span data-lang="tr">platform, tek case gövdesi<br>iOS · Android · Editor</span><span data-lang="en">platforms, one case body<br>iOS · Android · Editor</span></div></div>
+    <div class="metric"><div class="n">33.9K</div><div class="l"><span data-lang="tr">satır otomasyon kodu<br>Python · C# · Bash</span><span data-lang="en">lines of automation code<br>Python · C# · Bash</span></div></div>
+    <div class="metric"><div class="n">112 s</div><div class="l"><span data-lang="tr">ölçülmüş iOS derleme süresi<br>self-hosted CI</span><span data-lang="en">measured iOS build time<br>self-hosted CI</span></div></div>
+  </div>
+
+  <div class="pull">
+    <span data-lang="tr">“Appium yalnızca işletim sisteminin çizdiğine dokunabilir. AltTester ise Unity'nin çizdiği her şeyi sürer ve doğrular.”</span>
+    <span data-lang="en">“Appium only taps what the OS draws. AltTester drives and asserts everything Unity draws.”</span>
+    <span class="who"><span data-lang="tr">— projenin çıkış cümlesi</span><span data-lang="en">— the project's thesis</span></span>
+  </div>
+
+  <h3 style="font-size:1.15rem;margin:34px 0 12px" id="problem">
+    <span data-lang="tr">Çözdüğü problem</span><span data-lang="en">The problem it solves</span>
+  </h3>
+  <p style="color:var(--ink2);max-width:74ch">
+    <span data-lang="tr">Bir Unity oyunu tüm arayüzünü işletim sistemi açısından <b style="color:var(--ink)">tek bir opak yüzeyin</b> içine çizer. Appium bu yüzeye koordinatla dokunabilir ama “bakiye tam olarak 4.000 oldu mu” sorusunu soramaz. AltTester ise Unity'nin nesne ağacının içine uzanır — ama izin diyalogları, satın alma onayları ve uygulama yaşam döngüsü gibi <b style="color:var(--ink)">native katmana kördür</b>.</span>
+    <span data-lang="en">A Unity game draws its entire interface inside what the OS sees as <b style="color:var(--ink)">one opaque surface</b>. Appium can tap that surface by coordinate, but it cannot ask “did the balance become exactly 4,000?”. AltTester reaches into Unity's object tree — but it is <b style="color:var(--ink)">blind to the native layer</b>: permission dialogs, purchase confirmations, app lifecycle.</span>
+  </p>
+  <p style="color:var(--ink2);max-width:74ch">
+    <span data-lang="tr">Yani “Satın Al'a bas → native onay diyaloğu çıksın → onayla → cüzdana tam 5.000 yazılsın” akışını <b style="color:var(--ink)">tek başına hiçbir sürücü test edemez</b>. Bu proje ikisini tek bir test oturumunda, tek bir case gövdesinde birleştiriyor.</span>
+    <span data-lang="en">Which means <b style="color:var(--ink)">neither driver alone</b> can test a flow like “tap Buy → a native confirmation appears → accept → the wallet credits exactly 5,000”. This project unifies both into a single session and a single case body.</span>
+  </p>
+
+  <!-- MIMARI DIYAGRAM -->
+  <div class="diagram">
+    <svg viewBox="0 0 900 400" width="100%" height="auto" role="img" aria-label="Architecture diagram">
+      <defs>
+        <marker id="ag" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#3FB950"/>
+        </marker>
+        <marker id="ap" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#BC8CFF"/>
+        </marker>
+        <marker id="ad" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#6B7280"/>
+        </marker>
+      </defs>
+
+      <!-- test paketi -->
+      <rect x="18" y="145" width="176" height="110" rx="8" fill="#14171D" stroke="#2E3440"/>
+      <text x="106" y="180" text-anchor="middle" fill="#E8EAED" font-size="14" font-weight="700" font-family="monospace">hybrid_e2e.py</text>
+      <text x="106" y="203" text-anchor="middle" fill="#9BA3AF" font-size="12" font-family="sans-serif">
+        <tspan data-lang="tr">164 senaryo · 18 kategori</tspan><tspan data-lang="en">164 cases · 18 categories</tspan>
+      </text>
+      <text x="106" y="224" text-anchor="middle" fill="#6B7280" font-size="11" font-family="sans-serif">
+        <tspan data-lang="tr">tek case gövdesi,</tspan><tspan data-lang="en">one case body,</tspan>
+      </text>
+      <text x="106" y="240" text-anchor="middle" fill="#6B7280" font-size="11" font-family="sans-serif">
+        <tspan data-lang="tr">platform adı geçmez</tspan><tspan data-lang="en">names no platform</tspan>
+      </text>
+
+      <!-- surucu kutulari -->
+      <rect x="252" y="92" width="184" height="66" rx="8" fill="#14171D" stroke="#3FB950" stroke-opacity=".5"/>
+      <text x="344" y="118" text-anchor="middle" fill="#3FB950" font-size="13" font-weight="700" font-family="monospace">AltTester Driver</text>
+      <text x="344" y="140" text-anchor="middle" fill="#9BA3AF" font-size="11.5" font-family="monospace">127.0.0.1:13000</text>
+
+      <rect x="252" y="242" width="184" height="66" rx="8" fill="#14171D" stroke="#BC8CFF" stroke-opacity=".5"/>
+      <text x="344" y="268" text-anchor="middle" fill="#BC8CFF" font-size="13" font-weight="700" font-family="monospace">Appium Server</text>
+      <text x="344" y="290" text-anchor="middle" fill="#9BA3AF" font-size="11.5" font-family="monospace">127.0.0.1:4723</text>
+
+      <!-- paket -> suruculer -->
+      <path d="M194,180 C225,180 225,125 250,125" stroke="#3FB950" stroke-width="1.6" fill="none" marker-end="url(#ag)"/>
+      <path d="M194,220 C225,220 225,275 250,275" stroke="#BC8CFF" stroke-width="1.6" fill="none" marker-end="url(#ap)"/>
+
+      <!-- cihaz -->
+      <rect x="516" y="44" width="366" height="316" rx="12" fill="#0E1014" stroke="#2E3440"/>
+      <text x="699" y="70" text-anchor="middle" fill="#6B7280" font-size="11.5" font-weight="600" font-family="monospace" letter-spacing="1.5">
+        <tspan data-lang="tr">GERÇEK CİHAZ — iOS / ANDROID</tspan><tspan data-lang="en">REAL DEVICE — iOS / ANDROID</tspan>
+      </text>
+
+      <!-- unity uygulamasi -->
+      <rect x="542" y="88" width="314" height="122" rx="8" fill="#14171D" stroke="#3FB950" stroke-opacity=".35"/>
+      <text x="699" y="113" text-anchor="middle" fill="#E8EAED" font-size="13" font-weight="700" font-family="sans-serif">
+        <tspan data-lang="tr">Unity uygulaması</tspan><tspan data-lang="en">Unity application</tspan>
+      </text>
+      <text x="699" y="136" text-anchor="middle" fill="#9BA3AF" font-size="11.5" font-family="sans-serif">
+        <tspan data-lang="tr">nesne ağacı · oyun durumu · cüzdan</tspan><tspan data-lang="en">object tree · game state · wallet</tspan>
+      </text>
+      <text x="699" y="168" text-anchor="middle" fill="#3FB950" font-size="11" font-family="sans-serif">
+        <tspan data-lang="tr">AltTester içeri uzanır:</tspan><tspan data-lang="en">AltTester reaches inside:</tspan>
+      </text>
+      <text x="699" y="185" text-anchor="middle" fill="#6B7280" font-size="11" font-family="monospace">CoinWallet.Coins == 4000</text>
+
+      <!-- os katmani -->
+      <rect x="542" y="238" width="314" height="98" rx="8" fill="#14171D" stroke="#BC8CFF" stroke-opacity=".35"/>
+      <text x="699" y="263" text-anchor="middle" fill="#E8EAED" font-size="13" font-weight="700" font-family="sans-serif">
+        <tspan data-lang="tr">İşletim sistemi katmanı</tspan><tspan data-lang="en">Operating-system layer</tspan>
+      </text>
+      <text x="699" y="286" text-anchor="middle" fill="#9BA3AF" font-size="11.5" font-family="sans-serif">
+        <tspan data-lang="tr">native diyalog · izin · yaşam döngüsü</tspan><tspan data-lang="en">native dialog · permission · lifecycle</tspan>
+      </text>
+      <text x="699" y="313" text-anchor="middle" fill="#BC8CFF" font-size="11" font-family="sans-serif">
+        <tspan data-lang="tr">yalnızca Appium görebilir</tspan><tspan data-lang="en">only Appium can see this</tspan>
+      </text>
+
+      <!-- suruculer -> hedefler -->
+      <path d="M438,125 C478,125 490,149 540,149" stroke="#3FB950" stroke-width="1.6" fill="none" marker-end="url(#ag)"/>
+      <path d="M438,275 C478,275 490,287 540,287" stroke="#BC8CFF" stroke-width="1.6" fill="none" marker-end="url(#ap)"/>
+
+      <!-- appium'un korlugu -->
+      <path d="M470,262 C470,215 505,200 540,200" stroke="#6B7280" stroke-width="1.3" fill="none" stroke-dasharray="4 4" marker-end="url(#ad)"/>
+      <text x="415" y="212" text-anchor="middle" fill="#6B7280" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">Appium buraya</tspan><tspan data-lang="en">Appium sees only</tspan>
+      </text>
+      <text x="415" y="226" text-anchor="middle" fill="#6B7280" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">tek yüzey olarak bakar</tspan><tspan data-lang="en">one flat surface here</tspan>
+      </text>
+    </svg>
+  </div>
+  <p class="scrollhint"><span data-lang="tr">← diyagramı yatay kaydırabilirsiniz →</span><span data-lang="en">← scroll the diagram horizontally →</span></p>
+
+  <!-- DORT TASARIM KURALI -->
+  <h3 style="font-size:1.15rem;margin:38px 0 16px" id="kurallar">
+    <span data-lang="tr">Dört tasarım kuralı</span><span data-lang="en">Four design rules</span>
+  </h3>
+  <div class="grid2">
+    <div class="card">
+      <h4><span data-lang="tr">1 · Tek locator kaynağı</span><span data-lang="en">1 · One locator set</span></h4>
+      <p><span data-lang="tr">Erişilebilirlik id'leri bir kez <code>NativeIds.cs</code> içinde tanımlanır; Android'e <code>contentDescription</code>, iOS'a <code>accessibilityIdentifier</code> olarak yayılır. Python tarafı ile C# tarafı ayrışırsa <code>PF-01</code> senaryosu yüksek sesle patlar.</span><span data-lang="en">Accessibility ids are declared once in <code>NativeIds.cs</code> and published as <code>contentDescription</code> (Android) / <code>accessibilityIdentifier</code> (iOS). If the Python mirror drifts from the C# source, case <code>PF-01</code> fails loudly.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">2 · Case gövdesi platform bilmez</span><span data-lang="en">2 · A case body names no platform</span></h4>
+      <p><span data-lang="tr">Platform farkları <code>PlatformOps</code> arayüzünün arkasında yaşar. Bir kanal o platformda uygulanamıyorsa <code>PlatformUnsupported</code> ile <b>adıyla</b> atlanır — sessizce geçilmez.</span><span data-lang="en">Platform differences live behind the <code>PlatformOps</code> seam. A channel that cannot be implemented raises <code>PlatformUnsupported</code> <b>by name</b> — it is never silently skipped.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">3 · Kesintiler araya serpiştirilir</span><span data-lang="en">3 · Interruptions are interleaved</span></h4>
+      <p><span data-lang="tr">13 kesinti senaryosu kendi kategorisinde park etmez; kestikleri kategorinin id'sini taşır (<code>C-08</code>, <code>LC-05</code> değil). Davranış ekseni etiketlerle taşınır.</span><span data-lang="en">The 13 interruption cases are not parked in their own bucket; each carries the id of the category it interrupts (<code>C-08</code>, not <code>LC-0x</code>). The behavioural axis is carried by tags.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">4 · Her senaryo ön koşulunu kendi kurar</span><span data-lang="en">4 · Every case sets up its own state</span></h4>
+      <p><span data-lang="tr">Koşum sırası bir <b>anlatıdır</b>, bağımlılık zinciri değil. Herhangi bir senaryo tek başına, herhangi bir sırada çalışabilir. Oyunda kalıcılık bilerek kapalı — her açılış sıfırdan başlar.</span><span data-lang="en">Run order is a <b>narrative</b>, not a dependency chain. Any case runs alone, in any order. Persistence in the game is deliberately off — every launch starts fresh.</span></p>
+    </div>
+  </div>
+</div>
+</section>
+
+<section style="border-top:none;padding-top:0">
+<div class="wrap">
+
+  <!-- SONUCLAR -->
+  <h3 style="font-size:1.15rem;margin:0 0 8px" id="sonuclar">
+    <span data-lang="tr">Ölçülmüş sonuçlar</span><span data-lang="en">Measured results</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:70ch;margin-bottom:8px">
+    <span data-lang="tr">Aynı 164 senaryo gövdesi, üç farklı ortamda. Fark yalnızca sürücü kurulumunda — test mantığında değil.</span>
+    <span data-lang="en">The same 164 case bodies, three different environments. The only difference is driver setup — never test logic.</span>
+  </p>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th><span data-lang="tr">Ortam</span><span data-lang="en">Environment</span></th>
+          <th class="num">PASS</th>
+          <th class="num">FAIL</th>
+          <th class="num">SKIP</th>
+          <th class="num"><span data-lang="tr">Süre</span><span data-lang="en">Duration</span></th>
+          <th class="num"><span data-lang="tr">Hız</span><span data-lang="en">Pace</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>iPhone 11</b> · iOS 18.6.2<br><span style="color:var(--ink3);font-size:13px"><span data-lang="tr">gerçek cihaz</span><span data-lang="en">real device</span></span></td>
+          <td class="num pass">161</td><td class="num fail">1</td><td class="num skip">2</td>
+          <td class="num">38.6 <span data-lang="tr">dk</span><span data-lang="en">min</span></td>
+          <td class="num">normal</td>
+        </tr>
+        <tr>
+          <td><b>Android 15</b> · API 35<br><span style="color:var(--ink3);font-size:13px"><span data-lang="tr">emülatör</span><span data-lang="en">emulator</span></span></td>
+          <td class="num pass">163</td><td class="num fail">1</td><td class="num skip">0</td>
+          <td class="num">15.1 <span data-lang="tr">dk</span><span data-lang="en">min</span></td>
+          <td class="num">--fast</td>
+        </tr>
+        <tr>
+          <td><b>Unity Editor</b><br><span style="color:var(--ink3);font-size:13px"><span data-lang="tr">cihazsız, Appium yok</span><span data-lang="en">no device, no Appium</span></span></td>
+          <td class="num pass">139</td><td class="num fail">1</td><td class="num skip">24</td>
+          <td class="num">8.9 <span data-lang="tr">dk</span><span data-lang="en">min</span></td>
+          <td class="num">--fast</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- UC KIRMIZI -->
+  <h3 style="font-size:1.15rem;margin:38px 0 10px">
+    <span data-lang="tr">Üç kırmızı bilerek duruyor</span><span data-lang="en">Three reds are left standing on purpose</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:20px">
+    <span data-lang="tr">Tabloyu yeşile boyamak kolaydı. Boyamadım — çünkü <b style="color:var(--ink)">hiç kırmızıya dönmemiş bir test paketi, kırmızıya dönebildiğini kanıtlamamıştır.</b> Üçü de gerçek ve üçü de farklı bir şey öğretiyor:</span>
+    <span data-lang="en">Painting the table green would have been easy. I didn't — because <b style="color:var(--ink)">a suite that has never gone red has not been shown to be capable of going red.</b> All three are real, and each one teaches something different:</span>
+  </p>
+
+  <div class="finding">
+    <div class="fh"><span class="fid">J-02</span>
+      <span><span data-lang="tr">Testin kendi zamanlama yarışı</span><span data-lang="en">A timing race in the test itself</span></span>
+      <span class="fenv">iOS</span>
+    </div>
+    <div class="fb"><span data-lang="tr">Dünya durumu, bobbin yerleştirildikten <b>1,46 sn</b> sonra okunuyordu — ama Level 01'de bobbin ömrü ~1,5 sn. Nesne meşru şekilde yok olmuştu; ürün değil <b>test</b> hatalıydı. Üç okuma tek bir yeniden deneme döngüsüne alındı, kozmetik bekleme kaldırıldı: okuma artık <b>301 ms</b>'de yapılıyor ve Android'de geçiyor.</span><span data-lang="en">World state was read <b>1.46 s</b> after deploying a bobbin — but on Level 01 a bobbin lives ~1.5 s. The object was legitimately gone; the <b>test</b> was wrong, not the product. All three readings moved into one retry loop and a cosmetic settle was removed: the read now happens at <b>301 ms</b> and passes on Android.</span></div>
+  </div>
+
+  <div class="finding">
+    <div class="fh"><span class="fid">LC-05</span>
+      <span><span data-lang="tr"><code>--fast</code> bayrağının açığa çıkardığı gerçek yarış</span><span data-lang="en">A genuine race exposed by <code>--fast</code></span></span>
+      <span class="fenv">Android</span>
+    </div>
+    <div class="fb"><span data-lang="tr">İki <b>ölçüm</b> beklemesi yanlışlıkla <b>kozmetik</b> hız düğmesine bağlanmıştı, dolayısıyla <code>--fast</code> onları sıfırladı. Bu, paketteki gerçek bir sınıflandırma hatasıydı: kozmetik bekleme sıfırlanabilir, ölçüm beklemesi asla. Yerine ön plana gerçekten geçilene kadar yoklayan <code>_await_foreground()</code> kondu (6 sn tavan).</span><span data-lang="en">Two <b>measurement</b> waits had been wired through the <b>cosmetic</b> pace knob, so <code>--fast</code> zeroed them. That was a real classification bug in the suite: a cosmetic settle may be zeroed, a measurement wait never. They were replaced with <code>_await_foreground()</code>, which polls until the foreground genuinely moves (6 s ceiling).</span></div>
+  </div>
+
+  <div class="finding">
+    <div class="fh"><span class="fid">PF-03</span>
+      <span><span data-lang="tr">Ön kontrolün kendi hatası</span><span data-lang="en">A defect in the preflight itself</span></span>
+      <span class="fenv">Unity Editor</span>
+    </div>
+    <div class="fb"><span data-lang="tr">Editor modundaki backend kontrolü <code>"Editor"</code> / <code>"Mock"</code> için büyük-küçük harfe duyarlı bir alt dize testiydi; oysa <code>NativeProbe.BackendName</code> <code>'editor-mock'</code> cevabını veriyor. Üçüncü senaryoda, <b>0,05 sn</b> içinde patladı — tam da bir ön kontrolün yapması gereken şey.</span><span data-lang="en">The Editor-mode backend check was a case-sensitive substring test for <code>"Editor"</code> / <code>"Mock"</code>, but <code>NativeProbe.BackendName</code> answers <code>'editor-mock'</code>. It blew up on the third case in <b>0.05 s</b> — exactly what a preflight gate should do.</span></div>
+  </div>
+
+  <!-- OTOMASYONUN BULDUGU URUN HATALARI -->
+  <h3 style="font-size:1.15rem;margin:38px 0 16px">
+    <span data-lang="tr">Otomasyonun bulduğu iki gerçek ürün hatası</span><span data-lang="en">Two real product defects the automation found</span>
+  </h3>
+  <div class="grid2">
+    <div class="card">
+      <h4><code>ScreenWakeLock</code></h4>
+      <p><span data-lang="tr">15. kategori native senaryo içermeyen tek blok — dolayısıyla dokuz dakika boyunca yalnızca AltTester üzerinden koşuyor. AltTester dokunuşları Unity'nin <b>içine</b> enjekte edildiği için işletim sisteminin boşta kalma sayacını hiç sıfırlamıyor: telefon kendini kilitledi, iOS uygulamayı askıya aldı, soket koptu ve WDA oturumu öldü. Odaktayken <code>Screen.sleepTimeout = NeverSleep</code> ile çözüldü.</span><span data-lang="en">Category 15 is the only block with no native case, so it runs for nine straight minutes purely through AltTester. Because AltTester taps are injected <b>inside</b> Unity, they never reset the OS idle timer: the phone auto-locked, iOS suspended the app, the socket closed and the WDA session died. Fixed with <code>Screen.sleepTimeout = NeverSleep</code> while focused.</span></p>
+    </div>
+    <div class="card">
+      <h4><code>AltTesterHostBuildStep</code></h4>
+      <p><span data-lang="tr">Yeni kurulan bir iOS derlemesi, AltTester bağlantı diyaloğunda sonsuza kadar bekliyordu. Sürücü host'u artık derleme zamanında build adımıyla gömülüyor; koşum insan müdahalesi olmadan başlıyor.</span><span data-lang="en">A freshly installed iOS build used to stop at the AltTester connection dialog forever. The driver host is now baked in at build time by a build step, so a run starts with no human in the loop.</span></p>
+    </div>
+  </div>
+
+  <!-- GALERI: KOSUM -->
+  <div class="gallery">
+    <div class="shot wide">
+      <a href="../../assets/img/qa-hybrid-run.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/qa-hybrid-run.jpg" alt="Terminal log and iPhone driven side by side" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Hibrit koşum, canlı</span><span data-lang="en">The hybrid run, live</span></b>
+        <span data-lang="tr">Solda adım adım anlatan test logu, sağda sürülen iPhone. Ekranda AltTester'ın göremediği native “Privacy Policy” diyaloğu duruyor — bu diyaloğu Appium açıyor, sonucu AltTester Unity'nin içinden doğruluyor.</span>
+        <span data-lang="en">The narrated test log on the left, the driven iPhone on the right. On screen sits the native “Privacy Policy” dialog that AltTester cannot see — Appium answers it, then AltTester verifies the outcome from inside Unity.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/qa-purchase-dialog.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/qa-purchase-dialog.jpg" alt="Native purchase confirmation dialog" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Satın alma onayı — native katman</span><span data-lang="en">Purchase confirmation — native layer</span></b>
+        <span data-lang="tr">Logda tam olarak bu görülüyor: <code>blindness confirmed — popup visible while Unity stand-in stays closed</code>, ardından <code>before=19000 after=44000 delta=+25000 (expected +25000)</code>. Diyalog OS'a ait, tutar Unity'ye ait; tek senaryo ikisini birden doğruluyor.</span>
+        <span data-lang="en">The log shows exactly that: <code>blindness confirmed — popup visible while Unity stand-in stays closed</code>, then <code>before=19000 after=44000 delta=+25000 (expected +25000)</code>. The dialog belongs to the OS, the amount belongs to Unity; one case asserts both.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/qa-interrupt.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/qa-interrupt.jpg" alt="System interruption test" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Sistem kesintisi senaryosu</span><span data-lang="en">System interruption case</span></b>
+        <span data-lang="tr">Ekran uygulamanın elinden alınıp geri veriliyor. Ölçülen fark: native diyalog açıkken arka plana atıldığında <b>Android'in Unity'si durur, iOS'unki durmaz</b>.</span>
+        <span data-lang="en">The screen is taken from the app and given back. The measured difference: with a native dialog open and the app backgrounded, <b>Android's Unity stops, iOS's does not</b>.</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section style="border-top:none;padding-top:0">
+<div class="wrap">
+
+  <h3 style="font-size:1.15rem;margin:0 0 10px" id="cicd">
+    <span data-lang="tr">CI/CD — gerçek cihazlarda, ücretsiz</span><span data-lang="en">CI/CD — on real devices, for free</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch">
+    <span data-lang="tr">Cihaz bulutlarının kalıcı ücretsiz katmanı yok; Firebase Test Lab yalnızca Espresso/XCTest türü koşumları kabul ediyor ve host tarafında bir Python süreci çalıştıramıyor — üstelik AltTester bağlantıyı <b style="color:var(--ink)">cihazdan host'a doğru</b> kuruyor, yani bir veri merkezindeki telefonun benim makinemin <code>:13000</code> portuna rotası yok. Bu yüzden kendi Mac'imi self-hosted runner yaptım.</span>
+    <span data-lang="en">Device clouds have no permanent free tier; Firebase Test Lab only accepts Espresso/XCTest-shaped runs and cannot host a Python process — and AltTester dials <b style="color:var(--ink)">out from device to host</b>, so a handset in someone's datacentre has no route to my machine's <code>:13000</code>. So I turned my own Mac into a self-hosted runner.</span>
+  </p>
+
+  <div class="grid3" style="margin:22px 0">
+    <div class="card">
+      <h4><span data-lang="tr">Tek komut, beş faz</span><span data-lang="en">One command, five phases</span></h4>
+      <p><code>lane.sh editor|android|ios</code><br>
+      <span data-lang="tr">PREPARE → BUILD → SERVE → RUN → RESET. Faz sıralamasını script sahiplenir, workflow değil — böylece yerelde ve CI'da <b>aynı</b> şey çalışır.</span>
+      <span data-lang="en">PREPARE → BUILD → SERVE → RUN → RESET. The script owns the phase order, not the workflow — so local and CI run the <b>same</b> thing.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">İptal edilse bile temizler</span><span data-lang="en">Resets even when cancelled</span></h4>
+      <p><span data-lang="tr">Reset bir <code>EXIT</code> trap'ine bağlı; <code>SIGTERM</code>/<code>SIGINT</code> sinyalleri <code>exit</code>'e çevriliyor. Doğrulandı: <code>kill -TERM</code> tam bir reset sonrası 143 döndürüyor. Yarıda kalan koşum çalışma ağacını kirli bırakmıyor.</span>
+      <span data-lang="en">Reset hangs off an <code>EXIT</code> trap, and <code>SIGTERM</code>/<code>SIGINT</code> are converted into an <code>exit</code>. Verified: <code>kill -TERM</code> returns 143 after a full reset. A killed run never leaves the tree dirty.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Anlamlı çıkış kodları</span><span data-lang="en">Exit codes that mean something</span></h4>
+      <p><span data-lang="tr"><code>75</code> = atla, kusur değil (telefon takılı değil).<br><code>4</code> = artefakt güvenilmez: APK 30 MB'ın altındaysa IL2CPP stripping enstrümantasyonu yemiştir. <b>Yeşil bir koşum yalancı olmasın diye.</b></span>
+      <span data-lang="en"><code>75</code> = skip, not a defect (handset unplugged).<br><code>4</code> = artefact not credible: an APK under 30 MB means IL2CPP stripping ate the instrumentation. <b>So that a green run can't be a lie.</b></span></p>
+    </div>
+  </div>
+
+  <div class="note">
+    <b><span data-lang="tr">Ölçülmüş kurulum notu:</span><span data-lang="en">A measured setup note:</span></b>
+    <span data-lang="tr">Runner, oturum açmış GUI kullanıcısı altında bir LaunchAgent olarak çalışmak zorunda — Unity lisansı kullanıcı başına, kod imzalama kilidi açık anahtarlığa muhtaç, Editor lane'i ise bir pencere sunucusu istiyor. iOS derlemesinin “15–30 dakika sürer” varsayımı da yanlış çıktı: ölçülen <b>112,4 sn</b> (Unity→Xcode 40 sn, <code>xcodebuild</code> + imzalama 50 sn).</span>
+    <span data-lang="en">The runner must run as a LaunchAgent under the logged-in GUI user — the Unity licence is per-user, codesigning needs the unlocked login keychain, and the Editor lane needs a window server. The assumption that an iOS build takes “15–30 minutes” also proved wrong: measured <b>112.4 s</b> (Unity→Xcode 40 s, <code>xcodebuild</code> + signing 50 s).</span>
+  </div>
+
+  <div class="gallery">
+    <div class="shot wide">
+      <a href="../../assets/img/qa-ci-runs.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/qa-ci-runs.jpg" alt="GitHub Actions workflow runs" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">GitHub Actions — self-hosted runner üzerinde koşumlar</span><span data-lang="en">GitHub Actions — runs on the self-hosted runner</span></b>
+        <span data-lang="tr">Zamanlanmış, elle tetiklenen ve push ile gelen koşumlar. Lane, profil, cihaz, hız ve filtre <code>workflow_dispatch</code> girdileri olarak dışarı açılmış. Listede kırmızı bir koşum da var — hattın kırmızıya dönebildiğinin kanıtı.</span>
+        <span data-lang="en">Scheduled, manually dispatched and push-triggered runs. Lane, profile, device, pace and filter are exposed as <code>workflow_dispatch</code> inputs. There is a red run in the list too — proof the pipeline can actually go red.</span>
+      </div>
+    </div>
+  </div>
+
+  <h4 style="font-size:1rem;margin:26px 0 10px">
+    <span data-lang="tr">CI duman testi koşumları (smoke profili, 19 senaryo)</span><span data-lang="en">CI smoke runs (smoke profile, 19 cases)</span>
+  </h4>
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th><span data-lang="tr">Lane</span><span data-lang="en">Lane</span></th>
+          <th><span data-lang="tr">Cihaz</span><span data-lang="en">Device</span></th>
+          <th class="num">PASS</th>
+          <th class="num">FAIL</th>
+          <th class="num"><span data-lang="tr">Süre</span><span data-lang="en">Duration</span></th>
+          <th class="num">Seed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>ios</td><td>iPhone 11</td><td class="num pass">19</td><td class="num">0</td><td class="num">124 s</td><td class="num">42889247</td></tr>
+        <tr><td>android</td><td><span data-lang="tr">emülatör</span><span data-lang="en">emulator</span></td><td class="num pass">19</td><td class="num">0</td><td class="num">101 s</td><td class="num">331096936</td></tr>
+        <tr><td>editor</td><td><span data-lang="tr">cihazsız</span><span data-lang="en">no device</span></td><td class="num pass">14</td><td class="num">0</td><td class="num">126 s</td><td class="num">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="color:var(--ink3);font-size:13.5px;margin-top:-10px">
+    <span data-lang="tr">Her koşum, seed'i ile birlikte raporlanır: <code>--seed 331096936</code> ile birebir tekrar edilebilir.</span>
+    <span data-lang="en">Every run reports its seed: replay it exactly with <code>--seed 331096936</code>.</span>
+  </p>
+
+  <!-- RAPORLAR -->
+  <h3 style="font-size:1.15rem;margin:38px 0 10px" id="raporlar">
+    <span data-lang="tr">Raporları kendiniz gezin</span><span data-lang="en">Browse the reports yourself</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch">
+    <span data-lang="tr">Raporlar tek dosyalık, kendi kendine yeten HTML — grafikler gömülü, dış bağımlılık yok. Katalog sayfası 164 senaryonun her birini <b style="color:var(--ink)">adım adım</b> anlatır. Aşağıdakiler bu sitede barındırılan gerçek koşum çıktılarıdır.</span>
+    <span data-lang="en">The reports are single-file, self-contained HTML — charts embedded, no external dependency. The catalog page narrates all 164 cases <b style="color:var(--ink)">step by step</b>. The links below are real run artefacts hosted on this site.</span>
+  </p>
+  <div class="btnrow" style="margin-top:18px">
+    <a class="btn primary" href="../../qa-reports/catalog/" target="_blank" rel="noopener">
+      <span data-lang="tr">Senaryo kataloğu — 164 senaryo</span><span data-lang="en">Case catalog — 164 cases</span>
+    </a>
+    <a class="btn" href="../../qa-reports/reports/ios-20260821/" target="_blank" rel="noopener">iOS — 161 / 1 / 2</a>
+    <a class="btn" href="../../qa-reports/reports/android-20260821/" target="_blank" rel="noopener">Android — 163 / 1 / 0</a>
+    <a class="btn" href="../../qa-reports/reports/editor-20260821/" target="_blank" rel="noopener">Editor — 139 / 1 / 24</a>
+  </div>
+  <p style="color:var(--ink3);font-size:13px;margin-top:14px">
+    <span data-lang="tr">Not: rapor ve katalog sayfalarının arayüzü Türkçedir. Cihaz kimlikleri yayın kopyalarında maskelenmiştir.</span>
+    <span data-lang="en">Note: the report and catalog pages are in Turkish. Device identifiers are masked in the published copies.</span>
+  </p>
+</div>
+</section>
+
+<section style="border-top:none;padding-top:0">
+<div class="wrap">
+  <div class="pnav">
+    <a href="../../#projeler">
+      <div class="k">← <span data-lang="tr">Geri</span><span data-lang="en">Back</span></div>
+      <div class="t"><span data-lang="tr">Tüm projeler</span><span data-lang="en">All projects</span></div>
+    </a>
+    <a class="next" href="../platform/">
+      <div class="k"><span data-lang="tr">Sonraki proje</span><span data-lang="en">Next project</span> →</div>
+      <div class="t"><span data-lang="tr">Slot Oyun Platformu</span><span data-lang="en">Slot Game Platform</span></div>
+    </a>
+  </div>
+</div>
+</section>
+
+<footer>
+  <div class="wrap fgrid">
+    <div>© 2026 Orhun Baykan</div>
+    <div style="color:var(--ink3)"><span data-lang="tr">QA / Test Uzmanı · İstanbul</span><span data-lang="en">QA / Test Specialist · Istanbul</span></div>
+    <div class="sp"></div>
+    <div><a href="#" style="color:var(--ink3)"><span data-lang="tr">Başa dön ↑</span><span data-lang="en">Back to top ↑</span></a></div>
+  </div>
+</footer>
+
+<script src="../../assets/js/site.js"></script>
+</body>
+</html>
