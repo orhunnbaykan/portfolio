@@ -10,7 +10,8 @@ index.html                    Ana sayfa: hero, metrikler, proje özetleri, case 
 projects/otomasyon/index.html Proje 01 detay sayfası — Hibrit Mobil Test Otomasyonu
 projects/platform/index.html  Proje 02 detay sayfası — Slot Oyun Platformu
 assets/css/site.css           Ortak stil (üç sayfa da bunu kullanır)
-assets/js/site.js             Dil anahtarı, mobil menü, ekran görüntüsü lightbox'ı
+assets/fonts/                 Self-host woff2 fontlar — JetBrains Mono + IBM Plex Sans (CDN yok)
+assets/js/site.js             Dil anahtarı, mobil menü, hero terminal animasyonu, lightbox
 assets/img/                   Ekran görüntüleri
 assets/*.pdf                  CV
 qa-reports/                   Test otomasyonu koşum raporları ve senaryo kataloğu

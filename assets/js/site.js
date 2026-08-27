@@ -38,6 +38,23 @@
     });
   }
 
+  /* ---------- hero terminali: test kosumu animasyonu ----------
+     JS yoksa ya da kullanici hareket azaltmayi sectiyse terminal
+     dogrudan tam halde gorunur (CSS varsayilani). */
+  var term = document.getElementById('heroterm');
+  var reduced = false;
+  try { reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){}
+  if (term && !reduced) {
+    term.classList.add('animate');
+    var rows = term.querySelectorAll('.tl-line, .tl-sum');
+    var delays = [150, 700, 1100, 1420, 1740, 2060, 2380, 2950];
+    for (var i = 0; i < rows.length; i++) {
+      (function(el, ms){
+        setTimeout(function(){ el.classList.add('on'); }, ms);
+      })(rows[i], delays[i] != null ? delays[i] : 3000 + i * 300);
+    }
+  }
+
   /* ---------- lightbox (ekran goruntuleri) ---------- */
   var lb = null;
   function openLb(src, alt){
