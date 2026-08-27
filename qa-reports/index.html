@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YarnLoop — Hybrid E2E Suite Reports</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1b1f24; --muted: #5b6570; --line: #e3e7ec;
+    --card: #f7f9fb; --pass: #1a7f47; --fail: #b4232c; --skip: #8a6d1f;
+    --accent: #2b5fd9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14171b; --fg: #e8ecf1; --muted: #9aa5b1; --line: #2a3038;
+      --card: #1b1f25; --pass: #4cc38a; --fail: #f2777a; --skip: #d8b44a;
+      --accent: #7aa2f7;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 2.5rem 1.25rem 4rem;
+    background: var(--bg); color: var(--fg);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; }
+  h1 { font-size: 1.75rem; margin: 0 0 .35rem; letter-spacing: -.01em; }
+  .sub { color: var(--muted); margin: 0 0 2.25rem; }
+  h2 { font-size: 1.05rem; margin: 2.5rem 0 .85rem; letter-spacing: .02em;
+       text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  a.card {
+    display: block; text-decoration: none; color: inherit;
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 1.1rem 1.25rem; margin-bottom: .85rem;
+  }
+  a.card:hover { border-color: var(--accent); }
+  .row { display: flex; flex-wrap: wrap; align-items: baseline; gap: .6rem; }
+  .name { font-weight: 650; font-size: 1.05rem; }
+  .meta { color: var(--muted); font-size: .875rem; }
+  .tally { margin-top: .5rem; font-size: .9rem; font-variant-numeric: tabular-nums; }
+  .p { color: var(--pass); font-weight: 650; }
+  .f { color: var(--fail); font-weight: 650; }
+  .s { color: var(--skip); font-weight: 650; }
+  .note { font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+  code { background: var(--card); border: 1px solid var(--line); border-radius: 4px;
+         padding: .1rem .35rem; font-size: .85em; }
+  footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: .85rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>YarnLoop — Hybrid E2E Suite</h1>
+  <p class="sub">Appium × AltTester. 164 case, 18 kategori, tek suite — aynı case gövdeleri
+  iOS'ta, Android'de ve Editor'de değişmeden koşuyor. Üç ortamın da tam koşum raporu aşağıda.</p>
+
+  <h2>Katalog</h2>
+
+  <a class="card" href="catalog/">
+    <div class="row">
+      <span class="name">Case Kataloğu</span>
+      <span class="meta">164 case · 18 kategori · 744 adım</span>
+    </div>
+    <div class="note">Kategoriler ve case'ler açılır menü olarak — her case ne yaptığını
+    adım adım anlatır. Sayfa <code>hybrid_e2e.py</code>'den üretiliyor, elle yazılmıyor.</div>
+  </a>
+
+  <h2>Koşum raporları</h2>
+
+  <a class="card" href="reports/ios-20260821/">
+    <div class="row">
+      <span class="name">iOS — iPhone 11</span>
+      <span class="meta">iOS 18.6.2 · 21 Ağustos 2026 · 38.6 dk · normal tempo</span>
+    </div>
+    <div class="tally">
+      <span class="p">161 PASS</span> ·
+      <span class="f">1 FAIL</span> ·
+      <span class="s">2 SKIP</span>
+    </div>
+    <div class="note">FAIL: <code>J-02</code> — ekran görüntüsüyle birlikte.
+    SKIP'ler <code>NP-06</code>/<code>NP-07</code>: gerçek iOS cihazında bildirim izni
+    otomatik sıfırlanamıyor, platform kapısı.</div>
+  </a>
+
+  <a class="card" href="reports/android-20260821/">
+    <div class="row">
+      <span class="name">Android — Emülatör</span>
+      <span class="meta">Android 15 / API 35 · 21 Ağustos 2026 · 15.1 dk · <code>--fast</code></span>
+    </div>
+    <div class="tally">
+      <span class="p">163 PASS</span> ·
+      <span class="f">1 FAIL</span> ·
+      <span class="s">0 SKIP</span>
+    </div>
+    <div class="note">FAIL: <code>LC-05</code> — <code>--fast</code>, ölçüm beklemesi olması
+    gereken bir gecikmeyi de kestiği için ön plan değişimi gerçekleşmeden okundu.</div>
+  </a>
+
+  <a class="card" href="reports/editor-20260821/">
+    <div class="row">
+      <span class="name">Unity Editor — cihazsız</span>
+      <span class="meta">Appium yok · 21 Ağustos 2026 · 8.9 dk · <code>--fast</code></span>
+    </div>
+    <div class="tally">
+      <span class="p">139 PASS</span> ·
+      <span class="f">1 FAIL</span> ·
+      <span class="s">24 SKIP</span>
+    </div>
+    <div class="note">Aynı 164 case gövdesi, hiçbir cihaz ve Appium sunucusu olmadan.
+    Gerçek bir OS yüzeyi gerektiren 24 satır <em>sessizce elenmiyor</em> — gerekçesi
+    satırın üstünde yazan SKIP olarak raporda duruyor. FAIL: <code>PF-03</code> —
+    preflight'ın kendi kontrolündeki büyük/küçük harf hatası
+    (<code>'editor-mock'</code> beklenen <code>"Editor"/"Mock"</code> ile eşleşmedi),
+    ürün değil suite bulgusu.</div>
+  </a>
+
+  <footer>
+    Raporlar kendi kendine yeterli tek dosyalık HTML — dış bağımlılık yok.
+    Yayımlanan kopyalarda cihaz UDID'si maskelendi.
+  </footer>
+
+</div>
+</body>
+</html>

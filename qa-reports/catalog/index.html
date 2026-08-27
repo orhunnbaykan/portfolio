@@ -1,0 +1,2758 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YarnLoop — Case Kataloğu</title>
+<style>
+  :root {
+    --bg:#ffffff; --fg:#1b1f24; --muted:#5b6570; --line:#e3e7ec;
+    --card:#f7f9fb; --accent:#2b5fd9; --alt:#1a7f47; --appium:#7a4bbf;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:#14171b; --fg:#e8ecf1; --muted:#9aa5b1; --line:#2a3038;
+      --card:#1b1f25; --accent:#7aa2f7; --alt:#4cc38a; --appium:#c4a2f7;
+    }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:2.5rem 1.25rem 4rem; background:var(--bg); color:var(--fg);
+    font:16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .wrap { max-width:900px; margin:0 auto; }
+  a.back { color:var(--muted); text-decoration:none; font-size:.9rem; }
+  a.back:hover { color:var(--accent); }
+  h1 { font-size:1.75rem; margin:.75rem 0 .35rem; letter-spacing:-.01em; }
+  .sub { color:var(--muted); margin:0 0 1.5rem; }
+  .tools { display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; margin-bottom:1.5rem; }
+  input[type=search] { flex:1 1 16rem; min-width:0; padding:.55rem .75rem; font-size:.95rem;
+    color:var(--fg); background:var(--card); border:1px solid var(--line); border-radius:8px; }
+  input[type=search]:focus { outline:none; border-color:var(--accent); }
+  button { padding:.55rem .8rem; font-size:.9rem; cursor:pointer; color:var(--fg);
+    background:var(--card); border:1px solid var(--line); border-radius:8px; }
+  button:hover { border-color:var(--accent); }
+  details { border:1px solid var(--line); border-radius:10px; background:var(--card); }
+  details.cat { margin-bottom:.7rem; }
+  summary { cursor:pointer; padding:.8rem 1rem; list-style:none; display:flex;
+    align-items:baseline; gap:.65rem; flex-wrap:wrap; }
+  summary::-webkit-details-marker { display:none; }
+  summary::before { content:"▸"; color:var(--muted); margin-right:.15rem; }
+  details[open] > summary::before { content:"▾"; }
+  .cnum { font-weight:700; color:var(--accent); font-variant-numeric:tabular-nums; }
+  .ctitle { font-weight:650; }
+  .count { color:var(--muted); font-size:.85rem; margin-left:auto; }
+  .catbody { padding:0 1rem 1rem; }
+  details.note { background:transparent; border-style:dashed; margin-bottom:.7rem; }
+  details.note > summary { padding:.5rem .75rem; font-size:.85rem; color:var(--muted); }
+  details.note pre { margin:0; padding:0 .75rem .75rem; white-space:pre-wrap;
+    font-size:.82rem; line-height:1.5; color:var(--muted); overflow-x:auto; }
+  details.case { background:transparent; margin-bottom:.4rem; }
+  details.case > summary { padding:.55rem .75rem; font-size:.95rem; }
+  .cid { font-weight:700; font-variant-numeric:tabular-nums; min-width:4.2rem; }
+  .badge { font-size:.72rem; letter-spacing:.03em; text-transform:uppercase;
+    border:1px solid currentColor; border-radius:999px; padding:.05rem .45rem; }
+  .badge.alt { color:var(--alt); }
+  .badge.appium { color:var(--appium); }
+  .ctext { flex:1 1 14rem; }
+  .casebody { padding:0 .9rem .8rem 2.1rem; }
+  .casebody ol { margin:.2rem 0 .6rem; padding-left:1.2rem; }
+  .casebody li { margin:.15rem 0; }
+  .empty { color:var(--muted); font-style:italic; margin:.2rem 0 .6rem; }
+  .tags { margin:.3rem 0 0; }
+  .tag { display:inline-block; font-size:.72rem; color:var(--muted);
+    border:1px solid var(--line); border-radius:4px; padding:.05rem .4rem; margin-right:.25rem; }
+  .gate { margin:.4rem 0 0; font-size:.82rem; color:var(--muted); }
+  .nohit { display:none; }
+  footer { margin-top:2.5rem; padding-top:1.25rem; border-top:1px solid var(--line);
+    color:var(--muted); font-size:.85rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../">← Koşum raporları</a>
+  <h1>Case Kataloğu</h1>
+  <p class="sub">164 case, 18 kategori. Kategoriye tıkla, case'e tıkla —
+  her case ne yaptığını adım adım anlatır.</p>
+
+  <div class="tools">
+    <input type="search" id="q" placeholder="Ara: case id, başlık ya da adım metni…"
+           autocomplete="off">
+    <button id="expand">Hepsini aç</button>
+    <button id="collapse">Hepsini kapat</button>
+  </div>
+
+  <div id="list">
+<details class="cat">
+<summary><span class="cnum">K0</span><span class="ctitle">Preflight — Environment Contract</span><span class="count">4 case</span></summary>
+<div class="catbody">
+<details class="note"><summary>Kategori notu</summary><pre>Four questions asked before a single product case runs. Each one has cost real
+debugging time in this project and each one now fails LOUDLY and early:
+
+  PF-01  do the Python locator constants still match NativeIds.cs?
+  PF-02  are both drivers really looking at the SAME device?
+  PF-03  is the build under test instrumented the way this suite assumes?
+  PF-04  is the screen clean, or is a foreign window already covering the app?
+
+No baseline reset follows this category: on a device the app may still be at
+its first-launch dialog, and there is no game state to restore yet.</pre></details>
+<details class="case">
+<summary><span class="cid">PF-01</span><span class="badge alt">AltTester</span><span class="ctext">Locator constants match NativeIds.cs</span></summary>
+<div class="casebody">
+<ol>
+<li>Re-read NativeIds.cs and compare every constant</li>
+<li>Report what the contract covers</li>
+</ol>
+<p class="tags"><span class="tag">smoke</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PF-02</span><span class="badge appium">Appium+Alt</span><span class="ctext">Both drivers are looking at the same device</span></summary>
+<div class="casebody">
+<ol>
+<li>Ask AltTester which backend answered</li>
+<li>Ask Appium which platform it is driving</li>
+<li>assert_same_device() as the single verdict (backend match AND device model match)</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">native</span> <span class="tag">smoke</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PF-03</span><span class="badge alt">AltTester</span><span class="ctext">The build under test is instrumented as assumed</span></summary>
+<div class="casebody">
+<ol>
+<li>NativeProbe must be readable at all</li>
+<li>The backend must match the mode this run claims</li>
+<li>The Unity side answers a main-thread command</li>
+</ol>
+<p class="tags"><span class="tag">smoke</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PF-04</span><span class="badge appium">Appium+Alt</span><span class="ctext">No foreign window is covering the app</span></summary>
+<div class="casebody">
+<ol>
+<li>Ask the platform who owns the foreground</li>
+<li>The no-popup watchdog must be able to report a quiet screen — every later &#x27;no dialog leaked&#x27; claim leans on it</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">native</span> <span class="tag">smoke</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+</div></details>
+<details class="cat">
+<summary><span class="cnum">K1</span><span class="ctitle">First Launch — Native Onboarding</span><span class="count">9 case</span></summary>
+<div class="catbody">
+<details class="note"><summary>Kategori notu</summary><pre>The first-launch chain: privacy consent -&gt; policy -&gt; consent again -&gt; the OS
+notification permission. Three of those four dialogs are ours; the last one
+belongs to the operating system, and the difference matters in every case here.
+
+TWO WAYS TO REACH THE CHAIN, AND THEY PROVE DIFFERENT THINGS
+------------------------------------------------------------
+`_ranThisSession` is a STATIC field, so onboarding replays only when the process
+restarts. That gives two routes, used deliberately:
+
+  session.cold_start()               a real launch. Only NP-01 uses it, because
+                                     &quot;a real launch shows consent&quot; is the only
+                                     claim that needs it, and it costs ~20s.
+  FirstLaunchFlow.RestartFlowNow()   replays from consent with no relaunch. Used
+                                     by NP-03..NP-05 and NP-08/09, which are
+                                     claims about the chain&#x27;s INTERNAL logic,
+                                     not about launch behaviour. It also skips
+                                     ShouldRun(), which is what lets those cases
+                                     run in the Editor at all.
+
+No case here asserts anything absolute about the counters. Both routes leave
+ConsentShownCount/PolicyShownCount wherever the previous case left them, so
+every count is measured as a DELTA around the action under test. An absolute
+assertion would pass or fail depending on case order, which is the definition
+of a test that measures the harness instead of the product.
+
+WHY NP-06 IS THE DENY PATH AND NP-07 IS ALLOW
+---------------------------------------------
+Order, not preference. Whichever runs last leaves the device in that state, and
+every later category (and LC-07&#x27;s &quot;already granted, no dialog&quot; claim) is happier
+with notifications ON. So deny is measured first and allow last.
+
+PLATFORM REACH
+--------------
+  NP-01, NP-02      device only     - no cold start / no OS view in the Editor
+  NP-06, NP-07      Android only    - re-arming the OS dialog needs
+                                      `pm reset-permissions`; an iOS device has
+                                      no equivalent, so these SKIP with that
+                                      reason rather than silently passing
+  the rest          everywhere
+
+Case list:
+  NP-01  A real cold start shows the consent dialog
+  NP-02  While it is up, AltTester is blind (the view is the OS, not Unity)
+  NP-03  &quot;Read policy&quot; opens the policy dialog and does NOT accept consent
+  NP-04  Closing the policy brings consent BACK — consent is never assumed
+  NP-05  Accept moves the flow past consent and records acceptance
+  NP-06  Deny  -&gt; PermissionResult &#x27;Denied&#x27;,  Settings toggle OFF
+  NP-07  Allow -&gt; PermissionResult &#x27;Granted&#x27;, Settings toggle ON
+  NP-08  The finished flow shows no leaked dialog (shown == resolved)
+  NP-09  Watchdog negative: nothing on screen once the flow is Done
+
+WHY IT RUNS FIRST
+  A genuine first launch happens once. Every later category needs the screen
+  clear of onboarding, so setup drives the chain to Done before any case runs
+  — which means the ONLY place these claims can be made honestly is here, from
+  NP-01&#x27;s own cold start, before anything else has touched the app.
+
+NO BASELINE RESET FOLLOWS
+  The game state this category leaves behind is a freshly launched app, which
+  is what the next category wants anyway. Wiping a wallet that a cold start
+  already emptied is cost without a claim.</pre></details>
+<details class="case">
+<summary><span class="cid">NP-01</span><span class="badge appium">Appium+Alt</span><span class="ctext">A real cold start shows the consent dialog</span></summary>
+<div class="casebody">
+<ol>
+<li>Cold start — kill the process so _ranThisSession resets and onboarding runs the way a user meets it</li>
+<li>The consent dialog must be up, confirmed from BOTH sides (probe says shown AND the native view exists)</li>
+<li>The flow must agree it is at the Consent step</li>
+<li>Consent is NOT accepted merely by being shown</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">lifecycle</span> <span class="tag">native</span> <span class="tag">smoke</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+<details class="case">
+<summary><span class="cid">NP-02</span><span class="badge appium">Appium+Alt</span><span class="ctext">AltTester is blind while the consent dialog is up</span></summary>
+<div class="casebody">
+<ol>
+<li>Put the consent dialog on screen</li>
+<li>Prove the view is NOT Unity&#x27;s stand-in. The honest signal is IsPopupVisible==True WHILE the stand-in&#x27;s modalRoot is closed — the mock GameObject itself ships active in the scene, so &#x27;AltTester could not find it&#x27; would be a false pass</li>
+<li>assert_alttester_blind() as the single verdict</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">native</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+<details class="case">
+<summary><span class="cid">NP-03</span><span class="badge appium">Appium+Alt</span><span class="ctext">Read policy opens the policy dialog without accepting</span></summary>
+<div class="casebody">
+<ol>
+<li>Put the consent dialog on screen and record the counters we are about to move</li>
+<li>Tap the NEGATIVE button (&#x27;Read policy&#x27;)</li>
+<li>The policy dialog must open</li>
+<li>Reading the policy must NOT count as consent</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">native</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+<details class="case">
+<summary><span class="cid">NP-04</span><span class="badge appium">Appium+Alt</span><span class="ctext">Closing the policy brings the consent dialog back</span></summary>
+<div class="casebody">
+<ol>
+<li>Reach the policy dialog (consent → Read policy)</li>
+<li>Close the policy (its single button)</li>
+<li>The consent dialog must come BACK — the app asks again rather than assuming a decision</li>
+<li>Still not accepted</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">native</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+<details class="case">
+<summary><span class="cid">NP-05</span><span class="badge appium">Appium+Alt</span><span class="ctext">Accept records consent and advances the flow</span></summary>
+<div class="casebody">
+<ol>
+<li>Put the consent dialog on screen</li>
+<li>Tap Accept</li>
+<li>Acceptance is recorded and the flow left Consent. Which step it lands on depends on the OS: a fresh permission means NotificationPermission, an already-decided one goes straight to Done — both are correct, so the assertion is &#x27;moved past consent&#x27;, not a single expected value</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">native</span> <span class="tag">smoke</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+<details class="case">
+<summary><span class="cid">NP-06</span><span class="badge appium">Appium+Alt</span><span class="ctext">Denying the OS permission is recorded honestly</span></summary>
+<div class="casebody">
+<ol>
+<li>Clear the notification permission so the OS asks again (this KILLS the app process when it actually changes something, so the driver relaunches and reconnects for us)</li>
+<li>Drive the consent gate to reach the OS dialog</li>
+<li>The OS permission dialog must appear. Unity is PAUSED behind it (separate activity), so AltTester is unreachable — Appium is the only observer in this window</li>
+<li>Answer it — …</li>
+<li>Now that Unity is back, read what it recorded</li>
+<li>Open the Settings screen — it re-reads the OS authorization on open, so this is where the user finds out what the app thinks they allowed</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
+<p class="gate">izin sıfırlama gerektirir (iOS cihazda SKIP)</p>
+</div></details>
+<details class="case">
+<summary><span class="cid">NP-07</span><span class="badge appium">Appium+Alt</span><span class="ctext">Allowing the OS permission is recorded honestly</span></summary>
+<div class="casebody">
+<ol>
+<li>Clear the notification permission so the OS asks again (this KILLS the app process when it actually changes something, so the driver relaunches and reconnects for us)</li>
+<li>Drive the consent gate to reach the OS dialog</li>
+<li>The OS permission dialog must appear. Unity is PAUSED behind it (separate activity), so AltTester is unreachable — Appium is the only observer in this window</li>
+<li>Answer it — …</li>
+<li>Now that Unity is back, read what it recorded</li>
+<li>Open the Settings screen — it re-reads the OS authorization on open, so this is where the user finds out what the app thinks they allowed</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
+<p class="gate">izin sıfırlama gerektirir (iOS cihazda SKIP)</p>
+</div></details>
+<details class="case">
+<summary><span class="cid">NP-08</span><span class="badge appium">Appium+Alt</span><span class="ctext">The finished flow leaked no dialog</span></summary>
+<div class="casebody">
+<ol>
+<li>Run the chain to completion</li>
+<li>The flow must report Done</li>
+<li>Every dialog that was shown was also resolved — an unbalanced pair means one is still holding a callback</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">native</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+<details class="case">
+<summary><span class="cid">NP-09</span><span class="badge appium">Appium+Alt</span><span class="ctext">No native popup remains once onboarding is Done</span></summary>
+<div class="casebody">
+<ol>
+<li>Precondition — the flow is finished</li>
+<li>The stray-popup watchdog must come back CLEAN. This is the negative test of the detector every other case leans on: if it cannot report a quiet screen, its findings elsewhere mean nothing</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">native</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+</div></details>
+<details class="cat">
+<summary><span class="cnum">K2</span><span class="ctitle">Setup &amp; Discovery</span><span class="count">3 case</span></summary>
+<div class="catbody">
+<details class="note"><summary>Kategori notu</summary><pre>This category confirms that the target Unity instance is reachable via
+AltTester, that the active scene is one the suite knows how to drive, and
+that every root GameObject required by the gameplay systems exists. If any
+of these checks fails, all remaining categories should be considered
+unreliable — use `--stop-on-fail` in CI.</pre></details>
+<details class="case">
+<summary><span class="cid">S-01</span><span class="badge alt">AltTester</span><span class="ctext">Active scene is Game or MainMenu</span></summary>
+<div class="casebody">
+<ol>
+<li>Asking AltTester for the currently active scene</li>
+<li>Verifying the active scene is one we know how to drive</li>
+</ol>
+<p class="tags"><span class="tag">smoke</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">S-02</span><span class="badge alt">AltTester</span><span class="ctext">All expected root GameObjects are present</span></summary>
+<div class="casebody">
+<ol>
+<li>Probing … expected root GameObject(s) in the active scene</li>
+<li>Asserting no roots are missing</li>
+</ol>
+<p class="tags"><span class="tag">smoke</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">S-03</span><span class="badge alt">AltTester</span><span class="ctext">AltTester driver round-trip is healthy</span></summary>
+<div class="casebody">
+<ol>
+<li>Issuing a round-trip probe via driver.get_current_scene()</li>
+<li>Attempting an optional server version read (best-effort)</li>
+<li>AltTester driver is responsive ✓</li>
+</ol>
+<p class="tags"><span class="tag">smoke</span> <span class="tag">unity</span></p>
+</div></details>
+</div></details>
+<details class="cat">
+<summary><span class="cnum">K3</span><span class="ctitle">Wallet / Coin Economy</span><span class="count">9 case</span></summary>
+<div class="catbody">
+<details class="note"><summary>Kategori notu</summary><pre>This category exercises CoinWallet — the in-memory coin + unlock singleton
+that lives under [CoinWallet] (DontDestroyOnLoad). Persistence is
+intentionally OFF in this project, so every case starts by calling Reset()
+to guarantee a deterministic baseline (coins=0, unlock=0). Cases are
+independent — running `--only D-05` in isolation is a supported flow.
+
+Case list (see snazzy-singing-conway plan for the full catalog):
+  D-01  Add — balance increases
+  D-02  Spend — balance decreases
+  D-03  Spend — clamps to zero (never negative)
+  D-04  TrySpend — insufficient → returns false, balance unchanged
+  D-05  TrySpend — sufficient → returns true, deducts
+  D-06  CanSpend — non-destructive (pure query)
+  D-07  Reset — clears coins AND unlock index together
+  D-08  MarkLevelUnlocked — monotonic non-decreasing
+
+INTERLEAVED HERE
+  D-09 is not a wallet API case: it is the app being KILLED and relaunched.
+  It sits at the end of this category because the wallet is the thing whose
+  survival is in question, and &quot;coins do not survive a cold start&quot; is a
+  product PROMISE (CoinWallet.Awake: persistence intentionally disabled), not
+  an accident. Asking it anywhere else would be asking it about nothing.</pre></details>
+<details class="case">
+<summary><span class="cid">D-01</span><span class="badge alt">AltTester</span><span class="ctext">Add — balance increases</span></summary>
+<div class="casebody">
+<ol>
+<li>Reset wallet to a clean baseline</li>
+<li>Credit the wallet with Add(50)</li>
+<li>Read balance and assert equality with the credit</li>
+</ol>
+<p class="tags"><span class="tag">smoke</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">D-02</span><span class="badge alt">AltTester</span><span class="ctext">Spend — balance decreases</span></summary>
+<div class="casebody">
+<ol>
+<li>Reset wallet to a clean baseline</li>
+<li>Seed the wallet with Add(100)</li>
+<li>Debit the wallet with Spend(30)</li>
+<li>Read balance and assert (100 - 30) = 70</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">D-03</span><span class="badge alt">AltTester</span><span class="ctext">Spend — clamps to zero (no negative balance)</span></summary>
+<div class="casebody">
+<ol>
+<li>Reset wallet to a clean baseline</li>
+<li>Seed a small balance with Add(10)</li>
+<li>Attempt an over-spend with Spend(50) — should clamp to zero</li>
+<li>Assert the balance is exactly 0 (never negative)</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">D-04</span><span class="badge alt">AltTester</span><span class="ctext">TrySpend — insufficient returns false, balance unchanged</span></summary>
+<div class="casebody">
+<ol>
+<li>Reset wallet, then seed a small balance with Add(10)</li>
+<li>Call TrySpend(50) — expected to fail atomically (returns false)</li>
+<li>Assert the return value is false</li>
+<li>Assert the balance is unchanged (still 10)</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">D-05</span><span class="badge alt">AltTester</span><span class="ctext">TrySpend — sufficient returns true and deducts</span></summary>
+<div class="casebody">
+<ol>
+<li>Reset wallet, then seed with Add(50)</li>
+<li>Call TrySpend(20) — expected to succeed (returns true)</li>
+<li>Assert the return value is true</li>
+<li>Assert the balance dropped by exactly 20 (50 - 20 = 30)</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">D-06</span><span class="badge alt">AltTester</span><span class="ctext">CanSpend — non-destructive pure query</span></summary>
+<div class="casebody">
+<ol>
+<li>Reset wallet, then seed with Add(50)</li>
+<li>CanSpend(30) — expected true (50 ≥ 30)</li>
+<li>CanSpend(60) — expected false (50 &lt; 60)</li>
+<li>CanSpend(50) — boundary case, exact-match must return true</li>
+<li>Assert the wallet is untouched by all three queries</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">D-07</span><span class="badge alt">AltTester</span><span class="ctext">Reset — clears both coins and unlock</span></summary>
+<div class="casebody">
+<ol>
+<li>Prime BOTH balance and unlock so the reset has something to erase</li>
+<li>Call CoinWallet.Reset() — expected to wipe both fields together</li>
+<li>Assert coins == 0</li>
+<li>Assert HighestUnlockedLevelIndex == 0</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">D-08</span><span class="badge alt">AltTester</span><span class="ctext">MarkLevelUnlocked — monotonic non-decreasing</span></summary>
+<div class="casebody">
+<ol>
+<li>Reset wallet to a clean baseline</li>
+<li>MarkLevelUnlocked(3) — first assignment should apply</li>
+<li>MarkLevelUnlocked(1) — smaller value must be ignored</li>
+<li>MarkLevelUnlocked(3) — same value must be a no-op</li>
+<li>MarkLevelUnlocked(7) — strictly larger value must advance</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">D-09</span><span class="badge appium">Appium+Alt</span><span class="ctext">A cold start leaves the wallet empty — persistence-off is the spec</span></summary>
+<div class="casebody">
+<ol>
+<li>Put something in the wallet worth losing</li>
+<li>Kill the process and launch it again — a real cold start, not a scene reload</li>
+<li>Onboarding runs again, because nothing about it was persisted either. Drive it out of the way — NP owns the claims about it, this case only needs a usable screen</li>
+<li>The wallet is empty. CoinWallet.Awake calls this intentional — &#x27;persistence intentionally disabled, every app launch starts fresh&#x27; — and this is where that sentence stops being a comment and becomes a tested promise</li>
+<li>And the app is genuinely usable, not merely alive</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span> <span class="tag">smoke</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+</div></details>
+<details class="cat">
+<summary><span class="cnum">K4</span><span class="ctitle">Fresh State + MainMenu</span><span class="count">7 case</span></summary>
+<div class="catbody">
+<details class="note"><summary>Kategori notu</summary><pre>This category proves that the meta layer (MainMenu + coin fly bridge) is
+wired to the wallet correctly and that the fresh-state redirect guard fires
+as designed. The credit-before-animation invariant (G-01) is one of the most
+important regression guards in the entire suite — a bug here silently steals
+coins from the player.
+
+Case list:
+  A-01  Fresh state → MainMenu bypass → Game / Level 01
+  A-02  SkipFreshStateGuardOnce lets MainMenu render, and is a one-shot
+  A-03  MainMenu LevelInfoText matches wallet&#x27;s next-unlocked level
+  A-04  MainMenu CoinAmountText mirrors wallet, and reacts to a live Add()
+  A-05  Advancing the unlock refreshes LevelInfoText on the next MainMenu render
+  G-01  Coin fly + credit-before-animation invariant (wallet credited BEFORE
+        FlyingCoin_0 animation completes — coins never lost if scene tears down)
+
+INTERLEAVED HERE
+  A-06 backgrounds the app while MainMenu is on screen and brings it back.
+  The labels this category just proved correct are the cheapest possible
+  witness that the resume rebuilt the screen rather than merely restoring a
+  process: a MainMenu that comes back with a stale coin label is alive by
+  every OS-level check and wrong by the only one that matters.</pre></details>
+<details class="case">
+<summary><span class="cid">A-01</span><span class="badge alt">AltTester</span><span class="ctext">Fresh state → MainMenu bypass → Game / Level 01</span></summary>
+<div class="casebody">
+<ol>
+<li>Reset wallet so unlock=0 (the fresh-state trigger condition)</li>
+<li>Force-load MainMenu.unity so the guard has to react</li>
+<li>Wait for the fresh-state guard to redirect to Game</li>
+<li>Assert we landed on Level 01 (index 0)</li>
+</ol>
+<p class="tags"><span class="tag">smoke</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">A-02</span><span class="badge alt">AltTester</span><span class="ctext">SkipFreshStateGuardOnce bypasses guard, then re-arms</span></summary>
+<div class="casebody">
+<ol>
+<li>Reset wallet so unlock=0 (guard would normally fire)</li>
+<li>Arm MainMenuController.SkipFreshStateGuardOnce = true (one-shot bypass) via GameManager.ArmMainMenuGuardBypass()</li>
+<li>Load MainMenu — with flag armed, we should STAY there</li>
+<li>Re-load MainMenu — with flag consumed, guard MUST redirect</li>
+<li>Confirm the redirect landed on Level 01</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">A-03</span><span class="badge alt">AltTester</span><span class="ctext">MainMenu LevelInfoText matches wallet unlock</span></summary>
+<div class="casebody">
+<ol>
+<li>Reset wallet and arm the one-shot guard bypass so we can actually reach MainMenu and inspect its labels</li>
+<li>Load MainMenu with the guard bypassed</li>
+<li>Read the wallet&#x27;s HighestUnlockedLevelIndex</li>
+<li>Read LevelInfoText from the MainMenu Canvas</li>
+<li>Assert observed == expected</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">A-04</span><span class="badge alt">AltTester</span><span class="ctext">MainMenu CoinAmountText mirrors wallet + live Add()</span></summary>
+<div class="casebody">
+<ol>
+<li>Reset wallet + arm bypass + load MainMenu</li>
+<li>Baseline read — wallet.Coins == 0, CoinAmountText should read &#x27;0&#x27;</li>
+<li>Add(15) to the wallet — MainMenu should react via OnCoinsChanged</li>
+<li>Read updated wallet + label</li>
+<li>Assert the wallet is at 15</li>
+<li>Assert CoinAmountText is now &#x27;15&#x27; (live subscribe worked)</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">A-05</span><span class="badge alt">AltTester</span><span class="ctext">Unlock advance → LevelInfoText updates on next render</span></summary>
+<div class="casebody">
+<ol>
+<li>Prep — wallet.Reset(), arm bypass, load MainMenu</li>
+<li>Confirm initial LevelInfoText corresponds to unlock=0</li>
+<li>Advance unlock via MarkLevelUnlocked(3)</li>
+<li>Re-render MainMenu — no bypass needed because unlock=3, so the fresh-state guard won&#x27;t fire anyway (guard only triggers when HighestUnlockedLevelIndex == 0)</li>
+<li>LevelInfoText must now say &#x27;LEVEL 04&#x27; (unlock 3 → next 4)</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">G-01</span><span class="badge alt">AltTester</span><span class="ctext">Coin fly + credit-before-animation invariant</span></summary>
+<div class="casebody">
+<ol>
+<li>Reset wallet + navigate to Game / Playing to seed a reward</li>
+<li>Capture wallet balance BEFORE the win</li>
+<li>Cheat ForceWin — WinPanel should appear with a pending reward</li>
+<li>Read PendingCoinReward before we tap Home</li>
+<li>Tap HomeButton to bounce back to MainMenu</li>
+<li>Try to catch FlyingCoin_0 mid-flight (~0.88s window)</li>
+<li>Assert the wallet gained &gt;= pending BEFORE the animation finished (credit-before-animation invariant)</li>
+<li>Log the final wallet delta so the engineer can eyeball it</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">A-06</span><span class="badge appium">Appium+Alt</span><span class="ctext">MainMenu survives a background round trip with its labels intact</span></summary>
+<div class="casebody">
+<ol>
+<li>Reach MainMenu with a known unlock and a known balance</li>
+<li>Snapshot everything the round trip must preserve</li>
+<li>Background the app for 3s and bring it back</li>
+<li>Unity must have SEEN both halves of the trip — a background it never noticed tested nothing, and looks identical from the outside to one that worked</li>
+<li>...and the screen must be exactly where it was</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+</div></details>
+<details class="cat">
+<summary><span class="cnum">K5</span><span class="ctitle">Settings Modal</span><span class="count">16 case</span></summary>
+<div class="catbody">
+<details class="note"><summary>Kategori notu</summary><pre>This category exercises SettingsModalController in both scenes. The controller
+and toggle state (SettingsState singleton, DontDestroyOnLoad) are shared but
+scene-specific side effects diverge:
+
+  MainMenu context (B-*):   no LeaveButton; PlayButton locks while modal open.
+  In-Game  context (C-*):   LeaveButton present; GameManager.Pause/Resume gate;
+                            Leave YES → silent close + scene load (OnClosed
+                            NOT fired — Resume must be skipped so the leave
+                            handler owns timeScale).
+  Cross-scene bridge (X-*): SettingsState survives scene load — toggles set in
+                            MainMenu are still set after entering Game.
+
+Case list:
+  B-01  Open + close in MainMenu (HasLeaveButton == false)
+  B-02  PlayButton.interactable locks while modal open
+  B-03  4 toggles ON→OFF→ON (2x cross-check per toggle)
+  B-04  Info tab open + back (IsOpen persists across inner nav)
+  B-05  Close while Info tab active → CurrentTab resets on next open
+  B-06  Double-open guard (no ghost lock/unlock)
+  B-07  Double-close guard (no ghost lock on PlayButton)
+
+  C-01  Modal open in Game → HasLeaveButton == true + Pause
+  C-02  Modal close in Game → Resume
+  C-03  4 toggles in-game (cross-check MainMenu behaviour still holds)
+  C-04  Info tab in-game (Pause persists while on Info)
+  C-05  Leave YES → silent close → scene == MainMenu
+  C-06  Leave NO → back to toggles + Resume, still in Game
+  C-07  Double-open guard in-game (Pause not compounded)
+
+  X-01  SettingsState persists MainMenu → Game (Music/Sound OFF survives)
+
+INTERLEAVED HERE
+  C-08 backgrounds the app with the modal OPEN and the game PAUSED. Neither
+  old runner could ask this: the settings cases lived in one suite and the
+  lifecycle cases in another, so &quot;does a pause survive a pause&quot; — the game
+  paused by the modal, the app paused by the OS — was never put to anything.
+  Both ways it can go wrong are silent: the modal closes itself on resume (the
+  player comes back to a running game they never unpaused), or the game resumes
+  underneath a modal that is still on screen.</pre></details>
+<details class="case">
+<summary><span class="cid">B-01</span><span class="badge alt">AltTester</span><span class="ctext">Modal open/close in MainMenu (HasLeaveButton == false)</span></summary>
+<div class="casebody">
+<ol>
+<li>Bootstrap into MainMenu (unlock&gt;=3 disarms fresh-state guard)</li>
+<li>Open modal by tapping SettingsButton</li>
+<li>Verify HasLeaveButton == false (MainMenu modal has no Leave)</li>
+<li>Verify CurrentTab == Settings on fresh open</li>
+<li>Close via CloseButton, verify IsOpen falls to false</li>
+</ol>
+<p class="tags"><span class="tag">smoke</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">B-02</span><span class="badge alt">AltTester</span><span class="ctext">PlayButton locks while modal open</span></summary>
+<div class="casebody">
+<ol>
+<li>Bootstrap MainMenu + read PlayButton interactable baseline</li>
+<li>Open Settings modal — PlayButton must lock</li>
+<li>Close modal — PlayButton must unlock</li>
+<li>Assert the final interactable state</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">B-03</span><span class="badge alt">AltTester</span><span class="ctext">4 toggles ON→OFF→ON (2x cross-check)</span></summary>
+<div class="casebody">
+<ol>
+<li>Bootstrap MainMenu + open modal + reset toggle state to ON</li>
+<li>Baseline read: all 4 toggles must be ON</li>
+<li>Single-tap each toggle — each must independently flip to OFF</li>
+<li>Cross-check — 2nd tap on each toggle must return to ON</li>
+<li>Close modal cleanly</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">B-04</span><span class="badge alt">AltTester</span><span class="ctext">Info tab open + back (IsOpen persists)</span></summary>
+<div class="casebody">
+<ol>
+<li>Bootstrap MainMenu + open modal</li>
+<li>Tap InfoButton — CurrentTab must be Info, IsOpen still true</li>
+<li>Tap BackButton — CurrentTab must return to Settings</li>
+<li>IsOpen must still be true (Info was inner nav, not close)</li>
+<li>Close modal</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">B-05</span><span class="badge alt">AltTester</span><span class="ctext">Close on Info tab → CurrentTab resets on re-open</span></summary>
+<div class="casebody">
+<ol>
+<li>Bootstrap MainMenu + open modal + navigate to Info tab</li>
+<li>Close modal while Info tab is active</li>
+<li>Re-open the modal</li>
+<li>Assert CurrentTab has reset to Settings (Info residue gone)</li>
+<li>Close modal cleanly</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">B-06</span><span class="badge alt">AltTester</span><span class="ctext">Double-open guard (no ghost PlayButton lock)</span></summary>
+<div class="casebody">
+<ol>
+<li>Bootstrap MainMenu + first Open of modal (tap SettingsButton)</li>
+<li>Confirm PlayButton is locked after first Open</li>
+<li>Tap SettingsButton AGAIN — natural user pathway for double-open. Unity Button.onClick routes to SettingsModal.Open(), which must guard against re-entry when IsOpen is already true.</li>
+<li>State must be unchanged — IsOpen true, PlayButton still locked</li>
+<li>Close modal ONCE via CloseButton — PlayButton should unlock</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">B-07</span><span class="badge alt">AltTester</span><span class="ctext">Double-close guard (no ghost PlayButton lock)</span></summary>
+<div class="casebody">
+<ol>
+<li>Bootstrap MainMenu (modal starts closed)</li>
+<li>Open → Close once so the C# guard has state to protect</li>
+<li>Attempt a second Close call (modal is already closed)</li>
+<li>Verify PlayButton is interactable (no ghost lock from 2nd Close)</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">C-01</span><span class="badge alt">AltTester</span><span class="ctext">Modal open in Game (HasLeaveButton + Pause)</span></summary>
+<div class="casebody">
+<ol>
+<li>Bootstrap Game / Playing</li>
+<li>Open Settings modal — HasLeaveButton must be TRUE in-game</li>
+<li>GameManager.IsPaused must be True while modal is open</li>
+<li>Close modal (leave state clean for next case)</li>
+</ol>
+<p class="tags"><span class="tag">smoke</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">C-02</span><span class="badge alt">AltTester</span><span class="ctext">Modal close in Game (Resume)</span></summary>
+<div class="casebody">
+<ol>
+<li>Bootstrap Game / Playing</li>
+<li>Open modal — verify Paused=true baseline</li>
+<li>Close modal — IsPaused must fall back to false</li>
+<li>Verify GameManager.IsPaused == false after close (Resume fired)</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">C-03</span><span class="badge alt">AltTester</span><span class="ctext">4 toggles in-game (cross-check)</span></summary>
+<div class="casebody">
+<ol>
+<li>Bootstrap Game / Playing + open modal + reset toggles ON</li>
+<li>All 4 toggles must be ON at baseline</li>
+<li>Flip each toggle to OFF via in-game buttons</li>
+<li>2x cross-check — flip back to ON</li>
+<li>Close modal</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">C-04</span><span class="badge alt">AltTester</span><span class="ctext">Info tab in-game (Pause persists on Info)</span></summary>
+<div class="casebody">
+<ol>
+<li>Bootstrap Game / Playing + open modal</li>
+<li>Tap InfoButton in-game — CurrentTab must be Info</li>
+<li>While on Info tab, game must still be PAUSED (modal still open)</li>
+<li>Tap BackButton — CurrentTab returns to Settings</li>
+<li>Close modal — game must resume</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">C-05</span><span class="badge alt">AltTester</span><span class="ctext">Leave YES → silent close → MainMenu</span></summary>
+<div class="casebody">
+<ol>
+<li>Bootstrap Game / Playing (ensure unlock&gt;=3 so post-Leave MainMenu stays and doesn&#x27;t bounce us back to Game)</li>
+<li>Open modal + tap LeaveButton — CurrentTab must be LeaveConfirm</li>
+<li>Tap YesButton — silent close + scene → MainMenu</li>
+<li>Wait until active scene becomes MainMenu</li>
+<li>GameManager must be unreachable from MainMenu context</li>
+<li>MainMenu should render (proves silent close worked and we actually landed on MainMenu.unity)</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">C-06</span><span class="badge alt">AltTester</span><span class="ctext">Leave NO → back to toggles + Resume, still in Game</span></summary>
+<div class="casebody">
+<ol>
+<li>Bootstrap Game / Playing (C-05 left us in MainMenu — case-start cleanup rebuilds Game state)</li>
+<li>Open modal + tap LeaveButton → CurrentTab must be LeaveConfirm</li>
+<li>Tap NoButton — modal must close, scene stays Game</li>
+<li>Confirm scene is still Game (no navigation happened)</li>
+<li>GameManager.IsPaused must be false again (Resume fires via OnClosed on the normal close pathway)</li>
+<li>Re-open modal — CurrentTab must be Settings (LeaveConfirm residue gone)</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">C-07</span><span class="badge alt">AltTester</span><span class="ctext">Double-open guard in-game (no double Pause)</span></summary>
+<div class="casebody">
+<ol>
+<li>Bootstrap Game / Playing + first Open (tap SettingsButton)</li>
+<li>Tap SettingsButton AGAIN — natural user pathway for double-open. Unity Button.onClick routes to Open() which must not compound Pause().</li>
+<li>Close modal ONCE via CloseButton — should resume normally</li>
+<li>Verify no residual pause after extra settle</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">X-01</span><span class="badge alt">AltTester</span><span class="ctext">SettingsState persists MainMenu → Game</span></summary>
+<div class="casebody">
+<ol>
+<li>Bootstrap MainMenu + open modal + reset all toggles ON</li>
+<li>In MainMenu, flip Music + Sound to OFF (leave Vibration/Notification ON)</li>
+<li>Close modal in MainMenu</li>
+<li>Enter Game via direct scene load (SettingsState is DontDestroyOnLoad — it should survive)</li>
+<li>Open modal in Game and read all 4 toggles</li>
+<li>Assert persistence — Music+Sound OFF, Vibration ON</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">C-08</span><span class="badge appium">Appium+Alt</span><span class="ctext">The modal survives a background round trip — and so does its pause</span></summary>
+<div class="casebody">
+<ol>
+<li>Get into a live level and open the modal with its own button</li>
+<li>Snapshot the state the round trip must preserve</li>
+<li>Background the app for 3s with the modal on screen</li>
+<li>Unity must have seen both halves of the trip</li>
+<li>The modal is still open AND the game is still paused. Either one alone would be a bug: an open modal over a running game, or a closed modal that left the game frozen</li>
+<li>Closing it through its own button resumes the game, and no move was spent while the app was away</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+</div></details>
+<details class="cat">
+<summary><span class="cnum">K6</span><span class="ctitle">Shop Surface</span><span class="count">7 case</span></summary>
+<div class="catbody">
+<details class="note"><summary>Kategori notu</summary><pre>Everything about the Shop that can be measured WITHOUT opening a native
+dialog: the tab nav, the catalog-driven grid, the result modal&#x27;s resting
+state and the coin display. Pure AltTester — no Appium involved — so this
+category runs identically in the Editor and on device.
+
+It runs first on purpose. Categories 15-17 all reach the Shop through this
+surface; if the grid is not built or the tab does not switch, a native popup
+case would fail for a reason that has nothing to do with native popups.
+
+Expected pack data is parsed from Assets/YarnLoop/Data/ShopCatalog.asset at
+runtime, so editing the catalog cannot leave a stale copy passing in here.
+
+INTERLEAVED HERE
+  SH-07 backgrounds the app on the Shop tab. The tab is the only piece of
+  navigation state this game holds that is not a scene, so it is the only place
+  a resume can lose the player&#x27;s position without losing anything a scene check
+  would notice.</pre></details>
+<details class="case">
+<summary><span class="cid">SH-01</span><span class="badge appium">Appium+Alt</span><span class="ctext">MainMenu opens on the Home tab</span></summary>
+<div class="casebody">
+<ol>
+<li>Reaching MainMenu through the natural pathway (unlock &gt; 0 disarms the fresh-state guard)</li>
+<li>MainMenuTabController must report the Home tab</li>
+<li>Home content visible, Shop content hidden</li>
+<li>A freshly loaded scene has counted no tab change</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">smoke</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">SH-02</span><span class="badge appium">Appium+Alt</span><span class="ctext">Shop tab tap swaps the content and counts the change</span></summary>
+<div class="casebody">
+<ol>
+<li>Reading the tab-change counter before the tap</li>
+<li>Tapping … (the real button, not SelectTab — this also covers the onClick wiring and the raycast path)</li>
+<li>The controller must now report the Shop tab</li>
+<li>Content swapped AND the change was counted exactly once</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">SH-03</span><span class="badge appium">Appium+Alt</span><span class="ctext">Coin pack grid is built from the catalog asset</span></summary>
+<div class="casebody">
+<ol>
+<li>ShopController must have built one card per catalog pack</li>
+<li>Every pack has a reachable tile named CoinPack_{coins}</li>
+<li>Each tile is bound to ITS OWN catalog row (sku / coins / priceText read back off the card)</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">SH-04</span><span class="badge appium">Appium+Alt</span><span class="ctext">Tab round trip does not rebuild the grid</span></summary>
+<div class="casebody">
+<ol>
+<li>Snapshotting the grid before a tab round trip</li>
+<li>Shop → Home</li>
+<li>Home → Shop</li>
+<li>The grid was NOT rebuilt — BuildGrid runs once in Awake. A doubled CardCount here would mean duplicate tiles stacking up every time the player opens the Shop.</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">SH-05</span><span class="badge appium">Appium+Alt</span><span class="ctext">Purchase result modal starts closed and blank</span></summary>
+<div class="casebody">
+<ol>
+<li>The purchase result modal must be CLOSED at rest</li>
+<li>...and must not claim an outcome it never showed</li>
+<li>ShownCount is 0 for this scene instance (MainMenu was loaded fresh in SH-01)</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">SH-06</span><span class="badge appium">Appium+Alt</span><span class="ctext">Coin display stays in sync with the wallet on the Shop tab</span></summary>
+<div class="casebody">
+<ol>
+<li>The coin display lives on the Canvas, outside both tab contents — it must be readable while the Shop tab is open</li>
+<li>Displayed value matches the wallet right now</li>
+<li>Crediting the wallet directly — the display is driven by CoinWallet.OnCoinsChanged, so it must follow without a scene reload (this is exactly the path a purchase will take in Category 16)</li>
+<li>The label followed the wallet live</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">SH-07</span><span class="badge appium">Appium+Alt</span><span class="ctext">The Shop tab survives a background round trip</span></summary>
+<div class="casebody">
+<ol>
+<li>Park on a screen with readable state (Shop tab) and snapshot everything the round trip must preserve</li>
+<li>Background the app for 3s and bring it back</li>
+<li>Unity must have SEEN both halves of the trip</li>
+<li>...and the session must be exactly where it was</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+</div></details>
+<details class="cat">
+<summary><span class="cnum">K7</span><span class="ctitle">Purchase Flow</span><span class="count">18 case</span></summary>
+<div class="catbody">
+<details class="note"><summary>Kategori notu</summary><pre>The full purchase matrix, one case per coin pack per outcome. This is the only
+category where BOTH drivers do real work in every case: Appium taps the native
+confirmation dialog, AltTester proves what the wallet did about it.
+
+Why one case per pack instead of one loop: the credited amount is the thing
+under test, and it differs per pack. A loop that failed on the 25,000 pack
+would report &quot;purchase failed&quot; with no indication of which sku, and the report
+would show one red row for six behaviours.
+
+Every case records its wallet arithmetic as report EVIDENCE — before, expected
+delta, after, actual delta — so a reader can check the number themselves
+instead of trusting that an assertion passed.
+
+The wallet is deliberately NOT reset between cases. Asserting an exact delta on
+a running balance catches an error a per-case reset would hide: a stale token
+crediting twice, or a previous purchase leaking into this one.
+
+INTERLEAVED HERE
+  PU-17 and PU-18 are the two interruptions that can cost money: an app sent
+  away while a purchase is IN FLIGHT, and a confirmation dialog that is
+  backgrounded rather than answered. Both are silent when they go wrong — a
+  wallet credited twice and a dialog treated as a &#x27;yes&#x27; look exactly like a
+  normal run until someone reads the balance.</pre></details>
+<details class="case">
+<summary><span class="cid">PU-13</span><span class="badge appium">Appium+Alt</span><span class="ctext">A store failure on Buy credits nothing and says so</span></summary>
+<div class="casebody">
+<ol>
+<li>Arming a forced &#x27;Failed&#x27; outcome on the next Buy</li>
+<li>Tapping the tile and confirming the native dialog</li>
+<li>Tapping Buy — the user said yes, the store will not</li>
+<li>The wallet must be untouched</li>
+<li>The failure has a visible surface and clears</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">purchase</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PU-14</span><span class="badge appium">Appium+Alt</span><span class="ctext">A second purchase while one is in flight is ignored</span></summary>
+<div class="casebody">
+<ol>
+<li>Opening a purchase dialog and leaving it open</li>
+<li>Asking for a SECOND purchase (…) while the first is up</li>
+<li>The guard must have counted it and opened nothing</li>
+<li>Cancelling the one dialog that is open</li>
+<li>Nothing left on screen</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">purchase</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PU-15</span><span class="badge appium">Appium+Alt</span><span class="ctext">Tiles are disabled during a purchase and restored after</span></summary>
+<div class="casebody">
+<ol>
+<li>All tiles interactable at rest</li>
+<li>Opening a dialog on CoinPack_…</li>
+<li>EVERY tile must be disabled while it is open</li>
+<li>...and all of them come back after it resolves</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">purchase</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PU-16</span><span class="badge appium">Appium+Alt</span><span class="ctext">Two purchases of one pack use distinct tokens</span></summary>
+<div class="casebody">
+<ol>
+<li>Resetting the shop counters so the attempt count is absolute</li>
+<li>Two attempts, two DIFFERENT tokens, one exact total</li>
+<li>Purchase … of 2</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">purchase</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PU-17</span><span class="badge appium">Appium+Alt</span><span class="ctext">A purchase in flight survives backgrounding and credits once</span></summary>
+<div class="casebody">
+<ol>
+<li>Read the wallet BEFORE any dialog exists — this is the only moment Unity is guaranteed to be answering</li>
+<li>The confirmation dialog is up and UNRESOLVED — this is the state the OS is about to interrupt</li>
+<li>Background the app WITH the dialog up, then return. Unity answering afterwards is MEASURED, not required — the dialog owns the screen and Appium can still see it</li>
+<li>The dialog is STILL on screen — a resume must not dismiss the question the user was asked. Asked through Appium alone, because that is the observer this state leaves standing</li>
+<li>Now answer it — Buy — exactly as the user would on returning to their phone</li>
+<li>With the dialog gone, Unity must be running again — everything below reads game state and needs a live main thread</li>
+<li>The purchase resolved as a purchase, and the app is no longer holding a pending token</li>
+<li>The wallet moved by the pack&#x27;s coins — ONCE. A resume that re-delivers the receipt shows up here and nowhere else in this suite</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span> <span class="tag">purchase</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PU-18</span><span class="badge appium">Appium+Alt</span><span class="ctext">Backgrounding a dialog is not a silent answer to it</span></summary>
+<div class="casebody">
+<ol>
+<li>Open a purchase dialog and snapshot the resolution counters — the pair that says whether the app answered itself</li>
+<li>Background and resume with the question unanswered</li>
+<li>The dialog is still there. THIS is the case: an OS pause is not a Cancel, and a dialog that vanished across the trip was answered by something other than the user</li>
+<li>Answer it properly — Cancel</li>
+<li>Exactly ONE resolution happened, and it carries the token of the dialog we just cancelled — so the answer on record is the user&#x27;s, not the round trip&#x27;s</li>
+<li>The wallet is untouched — a cancelled purchase credits nothing, whatever happened in between</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span> <span class="tag">purchase</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PU-01</span><span class="badge appium">Appium+Alt</span><span class="ctext">Buy 1,000 pack (coins_1000) credits exactly 1,000</span></summary>
+<div class="casebody">
+<ol>
+<li>Shop tab open, snapshotting the wallet before anything</li>
+<li>Tapping PackPriceButton_… (the real tile button)</li>
+<li>The native confirmation dialog must be confirmed by BOTH observers (probe says shown AND a native view exists)</li>
+<li>...and it must be an OS view, not the Unity stand-in</li>
+<li>Tapping … via …</li>
+<li>The app must settle on …</li>
+<li>The wallet — the whole point of this case</li>
+<li>Result modal says …, closes on OK, and leaves the shop usable</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">purchase</span> <span class="tag">smoke</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PU-02</span><span class="badge appium">Appium+Alt</span><span class="ctext">Buy 5,000 pack (coins_5000) credits exactly 5,000</span></summary>
+<div class="casebody">
+<ol>
+<li>Shop tab open, snapshotting the wallet before anything</li>
+<li>Tapping PackPriceButton_… (the real tile button)</li>
+<li>The native confirmation dialog must be confirmed by BOTH observers (probe says shown AND a native view exists)</li>
+<li>...and it must be an OS view, not the Unity stand-in</li>
+<li>Tapping … via …</li>
+<li>The app must settle on …</li>
+<li>The wallet — the whole point of this case</li>
+<li>Result modal says …, closes on OK, and leaves the shop usable</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">purchase</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PU-03</span><span class="badge appium">Appium+Alt</span><span class="ctext">Buy 10,000 pack (coins_10000) credits exactly 10,000</span></summary>
+<div class="casebody">
+<ol>
+<li>Shop tab open, snapshotting the wallet before anything</li>
+<li>Tapping PackPriceButton_… (the real tile button)</li>
+<li>The native confirmation dialog must be confirmed by BOTH observers (probe says shown AND a native view exists)</li>
+<li>...and it must be an OS view, not the Unity stand-in</li>
+<li>Tapping … via …</li>
+<li>The app must settle on …</li>
+<li>The wallet — the whole point of this case</li>
+<li>Result modal says …, closes on OK, and leaves the shop usable</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">purchase</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PU-04</span><span class="badge appium">Appium+Alt</span><span class="ctext">Buy 25,000 pack (coins_25000) credits exactly 25,000</span></summary>
+<div class="casebody">
+<ol>
+<li>Shop tab open, snapshotting the wallet before anything</li>
+<li>Tapping PackPriceButton_… (the real tile button)</li>
+<li>The native confirmation dialog must be confirmed by BOTH observers (probe says shown AND a native view exists)</li>
+<li>...and it must be an OS view, not the Unity stand-in</li>
+<li>Tapping … via …</li>
+<li>The app must settle on …</li>
+<li>The wallet — the whole point of this case</li>
+<li>Result modal says …, closes on OK, and leaves the shop usable</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">purchase</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PU-05</span><span class="badge appium">Appium+Alt</span><span class="ctext">Buy 50,000 pack (coins_50000) credits exactly 50,000</span></summary>
+<div class="casebody">
+<ol>
+<li>Shop tab open, snapshotting the wallet before anything</li>
+<li>Tapping PackPriceButton_… (the real tile button)</li>
+<li>The native confirmation dialog must be confirmed by BOTH observers (probe says shown AND a native view exists)</li>
+<li>...and it must be an OS view, not the Unity stand-in</li>
+<li>Tapping … via …</li>
+<li>The app must settle on …</li>
+<li>The wallet — the whole point of this case</li>
+<li>Result modal says …, closes on OK, and leaves the shop usable</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">purchase</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PU-06</span><span class="badge appium">Appium+Alt</span><span class="ctext">Buy 100,000 pack (coins_100000) credits exactly 100,000</span></summary>
+<div class="casebody">
+<ol>
+<li>Shop tab open, snapshotting the wallet before anything</li>
+<li>Tapping PackPriceButton_… (the real tile button)</li>
+<li>The native confirmation dialog must be confirmed by BOTH observers (probe says shown AND a native view exists)</li>
+<li>...and it must be an OS view, not the Unity stand-in</li>
+<li>Tapping … via …</li>
+<li>The app must settle on …</li>
+<li>The wallet — the whole point of this case</li>
+<li>Result modal says …, closes on OK, and leaves the shop usable</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">purchase</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PU-07</span><span class="badge appium">Appium+Alt</span><span class="ctext">Cancel 1,000 pack (coins_1000) leaves the wallet untouched</span></summary>
+<div class="casebody">
+<ol>
+<li>Shop tab open, snapshotting the wallet before anything</li>
+<li>Tapping PackPriceButton_… (the real tile button)</li>
+<li>The native confirmation dialog must be confirmed by BOTH observers (probe says shown AND a native view exists)</li>
+<li>...and it must be an OS view, not the Unity stand-in</li>
+<li>Tapping … via …</li>
+<li>The app must settle on …</li>
+<li>The wallet — the whole point of this case</li>
+<li>Result modal says …, closes on OK, and leaves the shop usable</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">purchase</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PU-08</span><span class="badge appium">Appium+Alt</span><span class="ctext">Cancel 5,000 pack (coins_5000) leaves the wallet untouched</span></summary>
+<div class="casebody">
+<ol>
+<li>Shop tab open, snapshotting the wallet before anything</li>
+<li>Tapping PackPriceButton_… (the real tile button)</li>
+<li>The native confirmation dialog must be confirmed by BOTH observers (probe says shown AND a native view exists)</li>
+<li>...and it must be an OS view, not the Unity stand-in</li>
+<li>Tapping … via …</li>
+<li>The app must settle on …</li>
+<li>The wallet — the whole point of this case</li>
+<li>Result modal says …, closes on OK, and leaves the shop usable</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">purchase</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PU-09</span><span class="badge appium">Appium+Alt</span><span class="ctext">Cancel 10,000 pack (coins_10000) leaves the wallet untouched</span></summary>
+<div class="casebody">
+<ol>
+<li>Shop tab open, snapshotting the wallet before anything</li>
+<li>Tapping PackPriceButton_… (the real tile button)</li>
+<li>The native confirmation dialog must be confirmed by BOTH observers (probe says shown AND a native view exists)</li>
+<li>...and it must be an OS view, not the Unity stand-in</li>
+<li>Tapping … via …</li>
+<li>The app must settle on …</li>
+<li>The wallet — the whole point of this case</li>
+<li>Result modal says …, closes on OK, and leaves the shop usable</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">purchase</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PU-10</span><span class="badge appium">Appium+Alt</span><span class="ctext">Cancel 25,000 pack (coins_25000) leaves the wallet untouched</span></summary>
+<div class="casebody">
+<ol>
+<li>Shop tab open, snapshotting the wallet before anything</li>
+<li>Tapping PackPriceButton_… (the real tile button)</li>
+<li>The native confirmation dialog must be confirmed by BOTH observers (probe says shown AND a native view exists)</li>
+<li>...and it must be an OS view, not the Unity stand-in</li>
+<li>Tapping … via …</li>
+<li>The app must settle on …</li>
+<li>The wallet — the whole point of this case</li>
+<li>Result modal says …, closes on OK, and leaves the shop usable</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">purchase</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PU-11</span><span class="badge appium">Appium+Alt</span><span class="ctext">Cancel 50,000 pack (coins_50000) leaves the wallet untouched</span></summary>
+<div class="casebody">
+<ol>
+<li>Shop tab open, snapshotting the wallet before anything</li>
+<li>Tapping PackPriceButton_… (the real tile button)</li>
+<li>The native confirmation dialog must be confirmed by BOTH observers (probe says shown AND a native view exists)</li>
+<li>...and it must be an OS view, not the Unity stand-in</li>
+<li>Tapping … via …</li>
+<li>The app must settle on …</li>
+<li>The wallet — the whole point of this case</li>
+<li>Result modal says …, closes on OK, and leaves the shop usable</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">purchase</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">PU-12</span><span class="badge appium">Appium+Alt</span><span class="ctext">Cancel 100,000 pack (coins_100000) leaves the wallet untouched</span></summary>
+<div class="casebody">
+<ol>
+<li>Shop tab open, snapshotting the wallet before anything</li>
+<li>Tapping PackPriceButton_… (the real tile button)</li>
+<li>The native confirmation dialog must be confirmed by BOTH observers (probe says shown AND a native view exists)</li>
+<li>...and it must be an OS view, not the Unity stand-in</li>
+<li>Tapping … via …</li>
+<li>The app must settle on …</li>
+<li>The wallet — the whole point of this case</li>
+<li>Result modal says …, closes on OK, and leaves the shop usable</li>
+</ol>
+<p class="tags"><span class="tag">native</span> <span class="tag">purchase</span></p>
+</div></details>
+</div></details>
+<details class="cat">
+<summary><span class="cnum">K8</span><span class="ctitle">Play → HUD Displays</span><span class="count">11 case</span></summary>
+<div class="catbody">
+<details class="note"><summary>Kategori notu</summary><pre>This category covers the transition from MainMenu into a live level and the
+state of the in-game HUD right after that transition. It is deliberately NOT
+gameplay — no bobbin is ever deployed here. Real play (deploy, rack, cascade,
+AllClear) lives in Category 12.
+
+Entry is always the natural pathway: tap PlayButton in MainMenu and let
+MainMenuController.OnPlayClicked → GameManager.LoadLevel do the work. No
+direct scene loads, no direct LoadLevel calls.
+
+What is verified:
+  Entry        (Q-01):        PlayButton tap lands us in Game / state Playing
+  Static labels(Q-02..Q-05):  LevelText / MovesText / RackText / TimeText all
+                              agree with GameManager at level start
+  Live clock   (Q-06):        TimeText actually advances while Playing
+  Coin bridge  (Q-07):        HudCoinText mirrors CoinWallet and reacts to the
+                              OnCoinsChanged event without a scene reload
+  Controls     (Q-08):        SettingsButton + ShuffleButton present/interactable
+  Clean slate  (Q-09):        no end panel is open on a fresh level
+  Pause gate   (Q-10):        opening the Settings modal freezes the HUD clock
+                              (Time.timeScale = 0) and closing it resumes
+
+Case list:
+  Q-01  MainMenu → PlayButton tap → Game scene + state Playing
+  Q-02  LevelText matches GameManager.CurrentLevelIndex (&quot;LEVEL nn&quot;)
+  Q-03  MovesText == &quot;MOVES 0&quot; and GameManager.MovesCount == 0 at level start
+  Q-04  RackText  == &quot;RACK 0&quot; at level start
+  Q-05  TimeText  matches the &quot;TIME mm:ss&quot; format and starts near zero
+  Q-06  TimeText advances in real time while Playing
+  Q-07  HudCoinText mirrors CoinWallet.Coins, live via OnCoinsChanged
+  Q-08  SettingsButton + ShuffleButton exist and are interactable
+  Q-09  No end panel (Win/Lose/Congrats) is open on a fresh level
+  Q-10  Settings modal pauses the HUD clock; closing it resumes the clock
+
+INTERLEAVED HERE
+  Q-11 backgrounds a live level. The HUD clock is the only thing in this game
+  that measures real time, so it is the only place where &quot;the app came back&quot;
+  and &quot;the app came back correctly&quot; can differ visibly.</pre></details>
+<details class="case">
+<summary><span class="cid">Q-01</span><span class="badge alt">AltTester</span><span class="ctext">PlayButton → Game scene + state Playing</span></summary>
+<div class="casebody">
+<ol>
+<li>Bootstrap into MainMenu (unlock&gt;=3 disarms fresh-state guard)</li>
+<li>Verify PlayButton is present and interactable before tapping</li>
+<li>Tap PlayButton and wait for the Game scene</li>
+<li>Verify GameManager reaches Playing</li>
+</ol>
+<p class="tags"><span class="tag">smoke</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">Q-02</span><span class="badge alt">AltTester</span><span class="ctext">LevelText matches GameManager.CurrentLevelIndex</span></summary>
+<div class="casebody">
+<ol>
+<li>Ensure we are in a live level</li>
+<li>Read GameManager.CurrentLevelIndex and LevelText</li>
+<li>Assert the HUD label matches the GameManager index</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">Q-03</span><span class="badge alt">AltTester</span><span class="ctext">MovesText == &#x27;MOVES 0&#x27; and MovesCount == 0</span></summary>
+<div class="casebody">
+<ol>
+<li>Re-enter the level through PlayButton (LoadLevel zeroes movesCount)</li>
+<li>Read MovesText</li>
+<li>Read GameManager.MovesCount</li>
+<li>Assert both are zero and agree with each other</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">Q-04</span><span class="badge alt">AltTester</span><span class="ctext">RackText == &#x27;RACK 0&#x27; at level start</span></summary>
+<div class="casebody">
+<ol>
+<li>Re-enter the level through PlayButton (LoadLevel resets the rack display)</li>
+<li>Read RackText</li>
+<li>Assert nothing has been racked yet</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">Q-05</span><span class="badge alt">AltTester</span><span class="ctext">TimeText format &#x27;TIME mm:ss&#x27;, starts near zero</span></summary>
+<div class="casebody">
+<ol>
+<li>Re-enter the level through PlayButton (LoadLevel zeroes elapsedTime)</li>
+<li>Read TimeText and validate the &#x27;TIME mm:ss&#x27; format</li>
+<li>Assert the clock starts near zero</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">Q-06</span><span class="badge alt">AltTester</span><span class="ctext">TimeText advances in real time while Playing</span></summary>
+<div class="casebody">
+<ol>
+<li>Ensure we are in a live level and NOT paused</li>
+<li>First sample of TimeText + GameManager.ElapsedTime</li>
+<li>Let the clock run</li>
+<li>Second sample of TimeText + GameManager.ElapsedTime</li>
+<li>Assert both the label and the backing field advanced</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">Q-07</span><span class="badge alt">AltTester</span><span class="ctext">HudCoinText mirrors CoinWallet live (OnCoinsChanged)</span></summary>
+<div class="casebody">
+<ol>
+<li>Ensure we are in a live level</li>
+<li>HudCoinText must already mirror CoinWallet.Coins</li>
+<li>Add 50 coins — the HUD must update from the OnCoinsChanged event, with no scene reload</li>
+<li>Spend the 50 back — the HUD must follow downwards too</li>
+<li>Assert the wallet and the HUD are both back to baseline</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">Q-08</span><span class="badge alt">AltTester</span><span class="ctext">SettingsButton + ShuffleButton interactable</span></summary>
+<div class="casebody">
+<ol>
+<li>Ensure we are in a live level</li>
+<li>SettingsButton must exist and be interactable</li>
+<li>ShuffleButton must exist and be interactable (no external lock on a fresh level)</li>
+<li>Assert both HUD controls are usable (cheat buttons are informational only)</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">Q-09</span><span class="badge alt">AltTester</span><span class="ctext">No end panel open on a fresh level</span></summary>
+<div class="casebody">
+<ol>
+<li>Re-enter the level through PlayButton (LoadLevel calls HideEndPanels)</li>
+<li>Read every end-panel flag on HudController</li>
+<li>Assert the level starts with a clean slate</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">Q-10</span><span class="badge alt">AltTester</span><span class="ctext">Settings modal freezes the HUD clock, close resumes</span></summary>
+<div class="casebody">
+<ol>
+<li>Ensure we are in a live, running level</li>
+<li>Open the Settings modal via SettingsButton — GameManager must pause (Time.timeScale = 0)</li>
+<li>Sample TimeText, wait, sample again — it must be FROZEN</li>
+<li>Close the modal via CloseButton</li>
+<li>GameManager must resume</li>
+<li>Sample TimeText, wait, sample again — it must RUN again</li>
+<li>Assert the clock restarted after the pause</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">Q-11</span><span class="badge appium">Appium+Alt</span><span class="ctext">A run in progress survives backgrounding</span></summary>
+<div class="casebody">
+<ol>
+<li>Get into a real run and snapshot it</li>
+<li>Background the run for 3s and come back to it</li>
+<li>The run is the same run — same level, same moves, same board. A resume that re-seeds the board or eats a move costs the player progress they cannot get back</li>
+<li>RECORDED, NOT ASSERTED — GameManager.IsPaused</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+</div></details>
+<details class="cat">
+<summary><span class="cnum">K9</span><span class="ctitle">Board &amp; Cells</span><span class="count">9 case</span></summary>
+<div class="catbody">
+<details class="note"><summary>Kategori notu</summary><pre>This category verifies that the board is BUILT and READ correctly. It is still
+not gameplay — nothing is ever consumed here, because ConsumeCell / the
+CellCleared event need a deployed bobbin (Category 7 and Category 12 own that).
+
+Every expectation is derived from the level that is actually loaded, never
+hard-coded to one level: grid dimensions come from LEVEL_GRID_DIMS (mirrored
+from the Level_nn.asset files) and per-cell hit counts from
+expected_cell_count() (a Python mirror of BoardController.ComputeCellCount).
+That way the same cases hold whether the suite entered Level 01 or Level 06.
+
+What is verified:
+  Dimensions   (H-01):        Width/Height match the loaded LevelData
+  Model scan   (H-02):        GetCellColor and IsCellCleared agree on every cell
+  Scene bridge (H-03):        one Cell_&lt;x&gt;_&lt;y&gt; GameObject per grid slot
+  Cell identity(H-04):        StitchCell.X/Y/Color agree with name + board API
+  Difficulty   (H-05):        StitchCell.Count follows the level ramp
+  Bounds guard (H-06):        out-of-range reads answer None / cleared
+  Colour query (H-07):        HasCellOfColor agrees with the scanned colours
+  Proxy        (H-08):        GameManager.RemainingCells mirrors the board
+  Rebuild      (H-09):        loading a bigger level rebuilds the grid cleanly
+
+Case list:
+  H-01  Width/Height match the loaded level, RemainingCells &gt; 0
+  H-02  Full grid scan — colour/cleared consistency, active count == Remaining
+  H-03  One Cell_&lt;x&gt;_&lt;y&gt; object per slot, coordinates complete and unique
+  H-04  Sample cell: StitchCell.X/Y/Color agree with the name and GetCellColor
+  H-05  StitchCell.Count matches ComputeCellCount (runs on Level 04: Count == 2)
+  H-06  Out-of-bounds reads return None + cleared (defensive API)
+  H-07  HasCellOfColor true/false (runs on Level 04: a multi-colour board)
+  H-08  GameManager.RemainingCells == BoardController.RemainingCells
+  H-09  Level change rebuilds the board (no stale cells, new dimensions)</pre></details>
+<details class="case">
+<summary><span class="cid">H-01</span><span class="badge alt">AltTester</span><span class="ctext">Width/Height match the loaded LevelData</span></summary>
+<div class="casebody">
+<ol>
+<li>Ensure we are in a live level and read the board</li>
+<li>Compare with the LevelData asset for this level</li>
+<li>Assert dimensions and a non-empty board</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">H-02</span><span class="badge alt">AltTester</span><span class="ctext">Grid scan — colour/cleared consistency + tally</span></summary>
+<div class="casebody">
+<ol>
+<li>Ensure we are in a live level</li>
+<li>Scan every cell through GetCellColor + IsCellCleared</li>
+<li>Check the two APIs agree (colour None &lt;=&gt; cleared)</li>
+<li>Assert consistency and the RemainingCells tally</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">H-03</span><span class="badge alt">AltTester</span><span class="ctext">One Cell_&lt;x&gt;_&lt;y&gt; object per grid slot</span></summary>
+<div class="casebody">
+<ol>
+<li>Ensure we are in a live level</li>
+<li>Fetch every Cell_&lt;x&gt;_&lt;y&gt; GameObject in one round trip</li>
+<li>Every grid coordinate must have exactly one object, and no object may sit outside the grid</li>
+<li>Assert the scene mirrors the model exactly</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">H-04</span><span class="badge alt">AltTester</span><span class="ctext">Sample cell: StitchCell agrees with the board API</span></summary>
+<div class="casebody">
+<ol>
+<li>Ensure we are in a live level and pick a sample cell</li>
+<li>Read the StitchCell component off the scene object</li>
+<li>Read the same cell through the BoardController API</li>
+<li>Assert the object, its name and the board API all agree</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">H-05</span><span class="badge alt">AltTester</span><span class="ctext">StitchCell.Count follows the level difficulty ramp</span></summary>
+<div class="casebody">
+<ol>
+<li>Enter Level 04 through PlayButton — its ramp branch expects Count == 2, so Level 01&#x27;s trivial Count == 1 would fail here</li>
+<li>Read StitchCell.Count for every active cell</li>
+<li>Compare against ComputeCellCount for this level</li>
+<li>Assert every cell follows the difficulty ramp</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">H-06</span><span class="badge alt">AltTester</span><span class="ctext">Out-of-bounds reads stay defensive</span></summary>
+<div class="casebody">
+<ol>
+<li>Ensure we are in a live level</li>
+<li>Probe four out-of-range coordinates</li>
+<li>Assert the API stays defensive instead of throwing</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">H-07</span><span class="badge alt">AltTester</span><span class="ctext">HasCellOfColor agrees with the scanned colours</span></summary>
+<div class="casebody">
+<ol>
+<li>Enter Level 04 through PlayButton and scan its colours — it is a multi-colour board, unlike single-colour Level 01</li>
+<li>HasCellOfColor(…) must be True</li>
+<li>HasCellOfColor(…) must be False</li>
+<li>Assert the query agrees with the scan in both directions</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">H-08</span><span class="badge alt">AltTester</span><span class="ctext">GameManager.RemainingCells mirrors BoardController</span></summary>
+<div class="casebody">
+<ol>
+<li>Ensure we are in a live level</li>
+<li>Read the same figure through GameManager</li>
+<li>Assert the proxy property mirrors the board</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">H-09</span><span class="badge alt">AltTester</span><span class="ctext">Level change rebuilds the board with no stale cells</span></summary>
+<div class="casebody">
+<ol>
+<li>Enter a level through PlayButton (unlock 3 → Level 04)</li>
+<li>Snapshot the first board</li>
+<li>Unlock further and re-enter through PlayButton (unlock 5 → Level 06, a strictly bigger grid)</li>
+<li>Snapshot the rebuilt board</li>
+<li>The level must actually have changed</li>
+<li>The rebuild must be clean — no stale cells, exactly one object per new slot</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+</div></details>
+<details class="cat">
+<summary><span class="cnum">K10</span><span class="ctitle">Inventory &amp; Deploy</span><span class="count">9 case</span></summary>
+<div class="catbody">
+<details class="note"><summary>Kategori notu</summary><pre>This is the first category that actually DEPLOYS a bobbin. It tests deployment
+as a UNIT — one tap, then the immediate consequences: the tray shrinks, the
+move counter ticks, a world bobbin enters the rail, and the board drains by
+exactly the bobbin&#x27;s capacity. Playing a level through to a win is a different
+question and belongs to Category 12; the two overlap on purpose, because a
+narrow failing case here is far cheaper to diagnose than a five-minute
+playthrough that dies somewhere in the middle.
+
+Budget: FOUR deploys in the whole category, each on a freshly (re)entered
+level. Nothing here tries to clear a board — Level 01 ships exactly four
+bobbins of capacity 4 against sixteen cells, so a fourth deploy would win the
+level and drag end-panel behaviour (Category 10) into this one.
+
+Level choice per case:
+  Level 01 (four bobbins, one per column, nothing stacked) for the tray basics
+  and the deploy consequences.
+  Level 04 (fifteen bobbins over four columns) for the stacking rule — only the
+  topmost bobbin of each column may be deployed.
+
+Case list:
+  I-01  Tray is built from LevelData (count, colours, RemainingCount)
+  I-02  Capacity label on each bobbin matches BobbinDef.capacity
+  I-03  Unstacked tray: every bobbin interactable, HasStackableBobbins false
+  I-04  Stacked tray: exactly one interactable per column, HasStackableBobbins true
+  I-05  Deploy: tray shrinks by one, MovesCount + MovesText tick to 1
+  I-06  Deploy: a world bobbin appears and the rail accepts it
+  I-07  Deploy: the board drains by exactly the bobbin&#x27;s capacity
+  I-08  Deploy promotes the next bobbin in that column to interactable
+  I-09  Tapping a non-interactable (buried) bobbin deploys nothing</pre></details>
+<details class="case">
+<summary><span class="cid">I-01</span><span class="badge alt">AltTester</span><span class="ctext">Tray built from LevelData (count + colours)</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 for a full, untouched tray</li>
+<li>Read InventoryController.RemainingCount()</li>
+<li>Enumerate the tray objects and their colours</li>
+<li>Assert the tray matches Level_01.asset</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">I-02</span><span class="badge alt">AltTester</span><span class="ctext">Capacity label matches BobbinDef.capacity</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and enumerate the tray</li>
+<li>For each bobbin compare its label with BobbinDef.capacity</li>
+<li>Assert every label shows its own capacity</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">I-03</span><span class="badge alt">AltTester</span><span class="ctext">Unstacked tray: all deployable, not stackable</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 — four bobbins across four columns, so nothing is buried</li>
+<li>Read Button.interactable for every tray bobbin</li>
+<li>Assert an unstacked tray is fully deployable</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">I-04</span><span class="badge alt">AltTester</span><span class="ctext">Stacked tray: one deployable per column</span></summary>
+<div class="casebody">
+<ol>
+<li>Enter Level 04 — fifteen bobbins over four columns</li>
+<li>Enumerate the tray and its interactable flags</li>
+<li>Read HasStackableBobbins</li>
+<li>Assert exactly one deployable bobbin per column</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">I-05</span><span class="badge alt">AltTester</span><span class="ctext">Deploy shrinks the tray and ticks MovesCount</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and snapshot the tray + move counter</li>
+<li>Deploy … by tapping it</li>
+<li>Re-read the tray and the move counter</li>
+<li>Assert the tray shrank and the move registered</li>
+</ol>
+<p class="tags"><span class="tag">smoke</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">I-06</span><span class="badge alt">AltTester</span><span class="ctext">Deploy spawns a world bobbin the rail accepts</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and snapshot the rail</li>
+<li>Deploy … (colour …)</li>
+<li>Look for the world bobbin the rail accepted</li>
+<li>Assert the rail took exactly one bobbin of that colour</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">I-07</span><span class="badge alt">AltTester</span><span class="ctext">Deploy drains exactly `capacity` cells</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and snapshot the board</li>
+<li>Deploy … and watch the board drain</li>
+<li>Wait for RemainingCells to settle</li>
+<li>Assert one bobbin drains exactly its capacity</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">I-08</span><span class="badge alt">AltTester</span><span class="ctext">Deploy promotes the next bobbin in that column</span></summary>
+<div class="casebody">
+<ol>
+<li>Enter Level 04 and snapshot which bobbins are deployable</li>
+<li>Deploy the top bobbin …</li>
+<li>Re-read the tray — the bobbin under it must be promoted</li>
+<li>Assert exactly one buried bobbin took its place</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">I-09</span><span class="badge alt">AltTester</span><span class="ctext">Tapping a buried bobbin deploys nothing</span></summary>
+<div class="casebody">
+<ol>
+<li>Enter Level 04 and pick a BURIED bobbin</li>
+<li>Tap … — Button.interactable is False, so the click handler must never fire</li>
+<li>Re-read the tray and the move counter</li>
+<li>Assert nothing was deployed</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+</div></details>
+<details class="cat">
+<summary><span class="cnum">K11</span><span class="ctitle">Rail &amp; Rack</span><span class="count">12 case</span></summary>
+<div class="catbody">
+<details class="note"><summary>Kategori notu</summary><pre>The rail is the loop a deployed bobbin travels; the rack is the parking area a
+bobbin lands in after a full lap. This category covers how both are BUILT, what
+their lookup hooks report, and what a single deploy does to the rail.
+
+A mechanical constraint shapes the rack cases. RailController auto-sizes
+pullRadius to the board diagonal, so a bobbin pulls a matching cell at nearly
+every slot it arrives at. On Level 01 a Red bobbin therefore spends its whole
+capacity on the board within ~1.5s and is removed from the rail before it ever
+completes a lap — it never reaches the rack. Parking a bobbin on the rack (and
+filling the rack until LoseOutOfSpace fires) requires a real playthrough where
+colours run out and lines get blocked, so those live in Category 12.
+
+What is verified here:
+  Rail build   (J-01, J-06):  slot count follows LevelData, rebuilt per level
+  Rail occupancy(J-02):       both lookup hooks agree on where a bobbin sits
+  Rail motion  (J-03):        a deployed bobbin visits more than one slot
+  Rail guards  (J-04):        out-of-range and absent-colour lookups stay safe
+  Rail exit    (J-05):        a drained bobbin leaves the rail and the scene
+  Rack build   (K-01, K-02):  capacity + slot objects follow LevelData.rackSize
+  Rack guards  (K-03):        empty-rack lookups answer &#x27;&#x27; / -1
+  Rack resize  (K-04):        Level 09 rebuilds the rack at size 3
+  Rack invariant(K-05):       a bobbin drained on the board never parks
+
+Case list:
+  J-01  SlotCount matches LevelData.railSlotCount, rail starts empty
+  J-02  After a deploy, FindSlotByColor and GetBobbinNameAtSlot agree
+  J-03  A deployed bobbin is observed at more than one slot (it moves)
+  J-04  Out-of-range slot reads return &#x27;&#x27;, absent colour returns -1
+  J-05  A bobbin that spends its capacity leaves the rail and the scene
+  J-06  Level change rebuilds the rail (Level 01: 16 slots → Level 06: 26)
+  K-01  Capacity matches LevelData.rackSize, rack starts empty
+  K-02  One Slot_&lt;i&gt; object exists per rack slot
+  K-03  Empty-rack lookups: every slot &#x27;&#x27;, every colour -1, bounds safe
+  K-04  Level 09 rebuilds the rack at capacity 3
+  K-05  Draining a bobbin on the board leaves Count/TotalRackedEver at zero
+
+INTERLEAVED HERE
+  K-06 backgrounds the app with a bobbin RIDING THE RAIL. Everything else in
+  this category reads a structure that was built once and then stood still; a
+  bobbin mid-lap is the one piece of live, moving state the game owns, and a
+  resume that rebuilt it from scratch would be invisible to every other case.</pre></details>
+<details class="case">
+<summary><span class="cid">J-01</span><span class="badge alt">AltTester</span><span class="ctext">SlotCount matches LevelData, rail starts empty</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and read the rail</li>
+<li>Compare with the LevelData asset</li>
+<li>Assert the rail is built to spec and empty</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">J-02</span><span class="badge alt">AltTester</span><span class="ctext">Rail lookups agree on the deployed bobbin</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and deploy one bobbin</li>
+<li>Ask both rail hooks and the scene, in one breath</li>
+<li>Cross-check the name against the world bobbin objects</li>
+<li>Assert the two hooks agree and name a real bobbin</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">J-03</span><span class="badge alt">AltTester</span><span class="ctext">A deployed bobbin travels across slots</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and deploy one bobbin</li>
+<li>Sample the bobbin&#x27;s slot index while it travels</li>
+<li>Review the observed slot sequence</li>
+<li>Assert the bobbin actually travelled</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">J-04</span><span class="badge alt">AltTester</span><span class="ctext">Rail lookups stay defensive when empty/out of range</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 (empty rail) and read its size</li>
+<li>Probe out-of-range slot indices</li>
+<li>Probe colours on an empty rail</li>
+<li>Assert the lookups stay defensive</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">J-05</span><span class="badge alt">AltTester</span><span class="ctext">A drained bobbin leaves the rail and the scene</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and deploy one bobbin</li>
+<li>Wait for it to spend its capacity on the board</li>
+<li>Check the scene no longer holds that bobbin</li>
+<li>Assert a drained bobbin is removed, not stranded</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">J-06</span><span class="badge alt">AltTester</span><span class="ctext">Level change rebuilds the rail (16 → 26 slots)</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and snapshot the rail</li>
+<li>Enter Level 06 through PlayButton (unlock 5)</li>
+<li>Snapshot the rebuilt rail</li>
+<li>Assert the rail was rebuilt for the new level</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">K-01</span><span class="badge alt">AltTester</span><span class="ctext">Capacity matches LevelData.rackSize, rack empty</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and read the rack</li>
+<li>Compare with the LevelData asset</li>
+<li>Assert the rack is built to spec and empty</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">K-02</span><span class="badge alt">AltTester</span><span class="ctext">One Slot_&lt;i&gt; object per rack slot</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and read the rack capacity</li>
+<li>Enumerate the runtime-created Slot_&lt;i&gt; objects</li>
+<li>Assert one slot object per rack slot</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">K-03</span><span class="badge alt">AltTester</span><span class="ctext">Empty-rack lookups answer &#x27;&#x27; / -1</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 — the rack is empty</li>
+<li>Every in-range slot must report no occupant</li>
+<li>Out-of-range slots and colour lookups</li>
+<li>Assert an empty rack answers safely everywhere</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">K-04</span><span class="badge alt">AltTester</span><span class="ctext">Level 09 rebuilds the rack at capacity 3</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and snapshot the rack</li>
+<li>Enter Level 09 through PlayButton (unlock 8) — the first level that ships a smaller rack</li>
+<li>Snapshot the rebuilt rack</li>
+<li>Assert the rack shrank with the level</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">K-05</span><span class="badge alt">AltTester</span><span class="ctext">A board-drained bobbin never parks on the rack</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and confirm the rack starts empty</li>
+<li>Deploy one bobbin and let it spend its capacity</li>
+<li>Read the rack and the HUD</li>
+<li>Assert a bobbin drained on the board never parked</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">K-06</span><span class="badge appium">Appium+Alt</span><span class="ctext">The rail survives a background round trip taken mid-deploy</span></summary>
+<div class="casebody">
+<ol>
+<li>Fresh Level 01 and a snapshot of the untouched board</li>
+<li>Deploy one bobbin and interrupt while the rail holds it</li>
+<li>Background the app for 3s</li>
+<li>The level was RESUMED, not rebuilt — the rail is the same size, the move is still spent, and the board lost at most one bobbin&#x27;s worth of cells and gained none</li>
+<li>And the rail still WORKS — a level that came back frozen would satisfy every check above</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+</div></details>
+<details class="cat">
+<summary><span class="cnum">K12</span><span class="ctitle">Shuffle Booster</span><span class="count">7 case</span></summary>
+<div class="catbody">
+<details class="note"><summary>Kategori notu</summary><pre>The shuffle booster charges coins to reshuffle the inventory. This category
+covers its price display, its two reachable outcomes, the invariants a shuffle
+must preserve, and the external lock the HUD applies while the settings modal
+is open.
+
+Two facts shape the cases:
+
+1. ShuffleBooster.RefreshInteractable() runs every Update() and enables the
+   button only when `!externallyLocked &amp;&amp; inventory.HasStackableBobbins`. On
+   Level 01 every column holds a single bobbin, so the button is already
+   disabled and OnShuffleClicked never fires. That makes ShuffleOutcome
+   .NoStackable unreachable through the UI — it is a defensive guard behind an
+   already-closed door. P-02 therefore asserts the BUTTON-level guard (no
+   attempt, no charge) rather than the enum branch. ShuffleOutcome
+   .InventoryMissing is likewise only reachable with broken wiring.
+
+2. ShuffleAttemptCount and LastShuffleOutcome live on the HUD component, which
+   GameManager.LoadLevel never recreates (it rebuilds the systems but does not
+   reload the scene). Every assertion here is a DELTA measured inside the case.
+
+Shuffling is random, so nothing asserts a particular arrangement — only the
+invariants a shuffle MUST preserve: the same bobbins are still there, and each
+column still offers exactly one deployable bobbin.
+
+Case list:
+  P-01  Price property and ShufflePriceText agree; button live when stackable
+  P-02  Level 01 (nothing stacked): button disabled, tap changes nothing
+  P-03  Not enough coins: outcome InsufficientCoins, no charge, warning shown
+  P-04  Enough coins: outcome Success, exactly `Price` deducted
+  P-05  After a successful shuffle the tray is preserved and re-ranked
+  P-06  Settings modal locks the booster and closing it unlocks again
+  P-07  Tapping while locked neither charges coins nor counts an attempt</pre></details>
+<details class="case">
+<summary><span class="cid">P-01</span><span class="badge alt">AltTester</span><span class="ctext">Price property and HUD price text agree</span></summary>
+<div class="casebody">
+<ol>
+<li>Enter Level 04 so the booster is usable</li>
+<li>Read the price from the component and from the HUD</li>
+<li>The button must be live on a stacked inventory</li>
+<li>Assert the displayed price matches the charged price</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">P-02</span><span class="badge alt">AltTester</span><span class="ctext">Nothing stacked: button disabled, tap inert</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 — one bobbin per column, nothing stacked</li>
+<li>The button must be disabled by RefreshInteractable()</li>
+<li>Tap it anyway and snapshot the booster + wallet</li>
+<li>Assert the click handler never ran</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">P-03</span><span class="badge alt">AltTester</span><span class="ctext">Not enough coins: denied, no charge, warning shown</span></summary>
+<div class="casebody">
+<ol>
+<li>Enter Level 04 and empty the wallet</li>
+<li>Tap ShuffleButton with 0 &lt; … coins</li>
+<li>The floating warning must appear (it lives for ~1.5s, so probe immediately)</li>
+<li>Assert the attempt was counted but nothing was charged</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">P-04</span><span class="badge alt">AltTester</span><span class="ctext">Enough coins: Success, exactly `Price` deducted</span></summary>
+<div class="casebody">
+<ol>
+<li>Enter Level 04 and _k12_fund the wallet</li>
+<li>Tap ShuffleButton with enough coins</li>
+<li>Read the outcome and the wallet</li>
+<li>Assert a successful shuffle charges exactly the price</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">P-05</span><span class="badge alt">AltTester</span><span class="ctext">Shuffle preserves the tray and re-ranks the columns</span></summary>
+<div class="casebody">
+<ol>
+<li>Enter Level 04, _k12_fund the wallet, snapshot the tray</li>
+<li>Shuffle</li>
+<li>Re-read the tray</li>
+<li>Assert the invariants a shuffle must preserve (the arrangement itself is random and is NOT asserted)</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">P-06</span><span class="badge alt">AltTester</span><span class="ctext">Settings modal locks and unlocks the booster</span></summary>
+<div class="casebody">
+<ol>
+<li>Enter Level 04 with the booster unlocked</li>
+<li>Open the settings modal — HUD must lock the booster</li>
+<li>Close the modal</li>
+<li>The booster must come back</li>
+<li>Assert the lock tracks the modal in both directions</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">P-07</span><span class="badge alt">AltTester</span><span class="ctext">Tapping while locked charges nothing</span></summary>
+<div class="casebody">
+<ol>
+<li>Enter Level 04, _k12_fund the wallet, lock via settings modal</li>
+<li>Tap ShuffleButton while it is locked (the modal may also swallow the click — either way nothing may be charged)</li>
+<li>Read the booster and the wallet</li>
+<li>Close the modal so the category ends clean</li>
+<li>Assert a locked booster is inert</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+</div></details>
+<details class="cat">
+<summary><span class="cnum">K13</span><span class="ctitle">End Panels</span><span class="count">14 case</span></summary>
+<div class="catbody">
+<details class="note"><summary>Kategori notu</summary><pre>Every end panel is reached through the cheat buttons that ship in the HUD —
+WinButton and LoseButton are real Buttons wired to GameManager.ForceWin/
+ForceLose, so Kural 1 applies and nothing here calls those methods directly.
+
+Timing: GameManager.Win/Lose only set state to EndPending and start
+EndSequence, which waits endSequenceDelay (0.5s) before the panel appears.
+Nothing reads a panel flag without waiting for it first.
+
+The three exit flows differ in exactly one thing — what happens to the pending
+reward — and that is what most of these cases pin down:
+  NextLevel : ClaimPendingReward()  → wallet credited HERE, then next level
+  Home      : TakePendingReward()   → wallet NOT credited here; the amount is
+                                      handed to MainMenu via the static
+                                      CoinWallet.PendingRewardToClaim
+  Retry     : reward untouched      → same level reloaded from scratch
+  PlayAgain : GameManager.PlayAgain() → wallet wiped, back to Level 01
+
+Case list:
+  L-01  WinButton → state Won, WinPanel up, other panels down
+  L-02  WinCoinRewardText mirrors PendingCoinReward and LevelData.coinReward
+  L-03  Win panel locks the settings button and the shuffle booster
+  L-04  Winning unlocks the next level
+  L-05  NextLevel credits the reward and advances the level
+  M-01  LoseButton → state Lost, LosePanel up, label reads &quot;No moves left&quot;
+  M-02  Losing pays nothing and unlocks nothing
+  M-03  Retry reloads the same level from scratch (moves and board reset)
+  N-01  Winning the last level opens Congrats instead of the Win panel
+  N-02  PlayAgain wipes the wallet and returns to Level 01
+  O-01  Double-tapping NextLevel advances one level and pays once
+  O-02  Home hands the reward to MainMenu instead of crediting it in Game
+  O-03  The settings modal locks the cheat buttons
+
+INTERLEAVED HERE
+  L-06 backgrounds the app while the Win panel holds an UNPAID reward. The
+  money is committed but not yet in the wallet, which is the one window in this
+  game where an interruption could pay twice or not at all.</pre></details>
+<details class="case">
+<summary><span class="cid">L-01</span><span class="badge alt">AltTester</span><span class="ctext">WinButton → state Won, only the Win panel opens</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 with no panel open</li>
+<li>Win through the WinButton cheat</li>
+<li>Wait for the Win panel and read every panel flag</li>
+<li>Assert exactly the Win panel is up</li>
+</ol>
+<p class="tags"><span class="tag">smoke</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">L-02</span><span class="badge alt">AltTester</span><span class="ctext">Win panel shows LevelData.coinReward</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and win</li>
+<li>Read the reward from GameManager and from the panel</li>
+<li>The reward must not have been paid out yet</li>
+<li>Assert the panel shows the reward the level defines</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">L-03</span><span class="badge alt">AltTester</span><span class="ctext">Win panel locks settings + shuffle</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and confirm the HUD is unlocked</li>
+<li>Win</li>
+<li>Read the HUD locks the Win panel applies</li>
+<li>Assert the HUD is sealed behind the end panel</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">L-04</span><span class="badge alt">AltTester</span><span class="ctext">Winning unlocks the next level</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 (wallet reset → unlock 0)</li>
+<li>Win the level</li>
+<li>Read the unlock pointer</li>
+<li>Assert the win opened the next level</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">L-05</span><span class="badge alt">AltTester</span><span class="ctext">NextLevel credits the reward and advances</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and win</li>
+<li>Tap NextLevelButton (credits first, animates after)</li>
+<li>Wait for the next level to load</li>
+<li>Read the wallet and the panels</li>
+<li>Assert the reward was credited exactly once</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">M-01</span><span class="badge alt">AltTester</span><span class="ctext">LoseButton → state Lost, label &#x27;No moves left&#x27;</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01</li>
+<li>Lose through the LoseButton cheat</li>
+<li>Wait for the Lose panel and read it</li>
+<li>Assert exactly the Lose panel is up with the right reason</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">M-02</span><span class="badge alt">AltTester</span><span class="ctext">Losing pays nothing and unlocks nothing</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and snapshot wallet + unlock</li>
+<li>Lose</li>
+<li>Re-read wallet, unlock and the pending buffer</li>
+<li>Assert losing pays nothing and unlocks nothing</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">M-03</span><span class="badge alt">AltTester</span><span class="ctext">Retry reloads the same level from scratch</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and make one real move, so the reset has something to undo</li>
+<li>Lose</li>
+<li>Tap RetryButton</li>
+<li>Read the rebuilt level</li>
+<li>Assert Retry restarts the same level from scratch</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">N-01</span><span class="badge alt">AltTester</span><span class="ctext">Last level win opens Congrats, not the Win panel</span></summary>
+<div class="casebody">
+<ol>
+<li>Enter the LAST level (index …) through PlayButton</li>
+<li>Win it — this must be AllClear, not a normal win</li>
+<li>Wait for the Congrats panel and read every flag</li>
+<li>Assert Congrats replaced the Win panel</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">N-02</span><span class="badge alt">AltTester</span><span class="ctext">PlayAgain wipes the wallet and returns to Level 01</span></summary>
+<div class="casebody">
+<ol>
+<li>Enter the last level and win it</li>
+<li>Tap PlayAgainButton</li>
+<li>Read the wallet and the panels</li>
+<li>Assert PlayAgain is a full restart</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">O-01</span><span class="badge alt">AltTester</span><span class="ctext">Double-tapping NextLevel advances once, pays once</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and win</li>
+<li>Tap NextLevelButton TWICE with no pause between taps</li>
+<li>Wait for the level to settle</li>
+<li>Read where we ended up</li>
+<li>Assert the second tap was swallowed</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">O-02</span><span class="badge alt">AltTester</span><span class="ctext">Home hands the reward to MainMenu (paid once)</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and win</li>
+<li>Tap HomeButton — the reward must be handed to MainMenu, not credited here</li>
+<li>Wait until MainMenu has loaded</li>
+<li>MainMenu consumes the handoff and credits the wallet</li>
+<li>Assert the cross-scene handoff paid exactly once</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">O-03</span><span class="badge alt">AltTester</span><span class="ctext">Settings modal locks the cheat buttons</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 — both cheat buttons must be live</li>
+<li>Open the settings modal</li>
+<li>Both cheat buttons must be locked while paused</li>
+<li>Close the modal</li>
+<li>Assert the lock tracks the modal in both directions</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">L-06</span><span class="badge appium">Appium+Alt</span><span class="ctext">An unpaid win reward survives a background round trip and is paid exactly once</span></summary>
+<div class="casebody">
+<ol>
+<li>Fresh Level 01, then win it with the cheat button</li>
+<li>Snapshot the money mid-air — committed, not yet paid</li>
+<li>Background the app for 3s with the reward unpaid</li>
+<li>The panel is still up, the reward is still pending, and the wallet is still empty. A resume that &#x27;helpfully&#x27; claimed it would leave the player staring at a panel for money they already have</li>
+<li>Now claim it the way the player does — NextLevel</li>
+<li>Paid EXACTLY once</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span> <span class="tag">purchase</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+</div></details>
+<details class="cat">
+<summary><span class="cnum">K14</span><span class="ctitle">Level Progression + Leave</span><span class="count">7 case</span></summary>
+<div class="catbody">
+<details class="note"><summary>Kategori notu</summary><pre>Two journeys that span scenes: climbing the level chain, and abandoning a level
+through Settings → Leave.
+
+Scope was trimmed deliberately to avoid re-testing earlier categories:
+  * Category 3 (A-02) already covers the fresh-state guard via the test hook;
+    F-02 here covers the SAME guard through the real Leave flow instead.
+  * Category 4 (C-06) already covers Leave → NO, so only Leave → YES is here.
+  * Category 10 (L-05) already covers a SINGLE NextLevel advance; E-01 covers
+    the CHAIN — two advances in a row with level-specific rewards.
+
+What LeaveToMainMenu actually promises (GameManager.LeaveToMainMenu):
+  Resume() — the modal paused the game, leaving must not strand it paused
+  pendingCoinReward = 0 and CoinWallet.PendingRewardToClaim = 0 — no payout
+  no unlock change — abandoning is not a failure, but it is not progress either
+  SkipFreshStateGuardOnce = true — MainMenu is shown even in fresh state
+
+Case list:
+  E-01  Two advances in a row: rewards and unlock follow the level chain
+  E-02  LoadNextLevel on the last level falls back to PlayAgain
+  E-03  unlock → MainMenu label → what PlayButton actually opens
+  E-04  Progression survives a Leave and a re-entry
+  F-01  Leave pays nothing and changes no progression
+  F-02  Leave shows MainMenu even in fresh state (guard bypassed for real)
+  F-03  Leave never strands the game paused</pre></details>
+<details class="case">
+<summary><span class="cid">E-01</span><span class="badge alt">AltTester</span><span class="ctext">Two advances in a row pay their own rewards</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 (coins 0, unlock 0)</li>
+<li>Win Level 01 and advance</li>
+<li>Win Level 02 and advance again</li>
+<li>Review the chain</li>
+<li>Assert both advances paid their own level&#x27;s reward</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">E-02</span><span class="badge alt">AltTester</span><span class="ctext">LoadNextLevel on the last level falls back</span></summary>
+<div class="casebody">
+<ol>
+<li>Enter the last level (index …)</li>
+<li>Call LoadNextLevel() directly</li>
+<li>It must fall back to PlayAgain (full reset)</li>
+<li>Assert the last-level guard restarts the game</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">E-03</span><span class="badge alt">AltTester</span><span class="ctext">unlock → MainMenu label → level PlayButton opens</span></summary>
+<div class="casebody">
+<ol>
+<li>Reset, then unlock index 4 and open MainMenu</li>
+<li>MainMenu must advertise the level it will open</li>
+<li>Tap PlayButton and see which level actually loads</li>
+<li>Assert the label, the pointer and the loaded level agree</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">E-04</span><span class="badge alt">AltTester</span><span class="ctext">Progression survives a Leave and a re-entry</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01, win it and advance to Level 02</li>
+<li>Abandon Level 02 through Settings → Leave → YES</li>
+<li>MainMenu must still advertise the reached level</li>
+<li>Re-enter through PlayButton</li>
+<li>Assert progression survived the round trip</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">F-01</span><span class="badge alt">AltTester</span><span class="ctext">Leave pays nothing and changes no progression</span></summary>
+<div class="casebody">
+<ol>
+<li>Enter Level 04 (unlock 3) and put coins in the wallet</li>
+<li>Abandon through Settings → Leave → YES</li>
+<li>Read wallet, progression and the handoff buffer</li>
+<li>Assert abandoning costs nothing and pays nothing</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">F-02</span><span class="badge alt">AltTester</span><span class="ctext">Leave shows MainMenu even in fresh state</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 — wallet is fresh (unlock 0), which is exactly the state the MainMenu guard reacts to</li>
+<li>Abandon through Settings → Leave → YES</li>
+<li>We must STAY in MainMenu — normally the fresh-state guard would bounce a fresh wallet straight back into Game</li>
+<li>Assert the leave flow bypassed the guard</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">F-03</span><span class="badge alt">AltTester</span><span class="ctext">Leave never strands the game paused</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and confirm the game runs</li>
+<li>Open the settings modal — this PAUSES the game (timeScale = 0), and the leave happens from that paused state</li>
+<li>Confirm Leave → YES from the paused modal</li>
+<li>Re-enter the game and prove TIME IS ACTUALLY FLOWING</li>
+<li>Assert the leave did not strand the game paused</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+</div></details>
+<details class="cat">
+<summary><span class="cnum">K15</span><span class="ctitle">Manual Play + AllClear Cascade</span><span class="count">10 case</span></summary>
+<div class="catbody">
+<details class="note"><summary>Kategori notu</summary><pre>The full journey, played for real: Level 01 through Level 10, one case per
+level, chained. Everything before this category proved that individual systems
+behave; this one proves the game is actually playable end to end.
+
+How each level is played:
+  * Levels 01-08 are cleared by honest play. Their bobbin capacity matches the
+    board exactly (e.g. Level 08: 120 hits needed, 120 capacity), so every unit
+    of capacity has to land on a matching cell — a real win here is a real
+    statement about the game&#x27;s balance.
+  * Levels 09 and 10 cannot be won: they need 189 and 216 hits but ship 84 and
+    80 capacity. They are played out honestly until the game says so, then
+    Retry is pressed and the level is finished with the WinButton cheat —
+    exactly the flow a QA engineer would use to get past a wall.
+  * Winning Level 10 raises the Congrats screen; its PlayAgain button closes
+    the whole run.
+
+Extra beats woven into the run, so the playthrough also exercises the systems
+around it:
+  * Every level opens the settings modal once mid-play and checks that the game
+    pauses and resumes (levels 09 and 10 included).
+  * Every level except 01 spends coins on one shuffle (Level 01 has one bobbin
+    per column, so the booster is disabled there and the wallet is empty).
+  * Levels 07 and 08 are abandoned mid-play through Settings → Leave → YES,
+    re-entered from MainMenu, and then completed from scratch.
+  * After each win, the exit is chosen at RANDOM between NextLevel and Home.
+    The choice is drawn from a SEEDED generator and the seed is logged, so a
+    failing run can be reproduced exactly with --seed.
+
+A note on the auto-player: bobbins are fed at DEPLOY_PACING_S intervals rather
+than as fast as the rail accepts. Pacing is a gameplay parameter here, not
+cosmetics — bobbins block each other&#x27;s pull lines, so feeding them faster
+changes whether the level is winnable.
+
+Case list:
+  MP-01 .. MP-08  Play and clear levels 01-08 (07 and 08 also leave + re-enter)
+  MP-09           Play level 09 to its honest loss, retry, finish with cheat
+  MP-10           Same for level 10, then close the run from the Congrats panel</pre></details>
+<details class="case">
+<summary><span class="cid">MP-01</span><span class="badge alt">AltTester</span><span class="ctext">Level 01 cleared by playing</span></summary>
+<div class="casebody">
+<ol>
+<li>Start the run from a clean slate (Level 01, empty wallet, no progression)</li>
+</ol>
+<p class="tags"><span class="tag">slow</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">MP-02</span><span class="badge alt">AltTester</span><span class="ctext">Level 02 cleared by playing</span></summary>
+<div class="casebody">
+<ol>
+<li>Confirm we are on Level …</li>
+<li>The level must have been WON by playing, not conceded</li>
+<li>Leave the Win panel and land on the next level</li>
+<li>The leave interrupted the attempt — play the re-entered level through to the end</li>
+<li>(no leave scheduled for this level)</li>
+</ol>
+<p class="tags"><span class="tag">slow</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">MP-03</span><span class="badge alt">AltTester</span><span class="ctext">Level 03 cleared by playing</span></summary>
+<div class="casebody">
+<ol>
+<li>Confirm we are on Level …</li>
+<li>The level must have been WON by playing, not conceded</li>
+<li>Leave the Win panel and land on the next level</li>
+<li>The leave interrupted the attempt — play the re-entered level through to the end</li>
+<li>(no leave scheduled for this level)</li>
+</ol>
+<p class="tags"><span class="tag">slow</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">MP-04</span><span class="badge alt">AltTester</span><span class="ctext">Level 04 cleared by playing</span></summary>
+<div class="casebody">
+<ol>
+<li>Confirm we are on Level …</li>
+<li>The level must have been WON by playing, not conceded</li>
+<li>Leave the Win panel and land on the next level</li>
+<li>The leave interrupted the attempt — play the re-entered level through to the end</li>
+<li>(no leave scheduled for this level)</li>
+</ol>
+<p class="tags"><span class="tag">slow</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">MP-05</span><span class="badge alt">AltTester</span><span class="ctext">Level 05 cleared by playing</span></summary>
+<div class="casebody">
+<ol>
+<li>Confirm we are on Level …</li>
+<li>The level must have been WON by playing, not conceded</li>
+<li>Leave the Win panel and land on the next level</li>
+<li>The leave interrupted the attempt — play the re-entered level through to the end</li>
+<li>(no leave scheduled for this level)</li>
+</ol>
+<p class="tags"><span class="tag">slow</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">MP-06</span><span class="badge alt">AltTester</span><span class="ctext">Level 06 cleared by playing</span></summary>
+<div class="casebody">
+<ol>
+<li>Confirm we are on Level …</li>
+<li>The level must have been WON by playing, not conceded</li>
+<li>Leave the Win panel and land on the next level</li>
+<li>The leave interrupted the attempt — play the re-entered level through to the end</li>
+<li>(no leave scheduled for this level)</li>
+</ol>
+<p class="tags"><span class="tag">slow</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">MP-07</span><span class="badge alt">AltTester</span><span class="ctext">Level 07 cleared, with a mid-level Leave and re-entry</span></summary>
+<div class="casebody">
+<ol>
+<li>Confirm we are on Level …</li>
+<li>The level must have been WON by playing, not conceded</li>
+<li>Leave the Win panel and land on the next level</li>
+<li>The leave interrupted the attempt — play the re-entered level through to the end</li>
+<li>(no leave scheduled for this level)</li>
+</ol>
+<p class="tags"><span class="tag">slow</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">MP-08</span><span class="badge alt">AltTester</span><span class="ctext">Level 08 cleared, with a mid-level Leave and re-entry</span></summary>
+<div class="casebody">
+<ol>
+<li>Confirm we are on Level …</li>
+<li>The level must have been WON by playing, not conceded</li>
+<li>Leave the Win panel and land on the next level</li>
+<li>The leave interrupted the attempt — play the re-entered level through to the end</li>
+<li>(no leave scheduled for this level)</li>
+</ol>
+<p class="tags"><span class="tag">slow</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">MP-09</span><span class="badge alt">AltTester</span><span class="ctext">Level 09 lost honestly, retried, finished with the cheat</span></summary>
+<div class="casebody">
+<ol>
+<li>Confirm we are on Level … — this board needs far more capacity than the level ships, so honest play must end in a loss</li>
+<li>Play it out honestly until the game decides</li>
+<li>Expect a loss, and record HOW the game lost</li>
+<li>Press Retry and take the level again</li>
+<li>Finish it with the WinButton cheat — the honest route is closed, so this is how QA gets past the wall</li>
+<li>The last level closes the run through Congrats</li>
+<li>Leave the Win panel and move on</li>
+</ol>
+<p class="tags"><span class="tag">slow</span> <span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">MP-10</span><span class="badge alt">AltTester</span><span class="ctext">Level 10 lost honestly, retried, cheat win → Congrats → PlayAgain</span></summary>
+<div class="casebody">
+<ol>
+<li>Confirm we are on Level … — this board needs far more capacity than the level ships, so honest play must end in a loss</li>
+<li>Play it out honestly until the game decides</li>
+<li>Expect a loss, and record HOW the game lost</li>
+<li>Press Retry and take the level again</li>
+<li>Finish it with the WinButton cheat — the honest route is closed, so this is how QA gets past the wall</li>
+<li>The last level closes the run through Congrats</li>
+<li>Leave the Win panel and move on</li>
+</ol>
+<p class="tags"><span class="tag">slow</span> <span class="tag">unity</span></p>
+</div></details>
+</div></details>
+<details class="cat">
+<summary><span class="cnum">K16</span><span class="ctitle">Robustness (Spam Guards + Locators)</span><span class="count">8 case</span></summary>
+<div class="catbody">
+<details class="note"><summary>Kategori notu</summary><pre>The closing category: what happens when the app is poked badly, and whether the
+suite&#x27;s own plumbing holds up.
+
+Most spam guards were already covered where they live, and are NOT repeated
+here: settings modal double-open/double-close (K4 B-06/B-07/C-07), taps on a
+disabled or locked ShuffleButton (K9 P-02/P-07), end-panel double taps (K10
+O-01) and taps on a buried inventory bobbin (K7 I-09). What is left are the
+guards nothing has touched yet, plus a regression net around the driver
+pitfalls documented in the handoff.
+
+Deliberately NOT tested: tapping a bobbin that is riding the rail. The
+behaviour is real (Bobbin.OnClicked is only assigned while a bobbin sits on the
+rack, so a rail bobbin swallows clicks), but the suite has never confirmed that
+an AltTester tap reaches a world-space bobbin at all — so &quot;nothing happened&quot;
+could equally mean &quot;the tap never landed&quot;. That is an unfalsifiable assertion,
+and a green case that proves nothing is worse than no case.
+
+Case list:
+  R-01  MainMenu PlayButton double tap loads one scene, not two
+  R-02  Double-tapping one inventory bobbin deploys it once
+  R-03  WinButton double tap produces exactly one win
+  R-04  LoseButton is inert once the level is already won
+  R-05  reset_to_baseline() recovers from a deliberately broken state
+  T-01  Bracketed GameObject names need the COMPONENT fallback
+  T-02  A broken CONTAINERS fast path still resolves via COMPONENT search
+  T-03  Inactive objects are invisible to the locator until they activate</pre></details>
+<details class="case">
+<summary><span class="cid">R-01</span><span class="badge alt">AltTester</span><span class="ctext">MainMenu PlayButton double tap loads one scene</span></summary>
+<div class="casebody">
+<ol>
+<li>Reset, then open MainMenu with unlock 2</li>
+<li>Tap PlayButton TWICE with no pause (MainMenuController guards this with playInFlight)</li>
+<li>Wait for the game and inspect what we got</li>
+<li>Assert one clean load, on the right level</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">R-02</span><span class="badge alt">AltTester</span><span class="ctext">Double-tapped inventory bobbin deploys once</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and snapshot the tray</li>
+<li>Tap … twice in a row. The first tap destroys the tray object, so the second lands on a corpse</li>
+<li>Read the move counter and the tray</li>
+<li>Assert the bobbin was deployed exactly once</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">R-03</span><span class="badge alt">AltTester</span><span class="ctext">WinButton double tap produces exactly one win</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01</li>
+<li>Tap WinButton TWICE with no pause. ForceWin only acts while state == Playing, so the second must be swallowed</li>
+<li>Read what the win produced</li>
+<li>Assert a single, uncorrupted win</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">R-04</span><span class="badge alt">AltTester</span><span class="ctext">LoseButton is inert once the level is won</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 and win it</li>
+<li>Now tap the LoseButton cheat on top of the win. ForceLose also checks state == Playing, so it must be inert</li>
+<li>Read the panels and the state</li>
+<li>Assert the win stands and no Lose panel appeared</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">R-05</span><span class="badge alt">AltTester</span><span class="ctext">reset_to_baseline() recovers a broken state</span></summary>
+<div class="casebody">
+<ol>
+<li>Build a deliberately broken state — coins, unlock, an open settings modal and a paused game</li>
+<li>Call the suite&#x27;s own reset_to_baseline()</li>
+<li>Read the recovered state</li>
+<li>Assert the safety net every category depends on works</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">T-01</span><span class="badge alt">AltTester</span><span class="ctext">Bracketed names need the COMPONENT fallback</span></summary>
+<div class="casebody">
+<ol>
+<li>Ensure we are in a live level</li>
+<li>The singletons live on GameObjects whose names are bracketed, which AltTester parses as a path expression</li>
+<li>The COMPONENT fallback must find them anyway, and reading through it must work</li>
+<li>Assert the documented pitfall still behaves as documented — this is why CONTAINERS maps them to None</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">T-02</span><span class="badge alt">AltTester</span><span class="ctext">A broken CONTAINERS fast path still resolves</span></summary>
+<div class="casebody">
+<ol>
+<li>Ensure we are in a live level and read a baseline value through the normal fast path</li>
+<li>Assert a wrong fast path degrades instead of breaking</li>
+<li>Poison the CONTAINERS fast path for GameManager</li>
+<li>The COMPONENT search must pick up the slack</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+<details class="case">
+<summary><span class="cid">T-03</span><span class="badge alt">AltTester</span><span class="ctext">Inactive objects are invisible until activated</span></summary>
+<div class="casebody">
+<ol>
+<li>Restart Level 01 — no end panel, so its buttons are inactive GameObjects</li>
+<li>Win, which activates the panel and its buttons</li>
+<li>The same locator must now resolve</li>
+<li>Assert visibility tracks activation in both directions</li>
+</ol>
+<p class="tags"><span class="tag">unity</span></p>
+</div></details>
+</div></details>
+<details class="cat">
+<summary><span class="cnum">K17</span><span class="ctitle">App Lifecycle</span><span class="count">4 case</span></summary>
+<div class="catbody">
+<details class="note"><summary>Kategori notu</summary><pre>The three ways the OS takes the app away from the player, and what the product
+owes them on the way back: a pause it can return from, an interruption it never
+asked for, and a process death it cannot prevent.
+
+Nothing here is reachable through the game&#x27;s own UI, which is why it is the
+last category and the only one whose cases END the process they are testing.
+
+THE CASE BODIES NAME NO PLATFORM
+--------------------------------
+Every case below runs on Android AND on iOS, unchanged. Where the OS genuinely
+differs, the difference lives in `native_driver.PlatformOps` and nowhere else:
+
+  interruption    BOTH    the Settings app is brought to the front. Each
+                          platform arrived here by a different road and both
+                          roads were measured:
+                          iOS     XCUITest delivers coordinates into the app&#x27;s
+                                  OWN window, so a drag toward Notification
+                                  Center never reaches SpringBoard — iPhone 11,
+                                  2026-08-19
+                          Android `open_notifications()` DOES open the shade,
+                                  and the foreground owner stays the app under
+                                  test, because the shade is drawn over the
+                                  current app rather than resuming another one.
+                                  A panel that covers Unity without taking the
+                                  foreground is also the worst possible thing
+                                  to leave behind: Unity runs no frames beneath
+                                  it while every state check says the app is
+                                  fine — emulator-5554, 2026-08-20
+  background kill Android `am kill`, which the system applies only to
+                  processes it considers safe to kill — i.e. backgrounded
+                  ones, which is exactly the memory-pressure path
+                  iOS     the Appium session&#x27;s terminate_app, which IOSOps
+                          already documents as the only route on real hardware
+
+Both channels VERIFY themselves rather than trusting a return code: the
+interruption re-reads the foreground and raises if the app still owns it, and
+the kill re-reads the app state and raises if the process survived. A case that
+believes it was interrupted, and was not, would go on to assert that state
+survived an event that never happened — the most expensive kind of green.
+
+WHAT MAKES LC-02 THE CASE WORTH WRITING
+---------------------------------------
+`NativeProbe.PendingPurchaseToken` is non-empty exactly while a purchase dialog
+is open and unresolved, and its own comment says it survives a background round
+trip. LC-02 is what makes that a tested promise instead of a claim in a
+docstring: background the app mid-purchase, come back, finish the purchase, and
+the wallet must move by the pack&#x27;s coins ONCE. A resume that re-delivers a
+receipt is the classic IAP double-credit, and it is invisible to every other
+category in this suite.
+
+WHO ASKS WHOM, WHILE A DIALOG OWNS THE SCREEN
+---------------------------------------------
+LC-02 and LC-03 are sequenced around a measured platform behaviour rather than
+against it. Measured on emulator-5554, 2026-08-20, six times, identically:
+
+  dialog opens, app stays in front   Unity RUNS. AltTester reads
+                                     PendingPurchaseToken through the main
+                                     thread while the dialog is up — a dialog
+                                     alone does not pause the game
+  app is backgrounded                Unity pauses. onPause, then
+                                     OnApplicationPause(True). Ordinary
+  app is brought back, dialog still  Unity STAYS paused. onResume arrives,
+  on screen                          &#x27;windowFocusChanged: true&#x27; does not, and
+                                     OnApplicationPause(False) therefore never
+                                     fires. The AlertDialog is a separate
+                                     window and keeps focus across the trip
+  the dialog is answered             Unity resumes where it left off, in
+                                     0.1-0.5s, every time
+
+So the pause is started by the BACKGROUNDING and extended by the dialog. Worth
+stating precisely, because &quot;a native dialog pauses the game&quot; is the intuitive
+reading and it is not what happens.
+
+SPEC, not a defect — and deliberately not engineered around. The state is
+harmless here: the dialog covers the screen, so nobody sees a frozen game
+behind it; answering it resumes cleanly; the wallet is exactly right either way
+(LC-02 proves the credit lands once, LC-03 that the trip answers nothing).
+
+A SHIPPING product would likely dismiss the dialog itself on backgrounding, so
+the player returns to a clean screen with no stale question on it. That is a
+product decision this repo has no reason to make: YarnLoop Dummy exists to
+prove the Appium x AltTester pairing works and to carry that know-how to real
+projects, not to be a game with a release-quality lifecycle. Building the
+dismissal here would add product surface without adding evidence about the
+pairing.
+
+What the pairing DOES get out of this state is the point: it is the cleanest
+demonstration in the suite of why both drivers are needed. Unity cannot answer
+while the dialog holds focus, and Appium can — so the cases below read the
+screen through Appium and the game through AltTester, each where it is the only
+observer that can see. The resume wait is measured and noted on every run, so
+the day the behaviour changes, the report says so.
+
+What it does change is WHICH OBSERVER each step may use, and the two cases are
+ordered so that no step needs the one that cannot answer:
+
+  wallet + counters   read BEFORE the dialog exists, when Unity is guaranteed live
+  the dialog itself   read through Appium ALONE while Unity is parked
+  the answer          delivered through Appium — Buy or Cancel, as the user would
+  game state after    read through Unity, which by then is running again
+
+Reading the wallet up front is not a convenience. It is the only moment in
+either case when the answer is guaranteed to be obtainable.
+
+WHY A COLD START MUST FIND AN EMPTY WALLET
+------------------------------------------
+`CoinWallet.Awake` says it in the product code: &quot;Persistence intentionally
+disabled — every app launch / editor Play starts fresh. PlayerProfile stays as
+an in-memory DTO; the file APIs are not called.&quot; The file APIs exist — Load(),
+Save(), a JSON path under persistentDataPath — and are deliberately not wired
+up. LC-06 pins that decision down. The day someone wires Save() in, LC-06 turns
+red on purpose and names the change, instead of the suite silently starting to
+carry balances between runs.
+
+PLATFORM REACH
+--------------
+  every case      device only — Editor mode has no process to background, no
+                  shade to pull down and nothing to kill. Those are absent
+                  surfaces rather than unwritten channels, and EditorOps says
+                  so in the reason string this category skips with.
+
+ORDER IS DELIBERATE — it escalates, and it is destructive from LC-06 on:
+  LC-01 .. LC-05  pause and interruption; the session survives all of them
+  LC-06 .. LC-09  process death; the wallet is wiped from LC-06 onward, which
+                  is why nothing that measures a balance runs after it
+
+Case list:
+  LC-01  A background/resume round trip keeps the session
+  LC-02  A purchase in flight survives backgrounding and credits exactly once
+  LC-03  Backgrounding a dialog is not a silent answer to it
+  LC-04  A run in progress survives backgrounding
+  LC-05  A system interruption takes the screen and gives it back
+  LC-06  A cold start starts fresh — persistence-off is the spec
+  LC-07  Process death with a dialog up leaves no ghost behind
+  LC-08  A decided notification permission is not asked for again
+  LC-09  The app recovers from having its backgrounded process reclaimed
+
+WHY THIS CATEGORY IS SMALLER THAN IT USED TO BE
+  Five of the nine lifecycle cases moved OUT of here and into the category
+  whose state they interrupt — a cold start next to the wallet it empties
+  (D-09), a background next to the MainMenu labels it must preserve (A-06),
+  the Shop tab (SH-07), the purchase in flight (PU-17/18) and the live run
+  (Q-11). What is left is what has no other home: the cases that END THE
+  PROCESS they are testing. Their original ids are kept, gaps and all, so a
+  reader can still line them up against the old runner and the handoff.
+
+  This category runs LAST for the same reason it always did: from here on
+  every case kills the app, and the wallet comes back empty.</pre></details>
+<details class="case">
+<summary><span class="cid">LC-05</span><span class="badge appium">Appium+Alt</span><span class="ctext">A system interruption takes the screen and gives it back</span></summary>
+<div class="casebody">
+<ol>
+<li>Park on the Shop tab and snapshot it</li>
+<li>Let something else take the foreground, hold it, then give it back. The driver verifies the foreground actually changed hands — an interruption that never happened would let this case pass on nothing</li>
+<li>The app noticed it lost the screen</li>
+<li>...and it is intact now that it has the screen back</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
+<p class="gate">kesinti kanalı gerektirir</p>
+</div></details>
+<details class="case">
+<summary><span class="cid">LC-07</span><span class="badge appium">Appium+Alt</span><span class="ctext">Process death with a dialog up leaves no ghost behind</span></summary>
+<div class="casebody">
+<ol>
+<li>Open a purchase dialog and leave it unanswered</li>
+<li>Kill the process with the dialog still up. This is the state a user reaches by being interrupted at exactly the wrong moment, and it is the one no code path chose</li>
+<li>No dialog survived the process. A native view left behind by a dead process would sit on top of the new one, and every later tap would land on a corpse</li>
+<li>The app is not still holding the purchase</li>
+<li>...and it was not credited for a purchase nobody confirmed</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+<details class="case">
+<summary><span class="cid">LC-08</span><span class="badge appium">Appium+Alt</span><span class="ctext">A decided notification permission is not asked for again</span></summary>
+<div class="casebody">
+<ol>
+<li>Cold start once and let the onboarding chain settle whatever it wants to ask. Whether the OS permission dialog appears HERE is not the claim — it depends on what earlier runs left on the device</li>
+<li>Cold start AGAIN. This is the launch the claim is about: the permission has now been decided, whichever way, so the OS must not be asked a second time</li>
+<li>Drive consent — which IS expected, nothing about it is persisted — and then watch for the OS dialog that must not come. required=False because absence is the correct answer here; asserting its presence is what NP-06/07 do</li>
+<li>The flow still finished, and it agrees the permission is decided</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
+<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+</div></details>
+<details class="case">
+<summary><span class="cid">LC-09</span><span class="badge appium">Appium+Alt</span><span class="ctext">The app recovers from a reclaimed background process</span></summary>
+<div class="casebody">
+<ol>
+<li>Park on a known screen first — the app has to be somewhere recognisable for &#x27;it came back&#x27; to mean anything</li>
+<li>Background the app, then let its process be reclaimed the way the OS reclaims one under memory pressure. The driver verifies the app really was backgrounded first, and that the process really did die</li>
+<li>Bring it back the way the user does — by tapping the icon, not by reinstalling</li>
+<li>It relaunched into a usable screen rather than a crash dialog or a black frame</li>
+<li>Nothing of the dead process is still on screen, and the fresh one is answering both drivers</li>
+</ol>
+<p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
+<p class="gate">arka plan süreç sonlandırma gerektirir</p>
+</div></details>
+</div></details>
+  </div>
+
+  <footer>
+    Bu sayfa <code>hybrid_e2e.py</code>'nin case kayıt defterinden üretiliyor —
+    adımlar case'lerin koşarken bastığı <code>Step N/M</code> satırlarının ta kendisi.
+  </footer>
+</div>
+
+<script>
+(function () {
+  var q = document.getElementById('q');
+  var cats = Array.prototype.slice.call(document.querySelectorAll('details.cat'));
+
+  function filter() {
+    var term = q.value.trim().toLowerCase();
+    cats.forEach(function (cat) {
+      var cases = Array.prototype.slice.call(cat.querySelectorAll('details.case'));
+      var anyHit = false;
+      cases.forEach(function (c) {
+        var hit = !term || c.textContent.toLowerCase().indexOf(term) !== -1;
+        c.classList.toggle('nohit', !hit);
+        if (hit) anyHit = true;
+      });
+      // A category whose own name matches keeps all of its cases visible,
+      // so searching "Shop" answers "what is in that category" too.
+      var selfHit = !term ||
+        cat.querySelector('summary').textContent.toLowerCase().indexOf(term) !== -1;
+      if (selfHit && term) {
+        cases.forEach(function (c) { c.classList.remove('nohit'); });
+        anyHit = true;
+      }
+      cat.classList.toggle('nohit', !(anyHit || selfHit));
+      if (term && (anyHit || selfHit)) cat.open = true;
+      if (!term) cat.open = false;
+    });
+  }
+
+  q.addEventListener('input', filter);
+  document.getElementById('expand').addEventListener('click', function () {
+    document.querySelectorAll('details').forEach(function (d) { d.open = true; });
+  });
+  document.getElementById('collapse').addEventListener('click', function () {
+    document.querySelectorAll('details').forEach(function (d) { d.open = false; });
+  });
+})();
+</script>
+</body>
+</html>
