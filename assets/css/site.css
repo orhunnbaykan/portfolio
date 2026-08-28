@@ -258,6 +258,7 @@ td.num,th.num{font-family:var(--mono); text-align:right; white-space:nowrap}
 .shot{background:var(--bg2); border:1px solid var(--line); border-radius:10px; overflow:hidden}
 .shot img{width:100%; border-bottom:1px solid var(--line); display:block}
 .shot video{width:100%; border-bottom:1px solid var(--line); display:block; background:#000}
+.shot.wide video{max-height:620px; object-fit:contain}
 .shot a.zoom{display:block; cursor:zoom-in}
 .shot a.zoom:hover{opacity:.92}
 .shot .cap{padding:12px 15px; font-size:13px; color:var(--ink2); line-height:1.45}
