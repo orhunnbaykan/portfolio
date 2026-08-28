@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="tr">
+<html lang="tr" data-title-tr="YarnLoop — Case Kataloğu" data-title-en="YarnLoop — Case Catalog">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,7 +15,11 @@
       --card:#1b1f25; --accent:#7aa2f7; --alt:#4cc38a; --appium:#c4a2f7;
     }
   }
+  html[lang="tr"] [data-lang="en"] { display:none !important; }
+  html[lang="en"] [data-lang="tr"] { display:none !important; }
   * { box-sizing:border-box; }
+  .toprow { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+  .langbtn { padding:.3rem .6rem; font-size:.8rem; font-weight:600; letter-spacing:.04em; }
   body { margin:0; padding:2.5rem 1.25rem 4rem; background:var(--bg); color:var(--fg);
     font:16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
   .wrap { max-width:900px; margin:0 auto; }
@@ -68,23 +72,27 @@
 </head>
 <body>
 <div class="wrap">
-  <a class="back" href="../">← Koşum raporları</a>
-  <h1>Case Kataloğu</h1>
-  <p class="sub">164 case, 18 kategori. Kategoriye tıkla, case'e tıkla —
-  her case ne yaptığını adım adım anlatır.</p>
+  <div class="toprow">
+    <a class="back" href="../"><span data-lang="tr">← Koşum raporları</span><span data-lang="en">← Run reports</span></a>
+    <button class="langbtn" id="langbtn" type="button" aria-label="Change language"><span data-lang="tr">EN</span><span data-lang="en">TR</span></button>
+  </div>
+  <h1><span data-lang="tr">Case Kataloğu</span><span data-lang="en">Case Catalog</span></h1>
+  <p class="sub"><span data-lang="tr">164 case, 18 kategori. Kategoriye tıkla, case'e tıkla —
+  her case ne yaptığını adım adım anlatır.</span><span data-lang="en">164 cases, 18 categories. Click a category, click a case —
+  each case explains, step by step, what it does.</span></p>
 
   <div class="tools">
     <input type="search" id="q" placeholder="Ara: case id, başlık ya da adım metni…"
            autocomplete="off">
-    <button id="expand">Hepsini aç</button>
-    <button id="collapse">Hepsini kapat</button>
+    <button id="expand"><span data-lang="tr">Hepsini aç</span><span data-lang="en">Expand all</span></button>
+    <button id="collapse"><span data-lang="tr">Hepsini kapat</span><span data-lang="en">Collapse all</span></button>
   </div>
 
   <div id="list">
 <details class="cat">
-<summary><span class="cnum">K0</span><span class="ctitle">Preflight — Environment Contract</span><span class="count">4 case</span></summary>
+<summary><span class="cnum">K0</span><span class="ctitle">Preflight — Environment Contract</span><span class="count"><span data-lang="tr">4 case</span><span data-lang="en">4 cases</span></span></summary>
 <div class="catbody">
-<details class="note"><summary>Kategori notu</summary><pre>Four questions asked before a single product case runs. Each one has cost real
+<details class="note"><summary><span data-lang="tr">Kategori notu</span><span data-lang="en">Category note</span></summary><pre>Four questions asked before a single product case runs. Each one has cost real
 debugging time in this project and each one now fails LOUDLY and early:
 
   PF-01  do the Python locator constants still match NativeIds.cs?
@@ -112,7 +120,7 @@ its first-launch dialog, and there is no game state to restore yet.</pre></detai
 <li>assert_same_device() as the single verdict (backend match AND device model match)</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">native</span> <span class="tag">smoke</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 <details class="case">
 <summary><span class="cid">PF-03</span><span class="badge alt">AltTester</span><span class="ctext">The build under test is instrumented as assumed</span></summary>
@@ -132,13 +140,13 @@ its first-launch dialog, and there is no game state to restore yet.</pre></detai
 <li>The no-popup watchdog must be able to report a quiet screen — every later &#x27;no dialog leaked&#x27; claim leans on it</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">native</span> <span class="tag">smoke</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 </div></details>
 <details class="cat">
-<summary><span class="cnum">K1</span><span class="ctitle">First Launch — Native Onboarding</span><span class="count">9 case</span></summary>
+<summary><span class="cnum">K1</span><span class="ctitle">First Launch — Native Onboarding</span><span class="count"><span data-lang="tr">9 case</span><span data-lang="en">9 cases</span></span></summary>
 <div class="catbody">
-<details class="note"><summary>Kategori notu</summary><pre>The first-launch chain: privacy consent -&gt; policy -&gt; consent again -&gt; the OS
+<details class="note"><summary><span data-lang="tr">Kategori notu</span><span data-lang="en">Category note</span></summary><pre>The first-launch chain: privacy consent -&gt; policy -&gt; consent again -&gt; the OS
 notification permission. Three of those four dialogs are ours; the last one
 belongs to the operating system, and the difference matters in every case here.
 
@@ -209,7 +217,7 @@ NO BASELINE RESET FOLLOWS
 <li>Consent is NOT accepted merely by being shown</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">lifecycle</span> <span class="tag">native</span> <span class="tag">smoke</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 <details class="case">
 <summary><span class="cid">NP-02</span><span class="badge appium">Appium+Alt</span><span class="ctext">AltTester is blind while the consent dialog is up</span></summary>
@@ -220,7 +228,7 @@ NO BASELINE RESET FOLLOWS
 <li>assert_alttester_blind() as the single verdict</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">native</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 <details class="case">
 <summary><span class="cid">NP-03</span><span class="badge appium">Appium+Alt</span><span class="ctext">Read policy opens the policy dialog without accepting</span></summary>
@@ -232,7 +240,7 @@ NO BASELINE RESET FOLLOWS
 <li>Reading the policy must NOT count as consent</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">native</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 <details class="case">
 <summary><span class="cid">NP-04</span><span class="badge appium">Appium+Alt</span><span class="ctext">Closing the policy brings the consent dialog back</span></summary>
@@ -244,7 +252,7 @@ NO BASELINE RESET FOLLOWS
 <li>Still not accepted</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">native</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 <details class="case">
 <summary><span class="cid">NP-05</span><span class="badge appium">Appium+Alt</span><span class="ctext">Accept records consent and advances the flow</span></summary>
@@ -255,7 +263,7 @@ NO BASELINE RESET FOLLOWS
 <li>Acceptance is recorded and the flow left Consent. Which step it lands on depends on the OS: a fresh permission means NotificationPermission, an already-decided one goes straight to Done — both are correct, so the assertion is &#x27;moved past consent&#x27;, not a single expected value</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">native</span> <span class="tag">smoke</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 <details class="case">
 <summary><span class="cid">NP-06</span><span class="badge appium">Appium+Alt</span><span class="ctext">Denying the OS permission is recorded honestly</span></summary>
@@ -269,7 +277,7 @@ NO BASELINE RESET FOLLOWS
 <li>Open the Settings screen — it re-reads the OS authorization on open, so this is where the user finds out what the app thinks they allowed</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
-<p class="gate">izin sıfırlama gerektirir (iOS cihazda SKIP)</p>
+<p class="gate"><span data-lang="tr">izin sıfırlama gerektirir (iOS cihazda SKIP)</span><span data-lang="en">requires a permission reset (SKIP on an iOS device)</span></p>
 </div></details>
 <details class="case">
 <summary><span class="cid">NP-07</span><span class="badge appium">Appium+Alt</span><span class="ctext">Allowing the OS permission is recorded honestly</span></summary>
@@ -283,7 +291,7 @@ NO BASELINE RESET FOLLOWS
 <li>Open the Settings screen — it re-reads the OS authorization on open, so this is where the user finds out what the app thinks they allowed</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
-<p class="gate">izin sıfırlama gerektirir (iOS cihazda SKIP)</p>
+<p class="gate"><span data-lang="tr">izin sıfırlama gerektirir (iOS cihazda SKIP)</span><span data-lang="en">requires a permission reset (SKIP on an iOS device)</span></p>
 </div></details>
 <details class="case">
 <summary><span class="cid">NP-08</span><span class="badge appium">Appium+Alt</span><span class="ctext">The finished flow leaked no dialog</span></summary>
@@ -294,7 +302,7 @@ NO BASELINE RESET FOLLOWS
 <li>Every dialog that was shown was also resolved — an unbalanced pair means one is still holding a callback</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">native</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 <details class="case">
 <summary><span class="cid">NP-09</span><span class="badge appium">Appium+Alt</span><span class="ctext">No native popup remains once onboarding is Done</span></summary>
@@ -304,13 +312,13 @@ NO BASELINE RESET FOLLOWS
 <li>The stray-popup watchdog must come back CLEAN. This is the negative test of the detector every other case leans on: if it cannot report a quiet screen, its findings elsewhere mean nothing</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">native</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 </div></details>
 <details class="cat">
-<summary><span class="cnum">K2</span><span class="ctitle">Setup &amp; Discovery</span><span class="count">3 case</span></summary>
+<summary><span class="cnum">K2</span><span class="ctitle">Setup &amp; Discovery</span><span class="count"><span data-lang="tr">3 case</span><span data-lang="en">3 cases</span></span></summary>
 <div class="catbody">
-<details class="note"><summary>Kategori notu</summary><pre>This category confirms that the target Unity instance is reachable via
+<details class="note"><summary><span data-lang="tr">Kategori notu</span><span data-lang="en">Category note</span></summary><pre>This category confirms that the target Unity instance is reachable via
 AltTester, that the active scene is one the suite knows how to drive, and
 that every root GameObject required by the gameplay systems exists. If any
 of these checks fails, all remaining categories should be considered
@@ -345,9 +353,9 @@ unreliable — use `--stop-on-fail` in CI.</pre></details>
 </div></details>
 </div></details>
 <details class="cat">
-<summary><span class="cnum">K3</span><span class="ctitle">Wallet / Coin Economy</span><span class="count">9 case</span></summary>
+<summary><span class="cnum">K3</span><span class="ctitle">Wallet / Coin Economy</span><span class="count"><span data-lang="tr">9 case</span><span data-lang="en">9 cases</span></span></summary>
 <div class="catbody">
-<details class="note"><summary>Kategori notu</summary><pre>This category exercises CoinWallet — the in-memory coin + unlock singleton
+<details class="note"><summary><span data-lang="tr">Kategori notu</span><span data-lang="en">Category note</span></summary><pre>This category exercises CoinWallet — the in-memory coin + unlock singleton
 that lives under [CoinWallet] (DontDestroyOnLoad). Persistence is
 intentionally OFF in this project, so every case starts by calling Reset()
 to guarantee a deterministic baseline (coins=0, unlock=0). Cases are
@@ -469,13 +477,13 @@ INTERLEAVED HERE
 <li>And the app is genuinely usable, not merely alive</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span> <span class="tag">smoke</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 </div></details>
 <details class="cat">
-<summary><span class="cnum">K4</span><span class="ctitle">Fresh State + MainMenu</span><span class="count">7 case</span></summary>
+<summary><span class="cnum">K4</span><span class="ctitle">Fresh State + MainMenu</span><span class="count"><span data-lang="tr">7 case</span><span data-lang="en">7 cases</span></span></summary>
 <div class="catbody">
-<details class="note"><summary>Kategori notu</summary><pre>This category proves that the meta layer (MainMenu + coin fly bridge) is
+<details class="note"><summary><span data-lang="tr">Kategori notu</span><span data-lang="en">Category note</span></summary><pre>This category proves that the meta layer (MainMenu + coin fly bridge) is
 wired to the wallet correctly and that the fresh-state redirect guard fires
 as designed. The credit-before-animation invariant (G-01) is one of the most
 important regression guards in the entire suite — a bug here silently steals
@@ -582,13 +590,13 @@ INTERLEAVED HERE
 <li>...and the screen must be exactly where it was</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 </div></details>
 <details class="cat">
-<summary><span class="cnum">K5</span><span class="ctitle">Settings Modal</span><span class="count">16 case</span></summary>
+<summary><span class="cnum">K5</span><span class="ctitle">Settings Modal</span><span class="count"><span data-lang="tr">16 case</span><span data-lang="en">16 cases</span></span></summary>
 <div class="catbody">
-<details class="note"><summary>Kategori notu</summary><pre>This category exercises SettingsModalController in both scenes. The controller
+<details class="note"><summary><span data-lang="tr">Kategori notu</span><span data-lang="en">Category note</span></summary><pre>This category exercises SettingsModalController in both scenes. The controller
 and toggle state (SettingsState singleton, DontDestroyOnLoad) are shared but
 scene-specific side effects diverge:
 
@@ -817,13 +825,13 @@ INTERLEAVED HERE
 <li>Closing it through its own button resumes the game, and no move was spent while the app was away</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 </div></details>
 <details class="cat">
-<summary><span class="cnum">K6</span><span class="ctitle">Shop Surface</span><span class="count">7 case</span></summary>
+<summary><span class="cnum">K6</span><span class="ctitle">Shop Surface</span><span class="count"><span data-lang="tr">7 case</span><span data-lang="en">7 cases</span></span></summary>
 <div class="catbody">
-<details class="note"><summary>Kategori notu</summary><pre>Everything about the Shop that can be measured WITHOUT opening a native
+<details class="note"><summary><span data-lang="tr">Kategori notu</span><span data-lang="en">Category note</span></summary><pre>Everything about the Shop that can be measured WITHOUT opening a native
 dialog: the tab nav, the catalog-driven grid, the result modal&#x27;s resting
 state and the coin display. Pure AltTester — no Appium involved — so this
 category runs identically in the Editor and on device.
@@ -914,13 +922,13 @@ INTERLEAVED HERE
 <li>...and the session must be exactly where it was</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 </div></details>
 <details class="cat">
-<summary><span class="cnum">K7</span><span class="ctitle">Purchase Flow</span><span class="count">18 case</span></summary>
+<summary><span class="cnum">K7</span><span class="ctitle">Purchase Flow</span><span class="count"><span data-lang="tr">18 case</span><span data-lang="en">18 cases</span></span></summary>
 <div class="catbody">
-<details class="note"><summary>Kategori notu</summary><pre>The full purchase matrix, one case per coin pack per outcome. This is the only
+<details class="note"><summary><span data-lang="tr">Kategori notu</span><span data-lang="en">Category note</span></summary><pre>The full purchase matrix, one case per coin pack per outcome. This is the only
 category where BOTH drivers do real work in every case: Appium taps the native
 confirmation dialog, AltTester proves what the wallet did about it.
 
@@ -1002,7 +1010,7 @@ INTERLEAVED HERE
 <li>The wallet moved by the pack&#x27;s coins — ONCE. A resume that re-delivers the receipt shows up here and nowhere else in this suite</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span> <span class="tag">purchase</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 <details class="case">
 <summary><span class="cid">PU-18</span><span class="badge appium">Appium+Alt</span><span class="ctext">Backgrounding a dialog is not a silent answer to it</span></summary>
@@ -1016,7 +1024,7 @@ INTERLEAVED HERE
 <li>The wallet is untouched — a cancelled purchase credits nothing, whatever happened in between</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span> <span class="tag">purchase</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 <details class="case">
 <summary><span class="cid">PU-01</span><span class="badge appium">Appium+Alt</span><span class="ctext">Buy 1,000 pack (coins_1000) credits exactly 1,000</span></summary>
@@ -1200,9 +1208,9 @@ INTERLEAVED HERE
 </div></details>
 </div></details>
 <details class="cat">
-<summary><span class="cnum">K8</span><span class="ctitle">Play → HUD Displays</span><span class="count">11 case</span></summary>
+<summary><span class="cnum">K8</span><span class="ctitle">Play → HUD Displays</span><span class="count"><span data-lang="tr">11 case</span><span data-lang="en">11 cases</span></span></summary>
 <div class="catbody">
-<details class="note"><summary>Kategori notu</summary><pre>This category covers the transition from MainMenu into a live level and the
+<details class="note"><summary><span data-lang="tr">Kategori notu</span><span data-lang="en">Category note</span></summary><pre>This category covers the transition from MainMenu into a live level and the
 state of the in-game HUD right after that transition. It is deliberately NOT
 gameplay — no bobbin is ever deployed here. Real play (deploy, rack, cascade,
 AllClear) lives in Category 12.
@@ -1360,13 +1368,13 @@ INTERLEAVED HERE
 <li>RECORDED, NOT ASSERTED — GameManager.IsPaused</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 </div></details>
 <details class="cat">
-<summary><span class="cnum">K9</span><span class="ctitle">Board &amp; Cells</span><span class="count">9 case</span></summary>
+<summary><span class="cnum">K9</span><span class="ctitle">Board &amp; Cells</span><span class="count"><span data-lang="tr">9 case</span><span data-lang="en">9 cases</span></span></summary>
 <div class="catbody">
-<details class="note"><summary>Kategori notu</summary><pre>This category verifies that the board is BUILT and READ correctly. It is still
+<details class="note"><summary><span data-lang="tr">Kategori notu</span><span data-lang="en">Category note</span></summary><pre>This category verifies that the board is BUILT and READ correctly. It is still
 not gameplay — nothing is ever consumed here, because ConsumeCell / the
 CellCleared event need a deployed bobbin (Category 7 and Category 12 own that).
 
@@ -1497,9 +1505,9 @@ Case list:
 </div></details>
 </div></details>
 <details class="cat">
-<summary><span class="cnum">K10</span><span class="ctitle">Inventory &amp; Deploy</span><span class="count">9 case</span></summary>
+<summary><span class="cnum">K10</span><span class="ctitle">Inventory &amp; Deploy</span><span class="count"><span data-lang="tr">9 case</span><span data-lang="en">9 cases</span></span></summary>
 <div class="catbody">
-<details class="note"><summary>Kategori notu</summary><pre>This is the first category that actually DEPLOYS a bobbin. It tests deployment
+<details class="note"><summary><span data-lang="tr">Kategori notu</span><span data-lang="en">Category note</span></summary><pre>This is the first category that actually DEPLOYS a bobbin. It tests deployment
 as a UNIT — one tap, then the immediate consequences: the tray shrinks, the
 move counter ticks, a world bobbin enters the rail, and the board drains by
 exactly the bobbin&#x27;s capacity. Playing a level through to a win is a different
@@ -1627,9 +1635,9 @@ Case list:
 </div></details>
 </div></details>
 <details class="cat">
-<summary><span class="cnum">K11</span><span class="ctitle">Rail &amp; Rack</span><span class="count">12 case</span></summary>
+<summary><span class="cnum">K11</span><span class="ctitle">Rail &amp; Rack</span><span class="count"><span data-lang="tr">12 case</span><span data-lang="en">12 cases</span></span></summary>
 <div class="catbody">
-<details class="note"><summary>Kategori notu</summary><pre>The rail is the loop a deployed bobbin travels; the rack is the parking area a
+<details class="note"><summary><span data-lang="tr">Kategori notu</span><span data-lang="en">Category note</span></summary><pre>The rail is the loop a deployed bobbin travels; the rack is the parking area a
 bobbin lands in after a full lap. This category covers how both are BUILT, what
 their lookup hooks report, and what a single deploy does to the rail.
 
@@ -1799,13 +1807,13 @@ INTERLEAVED HERE
 <li>And the rail still WORKS — a level that came back frozen would satisfy every check above</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 </div></details>
 <details class="cat">
-<summary><span class="cnum">K12</span><span class="ctitle">Shuffle Booster</span><span class="count">7 case</span></summary>
+<summary><span class="cnum">K12</span><span class="ctitle">Shuffle Booster</span><span class="count"><span data-lang="tr">7 case</span><span data-lang="en">7 cases</span></span></summary>
 <div class="catbody">
-<details class="note"><summary>Kategori notu</summary><pre>The shuffle booster charges coins to reshuffle the inventory. This category
+<details class="note"><summary><span data-lang="tr">Kategori notu</span><span data-lang="en">Category note</span></summary><pre>The shuffle booster charges coins to reshuffle the inventory. This category
 covers its price display, its two reachable outcomes, the invariants a shuffle
 must preserve, and the external lock the HUD applies while the settings modal
 is open.
@@ -1918,9 +1926,9 @@ Case list:
 </div></details>
 </div></details>
 <details class="cat">
-<summary><span class="cnum">K13</span><span class="ctitle">End Panels</span><span class="count">14 case</span></summary>
+<summary><span class="cnum">K13</span><span class="ctitle">End Panels</span><span class="count"><span data-lang="tr">14 case</span><span data-lang="en">14 cases</span></span></summary>
 <div class="catbody">
-<details class="note"><summary>Kategori notu</summary><pre>Every end panel is reached through the cheat buttons that ship in the HUD —
+<details class="note"><summary><span data-lang="tr">Kategori notu</span><span data-lang="en">Category note</span></summary><pre>Every end panel is reached through the cheat buttons that ship in the HUD —
 WinButton and LoseButton are real Buttons wired to GameManager.ForceWin/
 ForceLose, so Kural 1 applies and nothing here calls those methods directly.
 
@@ -2116,13 +2124,13 @@ INTERLEAVED HERE
 <li>Paid EXACTLY once</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span> <span class="tag">purchase</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 </div></details>
 <details class="cat">
-<summary><span class="cnum">K14</span><span class="ctitle">Level Progression + Leave</span><span class="count">7 case</span></summary>
+<summary><span class="cnum">K14</span><span class="ctitle">Level Progression + Leave</span><span class="count"><span data-lang="tr">7 case</span><span data-lang="en">7 cases</span></span></summary>
 <div class="catbody">
-<details class="note"><summary>Kategori notu</summary><pre>Two journeys that span scenes: climbing the level chain, and abandoning a level
+<details class="note"><summary><span data-lang="tr">Kategori notu</span><span data-lang="en">Category note</span></summary><pre>Two journeys that span scenes: climbing the level chain, and abandoning a level
 through Settings → Leave.
 
 Scope was trimmed deliberately to avoid re-testing earlier categories:
@@ -2228,9 +2236,9 @@ Case list:
 </div></details>
 </div></details>
 <details class="cat">
-<summary><span class="cnum">K15</span><span class="ctitle">Manual Play + AllClear Cascade</span><span class="count">10 case</span></summary>
+<summary><span class="cnum">K15</span><span class="ctitle">Manual Play + AllClear Cascade</span><span class="count"><span data-lang="tr">10 case</span><span data-lang="en">10 cases</span></span></summary>
 <div class="catbody">
-<details class="note"><summary>Kategori notu</summary><pre>The full journey, played for real: Level 01 through Level 10, one case per
+<details class="note"><summary><span data-lang="tr">Kategori notu</span><span data-lang="en">Category note</span></summary><pre>The full journey, played for real: Level 01 through Level 10, one case per
 level, chained. Everything before this category proved that individual systems
 behave; this one proves the game is actually playable end to end.
 
@@ -2389,9 +2397,9 @@ Case list:
 </div></details>
 </div></details>
 <details class="cat">
-<summary><span class="cnum">K16</span><span class="ctitle">Robustness (Spam Guards + Locators)</span><span class="count">8 case</span></summary>
+<summary><span class="cnum">K16</span><span class="ctitle">Robustness (Spam Guards + Locators)</span><span class="count"><span data-lang="tr">8 case</span><span data-lang="en">8 cases</span></span></summary>
 <div class="catbody">
-<details class="note"><summary>Kategori notu</summary><pre>The closing category: what happens when the app is poked badly, and whether the
+<details class="note"><summary><span data-lang="tr">Kategori notu</span><span data-lang="en">Category note</span></summary><pre>The closing category: what happens when the app is poked badly, and whether the
 suite&#x27;s own plumbing holds up.
 
 Most spam guards were already covered where they live, and are NOT repeated
@@ -2507,9 +2515,9 @@ Case list:
 </div></details>
 </div></details>
 <details class="cat">
-<summary><span class="cnum">K17</span><span class="ctitle">App Lifecycle</span><span class="count">4 case</span></summary>
+<summary><span class="cnum">K17</span><span class="ctitle">App Lifecycle</span><span class="count"><span data-lang="tr">4 case</span><span data-lang="en">4 cases</span></span></summary>
 <div class="catbody">
-<details class="note"><summary>Kategori notu</summary><pre>The three ways the OS takes the app away from the player, and what the product
+<details class="note"><summary><span data-lang="tr">Kategori notu</span><span data-lang="en">Category note</span></summary><pre>The three ways the OS takes the app away from the player, and what the product
 owes them on the way back: a pause it can return from, an interruption it never
 asked for, and a process death it cannot prevent.
 
@@ -2667,7 +2675,7 @@ WHY THIS CATEGORY IS SMALLER THAN IT USED TO BE
 <li>...and it is intact now that it has the screen back</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
-<p class="gate">kesinti kanalı gerektirir</p>
+<p class="gate"><span data-lang="tr">kesinti kanalı gerektirir</span><span data-lang="en">requires an interrupt channel</span></p>
 </div></details>
 <details class="case">
 <summary><span class="cid">LC-07</span><span class="badge appium">Appium+Alt</span><span class="ctext">Process death with a dialog up leaves no ghost behind</span></summary>
@@ -2680,7 +2688,7 @@ WHY THIS CATEGORY IS SMALLER THAN IT USED TO BE
 <li>...and it was not credited for a purchase nobody confirmed</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 <details class="case">
 <summary><span class="cid">LC-08</span><span class="badge appium">Appium+Alt</span><span class="ctext">A decided notification permission is not asked for again</span></summary>
@@ -2692,7 +2700,7 @@ WHY THIS CATEGORY IS SMALLER THAN IT USED TO BE
 <li>The flow still finished, and it agrees the permission is decided</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
-<p class="gate">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</p>
+<p class="gate"><span data-lang="tr">gerçek cihaz gerektirir (Editor&#x27;de SKIP)</span><span data-lang="en">requires a real device (SKIP in the Editor)</span></p>
 </div></details>
 <details class="case">
 <summary><span class="cid">LC-09</span><span class="badge appium">Appium+Alt</span><span class="ctext">The app recovers from a reclaimed background process</span></summary>
@@ -2705,20 +2713,47 @@ WHY THIS CATEGORY IS SMALLER THAN IT USED TO BE
 <li>Nothing of the dead process is still on screen, and the fresh one is answering both drivers</li>
 </ol>
 <p class="tags"><span class="tag">device-only</span> <span class="tag">interrupt</span> <span class="tag">lifecycle</span> <span class="tag">native</span></p>
-<p class="gate">arka plan süreç sonlandırma gerektirir</p>
+<p class="gate"><span data-lang="tr">arka plan süreç sonlandırma gerektirir</span><span data-lang="en">requires killing the background process</span></p>
 </div></details>
 </div></details>
   </div>
 
   <footer>
-    Bu sayfa <code>hybrid_e2e.py</code>'nin case kayıt defterinden üretiliyor —
-    adımlar case'lerin koşarken bastığı <code>Step N/M</code> satırlarının ta kendisi.
+    <span data-lang="tr">Bu sayfa <code>hybrid_e2e.py</code>'nin case kayıt defterinden üretiliyor —
+    adımlar case'lerin koşarken bastığı <code>Step N/M</code> satırlarının ta kendisi.</span>
+    <span data-lang="en">This page is generated from <code>hybrid_e2e.py</code>'s case registry —
+    the steps are the very <code>Step N/M</code> lines the cases print while they run.</span>
   </footer>
 </div>
 
 <script>
 (function () {
+  var KEY = 'ob-lang';
+  var root = document.documentElement;
   var q = document.getElementById('q');
+  var PLACEHOLDER = {
+    tr: 'Ara: case id, başlık ya da adım metni…',
+    en: 'Search: case id, title or step text…'
+  };
+
+  function applyLang(lang) {
+    root.setAttribute('lang', lang);
+    try { localStorage.setItem(KEY, lang); } catch (e) {}
+    var t = root.getAttribute(lang === 'en' ? 'data-title-en' : 'data-title-tr');
+    if (t) document.title = t;
+    q.placeholder = PLACEHOLDER[lang];
+  }
+  var saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  if (saved !== 'tr' && saved !== 'en') {
+    var nav = (navigator.language || 'tr').toLowerCase();
+    saved = nav.indexOf('tr') === 0 ? 'tr' : 'en';
+  }
+  applyLang(saved);
+  document.getElementById('langbtn').addEventListener('click', function () {
+    applyLang(root.getAttribute('lang') === 'tr' ? 'en' : 'tr');
+  });
+
   var cats = Array.prototype.slice.call(document.querySelectorAll('details.cat'));
 
   function filter() {
