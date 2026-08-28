@@ -38,8 +38,8 @@
     <div class="stag"><span data-lang="tr">Kişisel proje · 01</span><span data-lang="en">Personal project · 01</span></div>
     <h1><span data-lang="tr">Hibrit Mobil Test Otomasyonu</span><span data-lang="en">Hybrid Mobile Test Automation</span></h1>
     <p class="sub">
-      <span data-lang="tr">Bir Unity oyununu Appium ve AltTester ile <b>aynı anda</b> süren uçtan uca test altyapısı. Oyunu, test paketini, raporlamayı ve CI hattını sıfırdan kendim yazdım — dört fazda, her fazı bir öncekinin ölçülmüş kanıtı üzerine kurarak: tek akışlık PoC'ten, batch-mode build alıp headless koşan bir CI hattına.</span>
-      <span data-lang="en">An end-to-end test rig that drives a Unity game with Appium and AltTester <b>at the same time</b>. I wrote the game, the suite, the reporting and the CI pipeline from scratch — in four phases, each built on the measured proof of the one before: from a single-flow PoC to a CI line that builds in batch mode and runs headless.</span>
+      <span data-lang="tr">Bir Unity oyununu Appium ve AltTester ile <b>aynı anda</b> süren uçtan uca test altyapısı. Oyunu, test paketini, raporlamayı ve CI hattını sıfırdan kurdum — dört fazda, her fazı bir öncekinin ölçülmüş kanıtı üzerine kurarak: tek akışlık PoC'ten, batch-mode build alıp headless koşan bir CI hattına.</span>
+      <span data-lang="en">An end-to-end test rig that drives a Unity game with Appium and AltTester <b>at the same time</b>. I built the game, the suite, the reporting and the CI pipeline from scratch — in four phases, each built on the measured proof of the one before: from a single-flow PoC to a CI line that builds in batch mode and runs headless.</span>
     </p>
   </div>
 
@@ -249,8 +249,8 @@
     <span data-lang="tr">Faz 1 — Oyunu makineye oynatmak</span><span data-lang="en">Phase 1 — Making a machine play the game</span>
   </h3>
   <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:18px">
-    <span data-lang="tr">İlk soru en temeli: Unity tabanlı bir mobil oyun, gerçek cihazda çalışan APK'sı üzerinden insansız oynanıp doğrulanabilir mi? Bunun için 10 seviyelik dummy bir puzzle oyunu yazdım ve AltTester SDK'sını entegre ettim. Python script'i rastgele koordinatlara tıklamaz: sahadaki parçaların renklerini, hedef hücreleri ve rayın durumunu <b style="color:var(--ink)">oyunun iç verisinden okuyup</b> doğru parçayı seçer, seviyeyi mantıksal olarak çözer. Samsung Z Fold5 üzerinde 10 seviyenin tamamı, her adımı loglanıp ekran görüntülenerek insansız tamamlandı.</span>
-    <span data-lang="en">The first question is the most basic: can a Unity mobile game be played and verified unattended, through its APK on a real device? I wrote a 10-level dummy puzzle game and integrated the AltTester SDK. The Python script doesn't tap random coordinates: it <b style="color:var(--ink)">reads the game's internal data</b> — piece colors, target cells, rail state — picks the right piece and solves each level logically. All 10 levels completed unattended on a Samsung Z Fold5, every step logged and screenshotted.</span>
+    <span data-lang="tr">İlk soru en temeli: Unity tabanlı bir mobil oyun, gerçek cihazda çalışan APK'sı üzerinden insansız oynanıp doğrulanabilir mi? Bunun için 10 seviyelik dummy bir puzzle oyunu geliştirdim ve AltTester SDK'sını entegre ettim. Python script'i rastgele koordinatlara tıklamaz: sahadaki parçaların renklerini, hedef hücreleri ve rayın durumunu <b style="color:var(--ink)">oyunun iç verisinden okuyup</b> doğru parçayı seçer, seviyeyi mantıksal olarak çözer. Samsung Z Fold5 üzerinde 10 seviyenin tamamı, her adımı loglanıp ekran görüntülenerek insansız tamamlandı.</span>
+    <span data-lang="en">The first question is the most basic: can a Unity mobile game be played and verified unattended, through its APK on a real device? I built a 10-level dummy puzzle game and integrated the AltTester SDK. The Python script doesn't tap random coordinates: it <b style="color:var(--ink)">reads the game's internal data</b> — piece colors, target cells, rail state — picks the right piece and solves each level logically. All 10 levels completed unattended on a Samsung Z Fold5, every step logged and screenshotted.</span>
   </p>
   <div class="gallery">
     <div class="shot wide">
