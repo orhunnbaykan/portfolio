@@ -13,6 +13,7 @@ assets/css/site.css           Ortak stil (üç sayfa da bunu kullanır)
 assets/fonts/                 Self-host woff2 fontlar — JetBrains Mono + IBM Plex Sans (CDN yok)
 assets/js/site.js             Dil anahtarı, mobil menü, hero terminal animasyonu, lightbox
 assets/img/                   Ekran görüntüleri
+assets/clips/                 Faz koşum videolarından kısa, sessiz mp4 klipler
 assets/*.pdf                  CV
 qa-reports/                   Test otomasyonu koşum raporları ve senaryo kataloğu
 .nojekyll                     GitHub Pages'in Jekyll işlemesini atlaması için (gerekli)

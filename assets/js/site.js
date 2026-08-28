@@ -86,3 +86,12 @@
   });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeLb(); });
 })();
+
+/* azaltilmis hareket tercihinde otomatik oynayan klipleri durdur, kontrol ver */
+(function(){
+  if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+  document.querySelectorAll('video[autoplay]').forEach(function(v){
+    v.removeAttribute('autoplay'); v.removeAttribute('loop');
+    v.pause(); v.setAttribute('controls','');
+  });
+})();

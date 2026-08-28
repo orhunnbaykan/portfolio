@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hibrit Mobil Test Otomasyonu — Orhun Baykan</title>
-<meta name="description" content="Bir Unity oyununu Appium ve AltTester ile aynı anda süren uçtan uca test altyapısı: 164 senaryo, 3 platform, gerçek cihazlarda self-hosted CI.">
+<meta name="description" content="Dört fazda evrilen uçtan uca test altyapısı: Appium × AltTester hibrit sürüş, 164 senaryo, 3 platform, batch-mode build'lerle gerçek cihazlarda self-hosted CI.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='4' y='4' width='92' height='92' rx='18' fill='%230C1014' stroke='%2346D181' stroke-width='6'/><text y='72' x='50' text-anchor='middle' font-size='58' font-family='monospace' font-weight='700' fill='%2346D181'>OB</text></svg>">
 <link rel="stylesheet" href="../../assets/css/site.css">
 </head>
@@ -17,6 +17,7 @@
     <nav class="navlinks" id="navlinks">
       <a href="#problem"><span data-lang="tr">Problem</span><span data-lang="en">Problem</span></a>
       <a href="#kurallar"><span data-lang="tr">Tasarım</span><span data-lang="en">Design</span></a>
+      <a href="#fazlar"><span data-lang="tr">Fazlar</span><span data-lang="en">Phases</span></a>
       <a href="#sonuclar"><span data-lang="tr">Sonuçlar</span><span data-lang="en">Results</span></a>
       <a href="#cicd"><span data-lang="tr">CI/CD</span><span data-lang="en">CI/CD</span></a>
       <a href="#raporlar"><span data-lang="tr">Raporlar</span><span data-lang="en">Reports</span></a>
@@ -37,8 +38,8 @@
     <div class="stag"><span data-lang="tr">Kişisel proje · 01</span><span data-lang="en">Personal project · 01</span></div>
     <h1><span data-lang="tr">Hibrit Mobil Test Otomasyonu</span><span data-lang="en">Hybrid Mobile Test Automation</span></h1>
     <p class="sub">
-      <span data-lang="tr">Bir Unity oyununu Appium ve AltTester ile <b>aynı anda</b> süren uçtan uca test altyapısı. Oyunu, test paketini, raporlamayı ve CI hattını sıfırdan kendim yazdım.</span>
-      <span data-lang="en">An end-to-end test rig that drives a Unity game with Appium and AltTester <b>at the same time</b>. I wrote the game, the suite, the reporting and the CI pipeline from scratch.</span>
+      <span data-lang="tr">Bir Unity oyununu Appium ve AltTester ile <b>aynı anda</b> süren uçtan uca test altyapısı. Oyunu, test paketini, raporlamayı ve CI hattını sıfırdan kendim yazdım — dört fazda, her fazı bir öncekinin ölçülmüş kanıtı üzerine kurarak: tek akışlık PoC'ten, batch-mode build alıp headless koşan bir CI hattına.</span>
+      <span data-lang="en">An end-to-end test rig that drives a Unity game with Appium and AltTester <b>at the same time</b>. I wrote the game, the suite, the reporting and the CI pipeline from scratch — in four phases, each built on the measured proof of the one before: from a single-flow PoC to a CI line that builds in batch mode and runs headless.</span>
     </p>
   </div>
 
@@ -192,6 +193,179 @@
 </div>
 </section>
 
+<!-- ==================== DORT FAZ ==================== -->
+<section style="border-top:none;padding-top:0">
+<div class="wrap">
+
+  <h3 style="font-size:1.15rem;margin:0 0 10px" id="fazlar">
+    <span data-lang="tr">Dört faz — kavram kanıtından headless CI'a</span><span data-lang="en">Four phases — from proof of concept to headless CI</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:8px">
+    <span data-lang="tr">Bu altyapı tek seferde yazılmadı. Dört faz halinde evrildi ve her faz, bir sonrakine geçmeden önce kendi PoC raporu, cihaz üzerinde video kaydı ve ölçülmüş sonucuyla kapatıldı. Kapsam her fazda katlandı: 1 akıştan 116 senaryoya, oradan hibrit 164'e — ve bugün hepsini insansız koşan bir CI hattına.</span>
+    <span data-lang="en">This rig wasn't written in one go. It evolved in four phases, and each phase was closed out with its own PoC report, an on-device video recording and a measured result before the next one started. Scope compounded every phase: from 1 flow to 116 cases, then to the hybrid 164 — and today, a CI line that runs all of it unattended.</span>
+  </p>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th><span data-lang="tr">Faz</span><span data-lang="en">Phase</span></th>
+          <th><span data-lang="tr">Odak</span><span data-lang="en">Focus</span></th>
+          <th><span data-lang="tr">Kapsam</span><span data-lang="en">Scope</span></th>
+          <th class="num"><span data-lang="tr">Ölçülmüş sonuç</span><span data-lang="en">Measured result</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b><span data-lang="tr">Faz 1</span><span data-lang="en">Phase 1</span></b></td>
+          <td><span data-lang="tr">Kavram kanıtı — AltTester gerçek cihazda</span><span data-lang="en">Proof of concept — AltTester on a real device</span></td>
+          <td><span data-lang="tr">1 akış · 10 seviye</span><span data-lang="en">1 flow · 10 levels</span></td>
+          <td class="num"><span class="pass">10/10</span> <span data-lang="tr">seviye insansız</span><span data-lang="en">levels unattended</span></td>
+        </tr>
+        <tr>
+          <td><b><span data-lang="tr">Faz 2</span><span data-lang="en">Phase 2</span></b></td>
+          <td><span data-lang="tr">Smoke şemsiyesi + hata enjeksiyonu</span><span data-lang="en">Smoke umbrella + fault injection</span></td>
+          <td><span data-lang="tr">13 kategori · 22 grup · 116 senaryo</span><span data-lang="en">13 categories · 22 groups · 116 cases</span></td>
+          <td class="num"><span class="pass">116/116</span> · <span data-lang="tr">13/13 enjekte bug yakalandı</span><span data-lang="en">13/13 injected bugs caught</span></td>
+        </tr>
+        <tr>
+          <td><b><span data-lang="tr">Faz 3</span><span data-lang="en">Phase 3</span></b></td>
+          <td><span data-lang="tr">Hibrit sürüş — Appium × AltTester, çok platform</span><span data-lang="en">Hybrid driving — Appium × AltTester, multi-platform</span></td>
+          <td><span data-lang="tr">18 kategori · 164 senaryo · 744 adım</span><span data-lang="en">18 categories · 164 cases · 744 steps</span></td>
+          <td class="num"><span data-lang="tr">3 ortamda tam koşum · raporlar yayında</span><span data-lang="en">full runs in 3 environments · reports published</span></td>
+        </tr>
+        <tr>
+          <td><b><span data-lang="tr">Faz 4</span><span data-lang="en">Phase 4</span></b> <span style="color:var(--ink3);font-size:12px">· <span data-lang="tr">güncel</span><span data-lang="en">current</span></span></td>
+          <td><span data-lang="tr">Headless CI — batch-mode build + self-hosted runner</span><span data-lang="en">Headless CI — batch-mode builds + self-hosted runner</span></td>
+          <td><span data-lang="tr">3 lane · zamanlanmış / dispatch / push</span><span data-lang="en">3 lanes · scheduled / dispatch / push</span></td>
+          <td class="num"><span data-lang="tr">iOS build</span><span data-lang="en">iOS build</span> <span class="pass">112.4 s</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FAZ 1 -->
+  <h3 style="font-size:1.05rem;margin:34px 0 10px">
+    <span data-lang="tr">Faz 1 — Oyunu makineye oynatmak</span><span data-lang="en">Phase 1 — Making a machine play the game</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:18px">
+    <span data-lang="tr">İlk soru en temeli: Unity tabanlı bir mobil oyun, gerçek cihazda çalışan APK'sı üzerinden insansız oynanıp doğrulanabilir mi? Bunun için 10 seviyelik dummy bir puzzle oyunu yazdım ve AltTester SDK'sını entegre ettim. Python script'i rastgele koordinatlara tıklamaz: sahadaki parçaların renklerini, hedef hücreleri ve rayın durumunu <b style="color:var(--ink)">oyunun iç verisinden okuyup</b> doğru parçayı seçer, seviyeyi mantıksal olarak çözer. Samsung Z Fold5 üzerinde 10 seviyenin tamamı, her adımı loglanıp ekran görüntülenerek insansız tamamlandı.</span>
+    <span data-lang="en">The first question is the most basic: can a Unity mobile game be played and verified unattended, through its APK on a real device? I wrote a 10-level dummy puzzle game and integrated the AltTester SDK. The Python script doesn't tap random coordinates: it <b style="color:var(--ink)">reads the game's internal data</b> — piece colors, target cells, rail state — picks the right piece and solves each level logically. All 10 levels completed unattended on a Samsung Z Fold5, every step logged and screenshotted.</span>
+  </p>
+  <div class="gallery">
+    <div class="shot">
+      <video autoplay muted loop playsinline preload="metadata" aria-label="Phase 1 autonomous level solving on Z Fold5">
+        <source src="../../assets/clips/qa-phase1-run.mp4" type="video/mp4">
+      </video>
+      <div class="cap">
+        <b><span data-lang="tr">24 saniye gerçek koşum</span><span data-lang="en">24 seconds of a real run</span></b>
+        <span data-lang="tr">Solda karar veren log, sağda Z Fold5. Script seviyeyi çözüyor, bitirince kendisi sonrakine geçiyor.</span>
+        <span data-lang="en">The deciding log on the left, the Z Fold5 on the right. The script solves the level and advances by itself.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/qa-phase1-device.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/qa-phase1-device.jpg" alt="Terminal log and Z Fold5 solving level 8" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Karar logu</span><span data-lang="en">The decision log</span></b>
+        <span data-lang="tr">Her hamle gerekçesiyle yazılır: <code>color hint: Yellow, 12 in inventory</code> → tık → <code>RemainingCells=23</code>. Seviye bitince <code>Level 7 cleared → state Won</code>.</span>
+        <span data-lang="en">Every move is logged with its reason: <code>color hint: Yellow, 12 in inventory</code> → tap → <code>RemainingCells=23</code>. On completion, <code>Level 7 cleared → state Won</code>.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/qa-phase1-complete.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/qa-phase1-complete.jpg" alt="All levels complete screen with per-level results" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">10/10 · ALL LEVELS COMPLETE</span><span data-lang="en">10/10 · ALL LEVELS COMPLETE</span></b>
+        <span data-lang="tr">Koşumun sonu: cihazda bitiş ekranı, logda seviye seviye döküm — <code>Level 1..9: WON, Level 10: ALLCLEAR</code> — ve ardından GameManager durumunun çapraz doğrulaması.</span>
+        <span data-lang="en">End of the run: the finish screen on device, a per-level breakdown in the log — <code>Level 1..9: WON, Level 10: ALLCLEAR</code> — then a cross-check of GameManager state.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAZ 2 -->
+  <h3 style="font-size:1.05rem;margin:34px 0 10px">
+    <span data-lang="tr">Faz 2 — Suite'i büyütmek ve kendisini kanıtlatmak</span><span data-lang="en">Phase 2 — Growing the suite, then making it prove itself</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:18px">
+    <span data-lang="tr">Tek akış, yapılandırılmış bir smoke şemsiyesine büyüdü: <b style="color:var(--ink)">13 kategori, 22 grup, 116 senaryo</b>. Bunun için oyuna üretim benzeri meta katmanlar eklendi — coin cüzdanı (uçan coin animasyonu ve animasyondan önce bakiye yazma güvencesiyle), ana menü, ayarlar penceresi (<code>Time.timeScale = 0</code> pause emniyet ağıyla), Shuffle Booster, bitiş ekranları, Leave akışı ve hızlı çift tıklamayı tek işleme indiren spam-guard'lar. Her kategori kendi baseline reset'iyle biter; üst üste 3 hatada koşum durur; rastgele seçimler <code>--seed</code> ile birebir tekrar üretilebilir. Her koşum log + JSON + tek dosyalık offline HTML rapor bırakır. Son tam koşum: <b style="color:var(--ink)">116/116 PASS, 827 sn</b>. Ve en önemlisi: yeşilin bir anlam taşıdığını kanıtlamak için ayrı bir Err-Inject branch'inde <b style="color:var(--ink)">13 kategoriye 13 bug bilerek enjekte edildi — 13'ü de hedeflenen senaryoyu kırmızıya çevirdi.</b> Hiç kırmızı görmemiş bir suite'e güvenilmez; bu suite kırmızıya dönebildiğini bağımsız olarak gösterdi.</span>
+    <span data-lang="en">The single flow grew into a structured smoke umbrella: <b style="color:var(--ink)">13 categories, 22 groups, 116 cases</b>. To support it, production-like meta layers were added to the game — a coin wallet (with a flying-coin animation and a credit-before-animation guarantee), a main menu, a settings window (paused via <code>Time.timeScale = 0</code> with a safety net), a Shuffle Booster, end screens, a Leave flow and spam-guards that collapse rapid double-taps into one action. Every category ends with its own baseline reset; three consecutive failures stop the run; random picks replay exactly via <code>--seed</code>. Each run leaves a log, JSON and a single-file offline HTML report. Last full run: <b style="color:var(--ink)">116/116 PASS in 827 s</b>. Most importantly: to prove the green meant something, <b style="color:var(--ink)">13 bugs were deliberately injected on a separate Err-Inject branch — one per category — and all 13 turned their target scenario red.</b> A suite that has never seen red can't be trusted; this one independently showed it could turn red.</span>
+  </p>
+  <div class="gallery">
+    <div class="shot">
+      <video autoplay muted loop playsinline preload="metadata" aria-label="Phase 2 smoke suite driving the settings modal on device">
+        <source src="../../assets/clips/qa-phase2-run.mp4" type="video/mp4">
+      </video>
+      <div class="cap">
+        <b><span data-lang="tr">Meta yüzeyler cihazda</span><span data-lang="en">Meta surfaces on device</span></b>
+        <span data-lang="tr">Suite ayarlar modalını açıyor, düğmeleri tek tek sürüyor, kapatıp oyunun donmadığını doğruluyor — <code>finalized_smoke.py --fast</code>, gerçek Samsung üzerinde.</span>
+        <span data-lang="en">The suite opens the settings modal, drives each toggle, closes it and verifies the game didn't stay frozen — <code>finalized_smoke.py --fast</code>, on a real Samsung.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/qa-phase2-settings.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/qa-phase2-settings.jpg" alt="Settings modal driven by the suite with narrated shuffle booster cases" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Kategori anlatısı</span><span data-lang="en">Category narration</span></b>
+        <span data-lang="tr">Log önce kategorinin senaryo listesini yazar (P-01…P-07), sonra her adımı beklenen/ölçülen değerle anlatır: <code>ShuffleButton.interactable = True (expected True)</code>.</span>
+        <span data-lang="en">The log first prints the category's case list (P-01…P-07), then narrates each step with expected/measured values: <code>ShuffleButton.interactable = True (expected True)</code>.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/qa-phase2-board.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/qa-phase2-board.jpg" alt="Level being cleared by playing with wallet and booster visible" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Kazanmak da doğrulanır</span><span data-lang="en">Even winning is asserted</span></b>
+        <span data-lang="tr">Seviye gerçek oynanışla bitirilir ve iddia açıktır: <code>The level must have been WON by playing, not conceded</code>. Cüzdan, booster ücreti, kalan hücre — hepsi adım adım ölçülür.</span>
+        <span data-lang="en">The level is finished by genuinely playing, and the claim is explicit: <code>The level must have been WON by playing, not conceded</code>. Wallet, booster price, remaining cells — all measured step by step.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAZ 3 -->
+  <h3 style="font-size:1.05rem;margin:34px 0 10px">
+    <span data-lang="tr">Faz 3 — İkinci sürücü ve üç ortam</span><span data-lang="en">Phase 3 — The second driver and three environments</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:18px">
+    <span data-lang="tr">Faz 2'nin suite'i yalnızca Unity'nin çizdiğini görebiliyordu — oysa para native satın alma onayında hareket eder, izin native istemde verilir, state uygulama arka plana atıldığında kaybolur. Faz 3 bu kör noktayı ikinci sürücüyle kapattı; önce 4 kategori / 40 senaryoluk ayrı bir ara runner'da OS yüzeyi tek başına çalışıldı (PlatformOps seam'i, watchdog'lar ve satın alma matrisi orada doğdu), sonra hibrit suite kuruldu. Oyuna gerçek native katman eklendi: Android'de JNI ile <code>AlertDialog</code>, iOS'ta Objective-C ile <code>UIAlertController</code>, Editor'de stand-in. Bir popup artık <b style="color:var(--ink)">iki kaynaktan</b> doğrulanır — ürün kodu “açık” demeli <b>ve</b> ekranda bizim erişilebilirlik id'mizi taşıyan native görünüm olmalı; ikisinden yalnız birinin doğru olması bulgu sayılır. Sonuç bu sayfanın geri kalanının konusu: 18 kategori, 164 senaryo, 744 adım; iOS, Android ve cihazsız Editor'de filtresiz tam koşum.</span>
+    <span data-lang="en">Phase 2's suite could only see what Unity draws — yet money moves in a native purchase confirmation, permission is granted in a native prompt, state is lost when the app is backgrounded. Phase 3 closed that blind spot with a second driver; the OS surface was first worked alone in a separate interim runner of 4 categories / 40 cases (the PlatformOps seam, the watchdogs and the purchase matrix were born there), then the hybrid suite was built. The game gained a genuinely native layer: <code>AlertDialog</code> via JNI on Android, <code>UIAlertController</code> via Objective-C on iOS, a stand-in in the Editor. A popup is now verified <b style="color:var(--ink)">from two sources</b> — product code must say “open” <b>and</b> a native view carrying our accessibility id must be on screen; only one of the two being true counts as a finding. The result is what the rest of this page is about: 18 categories, 164 cases, 744 steps; unfiltered full runs on iOS, Android and the device-less Editor.</span>
+  </p>
+  <div class="gallery">
+    <div class="shot">
+      <video autoplay muted loop playsinline preload="metadata" aria-label="Phase 3 native purchase matrix running on iPhone">
+        <source src="../../assets/clips/qa-phase3-purchase.mp4" type="video/mp4">
+      </video>
+      <div class="cap">
+        <b><span data-lang="tr">Satın alma matrisi, canlı</span><span data-lang="en">The purchase matrix, live</span></b>
+        <span data-lang="tr">Her paket sırayla: native onay çıkar, Appium cevaplar, AltTester cüzdan deltasını Unity içinden ölçer — <code>before=44000 after=94000 delta=+50000</code>.</span>
+        <span data-lang="en">Each pack in turn: the native confirmation appears, Appium answers it, AltTester measures the wallet delta from inside Unity — <code>before=44000 after=94000 delta=+50000</code>.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/qa-phase3-purchase.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/qa-phase3-purchase.jpg" alt="Purchase successful modal with narrated purchase matrix log" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Paranın hareket ettiği yüzey</span><span data-lang="en">The surface where money moves</span></b>
+        <span data-lang="tr">Altı paketlik matris tek tek koşar: <code>PU-01…PU-06</code>, her biri “native onay iki gözlemciyle doğrulandı → cüzdan tam tutarı aldı → modal kapandı, sahnede artık popup yok” zinciriyle geçer.</span>
+        <span data-lang="en">The six-pack matrix runs one by one: <code>PU-01…PU-06</code>, each passing through “native confirm verified by both observers → wallet credited the exact amount → modal closed, no stray popup left”.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/qa-phase3-coldstart.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/qa-phase3-coldstart.jpg" alt="Cold start after process kill with a purchase dialog left open" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">En zor soru: yarıda kesilen para</span><span data-lang="en">The hardest question: money interrupted mid-flight</span></b>
+        <span data-lang="tr"><code>LC-07</code>: satın alma diyaloğu açıkken süreç öldürülür. Soğuk açılışta suite üç şeyi kanıtlar — ekranda hayalet native görünüm kalmadı, uygulama satın almayı hâlâ tutmuyor ve <b>kimsenin onaylamadığı satın alma cüzdana yazılmadı</b>.</span>
+        <span data-lang="en"><code>LC-07</code>: the process is killed with a purchase dialog up. On cold start the suite proves three things — no ghost native view survived, the app no longer holds the purchase, and <b>a purchase nobody confirmed was never credited</b>.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAZ 4 -->
+  <h3 style="font-size:1.05rem;margin:34px 0 10px">
+    <span data-lang="tr">Faz 4 — İnsanı döngüden çıkarmak</span><span data-lang="en">Phase 4 — Taking the human out of the loop</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch">
+    <span data-lang="tr">Bugünkü faz: her şeyin insansız koşması. Unity <b style="color:var(--ink)">batch-mode + <code>-nographics</code></b> ile başsız derlenir — Android APK'sı, Unity→Xcode→imzalı iOS IPA'sı ve Editor koşumu aynı script ailesinden çıkar. GitHub Actions, kendi Mac'imdeki self-hosted runner'a bağlanır; koşumlar zamanlanmış, elle tetiklenen (<code>workflow_dispatch</code> girdileriyle lane/cihaz/hız/filtre seçilerek) ya da push ile başlar ve gerçek telefona kadar iner. Aşağıdaki CI/CD bölümü bu fazın ayrıntısıdır — beş fazlı lane script'i, iptalde bile temizleyen reset ve anlamlı çıkış kodlarıyla.</span>
+    <span data-lang="en">The current phase: everything runs unattended. Unity builds headless in <b style="color:var(--ink)">batch mode + <code>-nographics</code></b> — the Android APK, the Unity→Xcode→signed iOS IPA and the Editor run all come from the same script family. GitHub Actions connects to a self-hosted runner on my own Mac; runs start on a schedule, by hand (<code>workflow_dispatch</code> inputs picking lane/device/pace/filter) or on push, and reach all the way down to a real phone. The CI/CD section below is this phase in detail — the five-phase lane script, the reset that cleans up even on cancellation, and exit codes that mean something.</span>
+  </p>
+</div>
+</section>
+
 <section style="border-top:none;padding-top:0">
 <div class="wrap">
 
@@ -200,8 +374,8 @@
     <span data-lang="tr">Ölçülmüş sonuçlar</span><span data-lang="en">Measured results</span>
   </h3>
   <p style="color:var(--ink2);font-size:14.5px;max-width:70ch;margin-bottom:8px">
-    <span data-lang="tr">Aynı 164 senaryo gövdesi, üç farklı ortamda. Fark yalnızca sürücü kurulumunda — test mantığında değil.</span>
-    <span data-lang="en">The same 164 case bodies, three different environments. The only difference is driver setup — never test logic.</span>
+    <span data-lang="tr">Faz 3'ün filtresiz tam koşumları: aynı 164 senaryo gövdesi, üç farklı ortamda. Fark yalnızca sürücü kurulumunda — test mantığında değil.</span>
+    <span data-lang="en">Phase 3's unfiltered full runs: the same 164 case bodies, three different environments. The only difference is driver setup — never test logic.</span>
   </p>
 
   <div class="tablewrap">
@@ -321,11 +495,11 @@
 <div class="wrap">
 
   <h3 style="font-size:1.15rem;margin:0 0 10px" id="cicd">
-    <span data-lang="tr">CI/CD — gerçek cihazlarda, ücretsiz</span><span data-lang="en">CI/CD — on real devices, for free</span>
+    <span data-lang="tr">Faz 4 · CI/CD — gerçek cihazlarda, ücretsiz</span><span data-lang="en">Phase 4 · CI/CD — on real devices, for free</span>
   </h3>
   <p style="color:var(--ink2);font-size:14.5px;max-width:74ch">
-    <span data-lang="tr">Cihaz bulutlarının kalıcı ücretsiz katmanı yok; Firebase Test Lab yalnızca Espresso/XCTest türü koşumları kabul ediyor ve host tarafında bir Python süreci çalıştıramıyor — üstelik AltTester bağlantıyı <b style="color:var(--ink)">cihazdan host'a doğru</b> kuruyor, yani bir veri merkezindeki telefonun benim makinemin <code>:13000</code> portuna rotası yok. Bu yüzden kendi Mac'imi self-hosted runner yaptım.</span>
-    <span data-lang="en">Device clouds have no permanent free tier; Firebase Test Lab only accepts Espresso/XCTest-shaped runs and cannot host a Python process — and AltTester dials <b style="color:var(--ink)">out from device to host</b>, so a handset in someone's datacentre has no route to my machine's <code>:13000</code>. So I turned my own Mac into a self-hosted runner.</span>
+    <span data-lang="tr">Cihaz bulutlarının kalıcı ücretsiz katmanı yok; Firebase Test Lab yalnızca Espresso/XCTest türü koşumları kabul ediyor ve host tarafında bir Python süreci çalıştıramıyor — üstelik AltTester bağlantıyı <b style="color:var(--ink)">cihazdan host'a doğru</b> kuruyor, yani bir veri merkezindeki telefonun benim makinemin <code>:13000</code> portuna rotası yok. Bu yüzden kendi Mac'imi self-hosted runner yaptım. Derlemeler Unity'nin batch-mode + <code>-nographics</code> başsız hattından çıkar: Android APK'sı, imzalı iOS IPA'sı ve Editor koşumu — üçü de ekransız, insansız.</span>
+    <span data-lang="en">Device clouds have no permanent free tier; Firebase Test Lab only accepts Espresso/XCTest-shaped runs and cannot host a Python process — and AltTester dials <b style="color:var(--ink)">out from device to host</b>, so a handset in someone's datacentre has no route to my machine's <code>:13000</code>. So I turned my own Mac into a self-hosted runner. Builds come out of Unity's batch-mode + <code>-nographics</code> headless line: the Android APK, the signed iOS IPA and the Editor run — all three screenless, unattended.</span>
   </p>
 
   <div class="grid3" style="margin:22px 0">
