@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Slot Oyun Platformu — Orhun Baykan</title>
-<meta name="description" content="Üç Unity WebGL oyunu, üç .NET servisi, 17 modüllü yönetim paneli. Sunucu otoriteli, seed'li, her turu replay edilebilir bir iGaming sistemi.">
+<meta name="description" content="Üç Unity WebGL oyunu, üç .NET servisi, 15 modüllü yönetim paneli, ~126 API endpoint, HMAC imzalı cüzdan entegrasyonu. Sunucu otoriteli, seed'li, her turu replay edilebilir bir iGaming sistemi.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='4' y='4' width='92' height='92' rx='18' fill='%230C1014' stroke='%2346D181' stroke-width='6'/><text y='72' x='50' text-anchor='middle' font-size='58' font-family='monospace' font-weight='700' fill='%2346D181'>OB</text></svg>">
 <link rel="stylesheet" href="../../assets/css/site.css">
 </head>
@@ -15,10 +15,12 @@
   <div class="wrap">
     <a class="brand" href="../../">ORHUN<span>.</span>BAYKAN</a>
     <nav class="navlinks" id="navlinks">
-      <a href="#mimari"><span data-lang="tr">Mimari</span><span data-lang="en">Architecture</span></a>
+      <a href="#sistem"><span data-lang="tr">Sistem</span><span data-lang="en">System</span></a>
+      <a href="#spin"><span data-lang="tr">Spin</span><span data-lang="en">Spin</span></a>
       <a href="#matematik"><span data-lang="tr">Matematik</span><span data-lang="en">Math</span></a>
       <a href="#oyunlar"><span data-lang="tr">Oyunlar</span><span data-lang="en">Games</span></a>
       <a href="#panel"><span data-lang="tr">Panel</span><span data-lang="en">Backoffice</span></a>
+      <a href="#altyapi"><span data-lang="tr">Altyapı</span><span data-lang="en">Infra</span></a>
       <a href="../otomasyon/"><span data-lang="tr">← Proje 01</span><span data-lang="en">← Project 01</span></a>
     </nav>
     <button class="menubtn" id="menubtn" type="button" aria-label="Menu" aria-controls="navlinks" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
@@ -36,8 +38,8 @@
     <div class="stag"><span data-lang="tr">Kişisel proje · 02</span><span data-lang="en">Personal project · 02</span></div>
     <h1><span data-lang="tr">Slot Oyun Platformu</span><span data-lang="en">Slot Game Platform</span></h1>
     <p class="sub">
-      <span data-lang="tr">Üç Unity WebGL oyunu, üç ayrı .NET servisi, 17 modüllü bir yönetim paneli ve bir oyuncu sitesi. Şans oyunları alan bilgimi uçtan uca bir sisteme dönüştürdüğüm kişisel Ar-Ge projem.</span>
-      <span data-lang="en">Three Unity WebGL games, three separate .NET services, a 17-module backoffice and a player site. My personal R&amp;D project, turning years of iGaming domain knowledge into an end-to-end system.</span>
+      <span data-lang="tr">Bir slot sağlayıcısının altyapısını uçtan uca kurdum: üç Unity WebGL oyunu, üç .NET oyun servisi, 15 modüllü bir yönetim paneli, oyuncu sitesi, HMAC imzalı operatör cüzdan entegrasyonu ve sertifikalanabilir bir RNG zinciri. Şans oyunları alan bilgimi çalışan bir sisteme dönüştürdüğüm kişisel Ar-Ge projem.</span>
+      <span data-lang="en">I built a slot provider's infrastructure end to end: three Unity WebGL games, three .NET game services, a 15-module backoffice, a player site, HMAC-signed operator wallet integration and a certifiable RNG chain. My personal R&amp;D project, turning years of iGaming domain knowledge into a working system.</span>
     </p>
   </div>
 
@@ -48,16 +50,18 @@
     <span class="badge">C# · 46.7K <span data-lang="tr">satır</span><span data-lang="en">lines</span></span>
     <span class="badge">TypeScript · 15.6K <span data-lang="tr">satır</span><span data-lang="en">lines</span></span>
     <span class="badge">EF Core</span>
+    <span class="badge">SQLite · WAL</span>
     <span class="badge">WebSocket</span>
     <span class="badge">Docker</span>
+    <span class="badge">Cloudflare</span>
     <span class="badge">xUnit</span>
   </div>
 
   <div class="metrics">
     <div class="metric"><div class="n">3</div><div class="l"><span data-lang="tr">oyun, 3 farklı matematik modeli<br>payline · cluster · binom</span><span data-lang="en">games, 3 different math models<br>payline · cluster · binomial</span></div></div>
     <div class="metric"><div class="n">5M</div><div class="l"><span data-lang="tr">spin simülasyonu<br>RTP 0.96787 (hedef 0.965)</span><span data-lang="en">spin simulation<br>RTP 0.96787 (target 0.965)</span></div></div>
-    <div class="metric"><div class="n">62K</div><div class="l"><span data-lang="tr">satır kod<br>C# 46.7K · TypeScript 15.6K</span><span data-lang="en">lines of code<br>C# 46.7K · TypeScript 15.6K</span></div></div>
-    <div class="metric"><div class="n">17</div><div class="l"><span data-lang="tr">modüllü yönetim paneli<br>rol bazlı · canlı WebSocket</span><span data-lang="en">backoffice modules<br>role-based · live WebSocket</span></div></div>
+    <div class="metric"><div class="n">126</div><div class="l"><span data-lang="tr">API endpoint<br>29 tablo · 15 migration</span><span data-lang="en">API endpoints<br>29 tables · 15 migrations</span></div></div>
+    <div class="metric"><div class="n">15</div><div class="l"><span data-lang="tr">modüllü yönetim paneli<br>6 rol · canlı WebSocket</span><span data-lang="en">backoffice modules<br>6 roles · live WebSocket</span></div></div>
   </div>
 
   <div class="note">
@@ -66,13 +70,158 @@
     <span data-lang="en">This system ran locally and on my own server, but it is <b>not live right now</b> — the server is off. Every screenshot below is taken from real recordings of the running system; the <code>localhost</code> in the address bar confirms it. The repositories are private.</span>
   </div>
 
+  <!-- SISTEM HARITASI -->
+  <h3 style="font-size:1.15rem;margin:38px 0 10px" id="sistem">
+    <span data-lang="tr">Sistem haritası</span><span data-lang="en">System map</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:20px">
+    <span data-lang="tr">Üç oyun servisi tek bir VM üzerinde Docker Compose ile koşar, dışarıya tek çıkış Cloudflare Tunnel'dır — sunucuda açık inbound port yoktur. Oyuncu sitesi ve panel ayrı React uygulamalarıdır; operatör cüzdanları HMAC imzalı callback'lerle bağlanır.</span>
+    <span data-lang="en">Three game services run on a single VM under Docker Compose; the only way in is a Cloudflare Tunnel — the server has no open inbound ports. The player site and the panel are separate React apps; operator wallets connect over HMAC-signed callbacks.</span>
+  </p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 900 430" width="100%" height="auto" role="img" aria-label="System architecture diagram">
+      <defs>
+        <marker id="sg" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#3FB950"/>
+        </marker>
+        <marker id="sb" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#58A6FF"/>
+        </marker>
+        <marker id="sd" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#6B7280"/>
+        </marker>
+      </defs>
+
+      <!-- istemciler -->
+      <rect x="18" y="40" width="182" height="112" rx="8" fill="#14171D" stroke="#2E3440"/>
+      <text x="109" y="66" text-anchor="middle" fill="#E8EAED" font-size="13" font-weight="700" font-family="sans-serif">
+        <tspan data-lang="tr">Oyuncu tarayıcısı</tspan><tspan data-lang="en">Player browser</tspan>
+      </text>
+      <text x="109" y="88" text-anchor="middle" fill="#9BA3AF" font-size="11.5" font-family="sans-serif">React play-site</text>
+      <text x="109" y="106" text-anchor="middle" fill="#9BA3AF" font-size="11.5" font-family="sans-serif">
+        <tspan data-lang="tr">3 Unity WebGL oyunu</tspan><tspan data-lang="en">3 Unity WebGL games</tspan>
+      </text>
+      <text x="109" y="130" text-anchor="middle" fill="#6B7280" font-size="10.5" font-family="monospace">react-unity-webgl</text>
+
+      <rect x="18" y="180" width="182" height="76" rx="8" fill="#14171D" stroke="#2E3440"/>
+      <text x="109" y="206" text-anchor="middle" fill="#E8EAED" font-size="13" font-weight="700" font-family="sans-serif">
+        <tspan data-lang="tr">Operasyon</tspan><tspan data-lang="en">Operations</tspan>
+      </text>
+      <text x="109" y="228" text-anchor="middle" fill="#9BA3AF" font-size="11.5" font-family="sans-serif">
+        <tspan data-lang="tr">React panel · 15 modül</tspan><tspan data-lang="en">React panel · 15 modules</tspan>
+      </text>
+
+      <rect x="18" y="284" width="182" height="76" rx="8" fill="#14171D" stroke="#58A6FF" stroke-opacity=".4"/>
+      <text x="109" y="310" text-anchor="middle" fill="#58A6FF" font-size="13" font-weight="700" font-family="sans-serif">
+        <tspan data-lang="tr">Operatör cüzdanı</tspan><tspan data-lang="en">Operator wallet</tspan>
+      </text>
+      <text x="109" y="332" text-anchor="middle" fill="#9BA3AF" font-size="11" font-family="sans-serif">
+        <tspan data-lang="tr">PAM callback · HMAC imzalı</tspan><tspan data-lang="en">PAM callback · HMAC signed</tspan>
+      </text>
+
+      <!-- cloudflare edge -->
+      <rect x="256" y="40" width="168" height="216" rx="8" fill="#14171D" stroke="#2E3440"/>
+      <text x="340" y="66" text-anchor="middle" fill="#E8EAED" font-size="13" font-weight="700" font-family="sans-serif">Cloudflare edge</text>
+      <text x="340" y="88" text-anchor="middle" fill="#9BA3AF" font-size="11" font-family="sans-serif">TLS · WAF · Bot Fight</text>
+      <text x="340" y="116" text-anchor="middle" fill="#6B7280" font-size="11" font-family="monospace">Pages → panel</text>
+      <text x="340" y="136" text-anchor="middle" fill="#6B7280" font-size="11" font-family="monospace">Workers → play-site</text>
+      <text x="340" y="156" text-anchor="middle" fill="#6B7280" font-size="11" font-family="monospace">Tunnel → API</text>
+      <text x="340" y="196" text-anchor="middle" fill="#3FB950" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">tünel outbound-only:</tspan><tspan data-lang="en">tunnel is outbound-only:</tspan>
+      </text>
+      <text x="340" y="212" text-anchor="middle" fill="#3FB950" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">VM'de açık inbound port yok</tspan><tspan data-lang="en">no open inbound ports on the VM</tspan>
+      </text>
+
+      <!-- vm -->
+      <rect x="478" y="28" width="404" height="374" rx="12" fill="#0E1014" stroke="#2E3440"/>
+      <text x="680" y="54" text-anchor="middle" fill="#6B7280" font-size="11.5" font-weight="600" font-family="monospace" letter-spacing="1.5">
+        <tspan data-lang="tr">TEK VM — DOCKER COMPOSE · ~$24/AY</tspan><tspan data-lang="en">SINGLE VM — DOCKER COMPOSE · ~$24/MO</tspan>
+      </text>
+
+      <rect x="502" y="72" width="356" height="82" rx="8" fill="#14171D" stroke="#3FB950" stroke-opacity=".45"/>
+      <text x="680" y="96" text-anchor="middle" fill="#3FB950" font-size="12.5" font-weight="700" font-family="monospace">:8080 slot-server</text>
+      <text x="680" y="116" text-anchor="middle" fill="#9BA3AF" font-size="11" font-family="sans-serif">
+        <tspan data-lang="tr">Wild Revolver + tüm backoffice API'leri</tspan><tspan data-lang="en">Wild Revolver + every backoffice API</tspan>
+      </text>
+      <text x="680" y="136" text-anchor="middle" fill="#6B7280" font-size="10.5" font-family="monospace">/ws/panel · /games/* <tspan data-lang="tr">statik host</tspan><tspan data-lang="en">static host</tspan></text>
+
+      <rect x="502" y="166" width="170" height="58" rx="8" fill="#14171D" stroke="#2E3440"/>
+      <text x="587" y="190" text-anchor="middle" fill="#E8EAED" font-size="12" font-weight="700" font-family="monospace">:5081 sweetfortune</text>
+      <text x="587" y="210" text-anchor="middle" fill="#9BA3AF" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">cluster motoru</tspan><tspan data-lang="en">cluster engine</tspan>
+      </text>
+
+      <rect x="688" y="166" width="170" height="58" rx="8" fill="#14171D" stroke="#2E3440"/>
+      <text x="773" y="190" text-anchor="middle" fill="#E8EAED" font-size="12" font-weight="700" font-family="monospace">:5082 plinko</text>
+      <text x="773" y="210" text-anchor="middle" fill="#9BA3AF" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">binom motoru</tspan><tspan data-lang="en">binomial engine</tspan>
+      </text>
+
+      <rect x="502" y="240" width="220" height="66" rx="8" fill="#14171D" stroke="#BC8CFF" stroke-opacity=".45"/>
+      <text x="612" y="264" text-anchor="middle" fill="#BC8CFF" font-size="12.5" font-weight="700" font-family="monospace">SQLite · WAL</text>
+      <text x="612" y="284" text-anchor="middle" fill="#9BA3AF" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">3 servisin ortak DB'si — tek cüzdan</tspan><tspan data-lang="en">shared by all 3 services — one wallet</tspan>
+      </text>
+
+      <rect x="738" y="240" width="120" height="66" rx="8" fill="#14171D" stroke="#2E3440"/>
+      <text x="798" y="264" text-anchor="middle" fill="#E8EAED" font-size="11.5" font-weight="700" font-family="sans-serif">
+        <tspan data-lang="tr">bot sürüsü</tspan><tspan data-lang="en">bot crowd</tspan>
+      </text>
+      <text x="798" y="284" text-anchor="middle" fill="#9BA3AF" font-size="10.5" font-family="sans-serif">75 persona</text>
+
+      <text x="680" y="336" text-anchor="middle" fill="#6B7280" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">yeni oyun servisi açılışta kendini GameRegistrations'a yazar —</tspan><tspan data-lang="en">a new game service registers itself into GameRegistrations on boot —</tspan>
+      </text>
+      <text x="680" y="352" text-anchor="middle" fill="#6B7280" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">panel sıfır kod değişikliğiyle yeni oyunu gösterir</tspan><tspan data-lang="en">the panel picks it up with zero code changes</tspan>
+      </text>
+      <text x="680" y="384" text-anchor="middle" fill="#3FB950" font-size="10.5" font-family="monospace">
+        <tspan data-lang="tr">tek AUTH_SIGNING_KEY → aynı token 3 serviste geçerli</tspan><tspan data-lang="en">one AUTH_SIGNING_KEY → one token valid on all 3 services</tspan>
+      </text>
+
+      <!-- oklar -->
+      <path d="M200,96 C228,96 228,110 254,110" stroke="#3FB950" stroke-width="1.6" fill="none" marker-end="url(#sg)"/>
+      <path d="M200,218 C228,218 228,180 254,180" stroke="#3FB950" stroke-width="1.6" fill="none" marker-end="url(#sg)"/>
+      <path d="M424,150 C452,150 452,113 500,113" stroke="#3FB950" stroke-width="1.6" fill="none" marker-end="url(#sg)"/>
+      <path d="M680,154 L588,164" stroke="#6B7280" stroke-width="1.2" fill="none" marker-end="url(#sd)"/>
+      <path d="M680,154 L772,164" stroke="#6B7280" stroke-width="1.2" fill="none" marker-end="url(#sd)"/>
+      <path d="M587,224 C587,232 600,236 606,238" stroke="#6B7280" stroke-width="1.2" fill="none" marker-end="url(#sd)"/>
+      <path d="M773,224 C740,232 700,236 660,240" stroke="#6B7280" stroke-width="1.2" fill="none" marker-end="url(#sd)"/>
+      <path d="M200,322 C340,322 400,140 500,132" stroke="#58A6FF" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#sb)"/>
+      <text x="330" y="292" text-anchor="middle" fill="#58A6FF" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">debit / credit / rollback</tspan><tspan data-lang="en">debit / credit / rollback</tspan>
+      </text>
+    </svg>
+  </div>
+  <p class="scrollhint"><span data-lang="tr">← diyagramı yatay kaydırabilirsiniz →</span><span data-lang="en">← scroll the diagram horizontally →</span></p>
+
+  <div class="grid3">
+    <div class="card">
+      <h4><span data-lang="tr">Ortak veritabanı, tek cüzdan</span><span data-lang="en">Shared database, one wallet</span></h4>
+      <p><span data-lang="tr">Üç servis de aynı SQLite dosyasını WAL modunda açar. Oyuncu bakiyesi, turlar ve işlemler oyunlar arasında tek defterdedir — Plinko'da kazanılan bakiye Sweet Fortune'da anında kullanılabilir.</span>
+      <span data-lang="en">All three services open the same SQLite file in WAL mode. Player balance, rounds and transactions live in one ledger across games — a Plinko win is instantly spendable in Sweet Fortune.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Tek imza anahtarı</span><span data-lang="en">One signing key</span></h4>
+      <p><span data-lang="tr">Oyuncu token'ı HMAC-SHA256 ile imzalanır ve üç serviste de byte-byte geçerlidir. Kardeş servisler yalnızca doğrulayıcıyı taşır; login/kayıt tek yerde yaşar.</span>
+      <span data-lang="en">The player token is HMAC-SHA256 signed and valid byte-for-byte on all three services. Sibling services carry only the validator; login/registration lives in one place.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Oyun kendini kaydeder</span><span data-lang="en">Games register themselves</span></h4>
+      <p><span data-lang="tr">Her oyun servisi açılışta kendini idempotent biçimde <code>GameRegistrations</code> tablosuna yazar. Panel yeni oyunu sıfır kod değişikliğiyle listeler — hedef, sonraki oyunun 1 haftada değil 1 günde yayına çıkmasıydı.</span>
+      <span data-lang="en">Each game service idempotently upserts itself into <code>GameRegistrations</code> on boot. The panel lists the new game with zero code changes — the goal was for the next game to ship in a day, not a week.</span></p>
+    </div>
+  </div>
+
   <!-- QA GOZUYLE MIMARI -->
   <h3 style="font-size:1.15rem;margin:38px 0 10px" id="mimari">
     <span data-lang="tr">QA gözüyle alınmış mimari kararlar</span><span data-lang="en">Architecture decisions made with a QA eye</span>
   </h3>
   <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:20px">
-    <span data-lang="tr">Bu projede beni asıl ilgilendiren şey oyunu yapmak değildi; <b style="color:var(--ink)">doğrulanabilir</b> bir oyun yapmaktı. Aşağıdaki dört karar, kod yazılmadan önce test edilebilirlik gerekçesiyle alındı.</span>
-    <span data-lang="en">What interested me here was not building a game; it was building a <b style="color:var(--ink)">verifiable</b> one. The four decisions below were taken for testability reasons before any code was written.</span>
+    <span data-lang="tr">Bu projede beni asıl ilgilendiren şey oyunu yapmak değildi; <b style="color:var(--ink)">doğrulanabilir</b> bir oyun yapmaktı. Aşağıdaki kararlar, kod yazılmadan önce test edilebilirlik gerekçesiyle alındı.</span>
+    <span data-lang="en">What interested me here was not building a game; it was building a <b style="color:var(--ink)">verifiable</b> one. The decisions below were taken for testability reasons before any code was written.</span>
   </p>
 
   <div class="grid2">
@@ -96,6 +245,16 @@
       <p><span data-lang="tr">Her tur, grid'i ve değerlendirmesi ile birlikte veritabanına kaydedilir. Panelden herhangi bir tur açılıp <b>birebir yeniden oynatılabilir</b>: hangi sembol nereye düştü, hangi hat kazandı, ne ödendi. Şikâyet incelemesi tahmine değil kayda dayanır.</span>
       <span data-lang="en">Each round is persisted with its grid and its evaluation. Any round can be opened from the panel and <b>replayed exactly</b>: which symbol landed where, which line won, what was paid. Dispute handling rests on the record, not on guesswork.</span></p>
     </div>
+    <div class="card">
+      <h4><span data-lang="tr">Tek WebSocket, ateşle-unut yayın</span><span data-lang="en">One WebSocket, fire-and-forget broadcast</span></h4>
+      <p><span data-lang="tr">Canlı akış için tek hub vardır; kardeş servisler her spin sonrası sonucu içeriden ateşle-unut ilkesiyle yayınlar. Panel hub'ı çökse bile <b>oyuncunun spini ne yavaşlar ne başarısız olur</b> — izleme, oyunun kritik yolunda değildir.</span>
+      <span data-lang="en">There is a single live hub; sibling services fire-and-forget each spin result into it. Even if the panel hub dies, <b>a player's spin neither slows nor fails</b> — observability sits off the game's critical path.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Cüzdan üç durumludur</span><span data-lang="en">The wallet has three states</span></h4>
+      <p><span data-lang="tr">Kazanç yatırma <code>ok / pending / failed</code> ile sonuçlanır ve tur <b>her koşulda</b> yazılır: "bu spin koşuldu"nun kaynağı turdur, mutabakatın ne yapacağını işlem durumu söyler. Başarısız credit, kritik log + denetim kaydı üretir.</span>
+      <span data-lang="en">A win credit resolves to <code>ok / pending / failed</code> and the round is written <b>in every case</b>: the round is the source of truth for "this spin ran", while the transaction status tells reconciliation what to do next. A failed credit produces a critical log plus an audit row.</span></p>
+    </div>
   </div>
 
   <!-- REPLAY GORSELI -->
@@ -103,9 +262,139 @@
     <div class="shot wide">
       <a href="../../assets/img/slot-replay.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-replay.jpg" alt="Round replay in the backoffice" loading="lazy"></a>
       <div class="cap">
-        <b><span data-lang="tr">Tur replay — yukarıdaki kararın somut karşılığı</span><span data-lang="en">Round replay — what that decision buys you</span></b>
+        <b><span data-lang="tr">Tur replay — yukarıdaki kararların somut karşılığı</span><span data-lang="en">Round replay — what those decisions buy you</span></b>
         <span data-lang="tr">Tur kimliği, oyuncu, operatör, zaman damgası; gerçek 5×3 grid, kazanan hat (<code>Line 6 · 3× 10</code>) ve ödenen tutar. Sağ altta turu geri alma aksiyonu. Bir QA ya da destek ekibinin “bu turda ne oldu” sorusuna dakikalar değil saniyeler içinde cevap vermesini sağlayan ekran budur.</span>
         <span data-lang="en">Round id, player, operator, timestamp; the actual 5×3 grid, the winning line (<code>Line 6 · 3× 10</code>) and what was paid. Bottom left, the rollback action. This is the screen that lets QA or support answer “what happened in this round?” in seconds rather than minutes.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPIN YASAM DONGUSU -->
+  <h3 style="font-size:1.15rem;margin:38px 0 10px" id="spin">
+    <span data-lang="tr">Bir spinin yaşam döngüsü</span><span data-lang="en">The life of a spin</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:20px">
+    <span data-lang="tr">Sistemin bütün iddiası tek bir akışta özetlenebilir: oyuncunun tıklaması ile panelde beliren kayıt arasındaki sekiz adım. Sıralama bilinçli — idempotency anahtarı <b style="color:var(--ink)">paradan önce</b> var olur, tur <b style="color:var(--ink)">her koşulda</b> yazılır.</span>
+    <span data-lang="en">The whole system's claim fits in one flow: the eight steps between the player's click and the record appearing in the panel. The ordering is deliberate — the idempotency key exists <b style="color:var(--ink)">before any money moves</b>, and the round is written <b style="color:var(--ink)">in every case</b>.</span>
+  </p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 900 330" width="100%" height="auto" role="img" aria-label="Spin pipeline diagram">
+      <defs>
+        <marker id="pg" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#3FB950"/>
+        </marker>
+      </defs>
+
+      <!-- satir 1 -->
+      <rect x="18" y="34" width="196" height="86" rx="8" fill="#14171D" stroke="#2E3440"/>
+      <text x="34" y="60" fill="#3FB950" font-size="12" font-weight="700" font-family="monospace">01</text>
+      <text x="116" y="60" text-anchor="middle" fill="#E8EAED" font-size="12.5" font-weight="700" font-family="monospace">roundId</text>
+      <text x="116" y="82" text-anchor="middle" fill="#9BA3AF" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">idempotency anahtarı doğar:</tspan><tspan data-lang="en">the idempotency key is born:</tspan>
+      </text>
+      <text x="116" y="100" text-anchor="middle" fill="#6B7280" font-size="10.5" font-family="monospace">debit:{roundId}</text>
+
+      <rect x="240" y="34" width="196" height="86" rx="8" fill="#14171D" stroke="#2E3440"/>
+      <text x="256" y="60" fill="#3FB950" font-size="12" font-weight="700" font-family="monospace">02</text>
+      <text x="338" y="60" text-anchor="middle" fill="#E8EAED" font-size="12.5" font-weight="700" font-family="sans-serif">
+        <tspan data-lang="tr">limit kontrolü</tspan><tspan data-lang="en">limit check</tspan>
+      </text>
+      <text x="338" y="82" text-anchor="middle" fill="#9BA3AF" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">sorumlu oyun: bahis/kayıp limiti,</tspan><tspan data-lang="en">responsible gambling: wager/loss</tspan>
+      </text>
+      <text x="338" y="98" text-anchor="middle" fill="#9BA3AF" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">self-exclusion, ülke kuralı</tspan><tspan data-lang="en">limits, self-exclusion, geo rules</tspan>
+      </text>
+
+      <rect x="462" y="34" width="196" height="86" rx="8" fill="#14171D" stroke="#58A6FF" stroke-opacity=".45"/>
+      <text x="478" y="60" fill="#58A6FF" font-size="12" font-weight="700" font-family="monospace">03</text>
+      <text x="560" y="60" text-anchor="middle" fill="#58A6FF" font-size="12.5" font-weight="700" font-family="monospace">DEBIT</text>
+      <text x="560" y="82" text-anchor="middle" fill="#9BA3AF" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">operatör cüzdanı · HMAC imzalı</tspan><tspan data-lang="en">operator wallet · HMAC signed</tspan>
+      </text>
+      <text x="560" y="98" text-anchor="middle" fill="#9BA3AF" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">retry + devre kesici · ret → tur yok</tspan><tspan data-lang="en">retry + circuit breaker · reject → no round</tspan>
+      </text>
+
+      <rect x="684" y="34" width="196" height="86" rx="8" fill="#14171D" stroke="#3FB950" stroke-opacity=".45"/>
+      <text x="700" y="60" fill="#3FB950" font-size="12" font-weight="700" font-family="monospace">04</text>
+      <text x="782" y="60" text-anchor="middle" fill="#3FB950" font-size="12.5" font-weight="700" font-family="monospace">RNG</text>
+      <text x="782" y="82" text-anchor="middle" fill="#9BA3AF" font-size="10.5" font-family="sans-serif">HMAC-DRBG · NIST SP 800-90A</text>
+      <text x="782" y="98" text-anchor="middle" fill="#9BA3AF" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">seed + çekiliş sayısı tura yazılır</tspan><tspan data-lang="en">seed + draw count stamped on round</tspan>
+      </text>
+
+      <!-- satir 2 -->
+      <rect x="18" y="180" width="196" height="86" rx="8" fill="#14171D" stroke="#3FB950" stroke-opacity=".45"/>
+      <text x="34" y="206" fill="#3FB950" font-size="12" font-weight="700" font-family="monospace">05</text>
+      <text x="116" y="206" text-anchor="middle" fill="#3FB950" font-size="12.5" font-weight="700" font-family="monospace">engine.Spin</text>
+      <text x="116" y="228" text-anchor="middle" fill="#9BA3AF" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">grid + kazanç + bonus/tumble</tspan><tspan data-lang="en">grid + wins + bonus/tumble</tspan>
+      </text>
+      <text x="116" y="244" text-anchor="middle" fill="#9BA3AF" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">adımları tek yanıtta</tspan><tspan data-lang="en">steps in a single response</tspan>
+      </text>
+
+      <rect x="240" y="180" width="196" height="86" rx="8" fill="#14171D" stroke="#58A6FF" stroke-opacity=".45"/>
+      <text x="256" y="206" fill="#58A6FF" font-size="12" font-weight="700" font-family="monospace">06</text>
+      <text x="338" y="206" text-anchor="middle" fill="#58A6FF" font-size="12.5" font-weight="700" font-family="monospace">CREDIT</text>
+      <text x="338" y="228" text-anchor="middle" fill="#9BA3AF" font-size="10.5" font-family="monospace">ok / pending / failed</text>
+      <text x="338" y="244" text-anchor="middle" fill="#9BA3AF" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">tur yine yazılır — mutabakat okur</tspan><tspan data-lang="en">round still written — reconciliation reads it</tspan>
+      </text>
+
+      <rect x="462" y="180" width="196" height="86" rx="8" fill="#14171D" stroke="#BC8CFF" stroke-opacity=".5"/>
+      <text x="478" y="206" fill="#BC8CFF" font-size="12" font-weight="700" font-family="monospace">07</text>
+      <text x="560" y="206" text-anchor="middle" fill="#BC8CFF" font-size="12.5" font-weight="700" font-family="sans-serif">
+        <tspan data-lang="tr">tek EF transaction</tspan><tspan data-lang="en">one EF transaction</tspan>
+      </text>
+      <text x="560" y="228" text-anchor="middle" fill="#9BA3AF" font-size="10.5" font-family="sans-serif">Round + Bet/Win Tx + Session</text>
+      <text x="560" y="244" text-anchor="middle" fill="#9BA3AF" font-size="10.5" font-family="sans-serif">+ Bonus + Jackpot + Audit</text>
+
+      <rect x="684" y="180" width="196" height="86" rx="8" fill="#14171D" stroke="#2E3440"/>
+      <text x="700" y="206" fill="#3FB950" font-size="12" font-weight="700" font-family="monospace">08</text>
+      <text x="782" y="206" text-anchor="middle" fill="#E8EAED" font-size="12.5" font-weight="700" font-family="sans-serif">
+        <tspan data-lang="tr">canlı yayın</tspan><tspan data-lang="en">live broadcast</tspan>
+      </text>
+      <text x="782" y="228" text-anchor="middle" fill="#9BA3AF" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">WebSocket panel feed</tspan><tspan data-lang="en">WebSocket panel feed</tspan>
+      </text>
+      <text x="782" y="244" text-anchor="middle" fill="#9BA3AF" font-size="10.5" font-family="sans-serif">
+        <tspan data-lang="tr">ateşle-unut — spin'i bekletmez</tspan><tspan data-lang="en">fire-and-forget — never blocks the spin</tspan>
+      </text>
+
+      <!-- oklar -->
+      <path d="M214,77 L238,77" stroke="#3FB950" stroke-width="1.6" fill="none" marker-end="url(#pg)"/>
+      <path d="M436,77 L460,77" stroke="#3FB950" stroke-width="1.6" fill="none" marker-end="url(#pg)"/>
+      <path d="M658,77 L682,77" stroke="#3FB950" stroke-width="1.6" fill="none" marker-end="url(#pg)"/>
+      <path d="M782,120 C782,158 220,140 122,178" stroke="#3FB950" stroke-width="1.6" fill="none" marker-end="url(#pg)"/>
+      <path d="M214,223 L238,223" stroke="#3FB950" stroke-width="1.6" fill="none" marker-end="url(#pg)"/>
+      <path d="M436,223 L460,223" stroke="#3FB950" stroke-width="1.6" fill="none" marker-end="url(#pg)"/>
+      <path d="M658,223 L682,223" stroke="#3FB950" stroke-width="1.6" fill="none" marker-end="url(#pg)"/>
+
+      <text x="449" y="308" text-anchor="middle" fill="#6B7280" font-size="11" font-family="sans-serif">
+        <tspan data-lang="tr">Sonrası: seed ve çekiliş sayısı kayıtlı olduğu için her tur panelden deterministik replay ile byte-byte yeniden üretilebilir.</tspan><tspan data-lang="en">Afterwards: because seed and draw count are on record, any round can be re-derived byte-for-byte via deterministic replay from the panel.</tspan>
+      </text>
+    </svg>
+  </div>
+  <p class="scrollhint"><span data-lang="tr">← diyagramı yatay kaydırabilirsiniz →</span><span data-lang="en">← scroll the diagram horizontally →</span></p>
+
+  <div class="gallery">
+    <div class="shot">
+      <a href="../../assets/img/slot-panel-transaction.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-panel-transaction.jpg" alt="Transaction detail with idempotency key and balance movement" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">İşlem detayı — paranın izi</span><span data-lang="en">Transaction detail — the money trail</span></b>
+        <span data-lang="tr">Her bet/win/bonus/refund satırı önceki ve sonraki bakiyeyle yazılır (139.300 → 134.300). Idempotency anahtarı ekranda: aynı tur iki kez debit edilemez.</span>
+        <span data-lang="en">Every bet/win/bonus/refund row is written with balance before and after (139,300 → 134,300). The idempotency key is on screen: the same round cannot be debited twice.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-panel-monitoring-callback.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-panel-monitoring-callback.jpg" alt="Wallet callback log with request and response JSON" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Cüzdan callback'i — HMAC'li istek/yanıt</span><span data-lang="en">Wallet callback — HMAC-signed request/response</span></b>
+        <span data-lang="tr">Operatöre giden her <code>POST /wallet/v1/debit|credit</code> çağrısının gövdesi, yanıtı, durumu ve gecikmesi saklanır. Entegrasyon tartışmasında "ne gönderdik, ne döndü" sorusunun cevabı buradadır.</span>
+        <span data-lang="en">Every <code>POST /wallet/v1/debit|credit</code> call to an operator is stored with its body, response, status and latency. In an integration dispute, "what did we send, what came back" is answered here.</span>
       </div>
     </div>
   </div>
@@ -145,11 +434,42 @@
         <tr>
           <td><b>Plinko</b></td>
           <td><span data-lang="tr">binom dağılım · gerçek fizik</span><span data-lang="en">binomial · real physics</span></td>
-          <td><span data-lang="tr">28 çarpan tablosu + xUnit</span><span data-lang="en">28 multiplier tables + xUnit</span></td>
+          <td><span data-lang="tr">28 çarpan tablosu + analitik doğrulayıcı + xUnit</span><span data-lang="en">28 multiplier tables + analytic verifier + xUnit</span></td>
           <td class="num"><span class="pass">~99% RTP</span><br><span style="color:var(--ink3);font-size:12.5px">20/20 <span data-lang="tr">test geçti</span><span data-lang="en">tests pass</span></span></td>
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="term" role="img" aria-label="RTP simulation run: PASS">
+    <div class="termbar"><i></i><i></i><i></i><span class="tt">orhun@dev: ~/slot-platform</span></div>
+    <div class="termbody" style="min-height:0">
+      <div class="tl-line"><span class="prompt">$&nbsp;</span><span class="cmd">dotnet run --project tests/SlotEngine.Sim -- wild_revolver --spins 5000000 --seed 42</span></div>
+      <div class="tl-line dim">config wild_revolver.json · mathHash 41cfa9e2 · 1.56M spins/s</div>
+      <div class="tl-line"><span class="tname">rtp_total&nbsp;&nbsp;&nbsp;0.96787&nbsp;&nbsp;(target 0.965 ±0.005)</span><span class="tdots"></span><span class="tpass">PASS</span></div>
+      <div class="tl-line dim">&nbsp;&nbsp;paylines 0.77700 · scatter 0.00650 · bonus 0.18437</div>
+      <div class="tl-line"><span class="tname">hit_freq&nbsp;&nbsp;&nbsp;&nbsp;30.5% · bonus 1/154 spin</span><span class="tdots"></span><span class="tpass">PASS</span></div>
+      <div class="tl-line dim">max_win 487× (cap 5000×) · σ/spin 3.70</div>
+      <div class="tl-sum">════ <span data-lang="tr">aynı seed → aynı rapor, byte-byte</span><span data-lang="en">same seed → same report, byte for byte</span> ════</div>
+    </div>
+  </div>
+
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-top:18px">
+    <span data-lang="tr">Bu rapor bir kereliğine üretilmiş bir vitrin değil, ayar sürecinin kendisi: Unity'deki matematiğin sunucuya naif portu ilk ölçümde <b style="color:var(--ink)">%157,94 RTP</b> verdi — oyuncuya sistematik para kazandıran bir oyun. Beş ayar geçişi (makara ağırlıkları, wild çarpan dağılımı, scatter frekansı) sonucu %96,79'a taşıdı; her geçiş rapora işlendi. Rapor dürüst kalanları da söylüyor: varyans hedeflenen "orta-yüksek"in altında, çözümü (ödeme tablosu yeniden tasarımı) kapsam dışına alınıp kayda geçirildi.</span>
+    <span data-lang="en">This report isn't a one-off showcase — it is the tuning process itself: the naive port of the Unity math to the server measured <b style="color:var(--ink)">157.94% RTP</b> on the first run — a game that systematically pays the player. Five tuning passes (reel weights, wild-multiplier distribution, scatter frequency) brought it to 96.79%, each pass logged in the report. It also states what remains honest: variance sits below the intended "medium-high", and the fix (a paytable redesign) was scoped out and recorded.</span>
+  </p>
+
+  <div class="grid2">
+    <div class="card">
+      <h4><span data-lang="tr">Sertifikalanabilir RNG</span><span data-lang="en">A certifiable RNG</span></h4>
+      <p><span data-lang="tr">Rastgelelik, NIST SP 800-90A §10.1.2'ye göre yazılmış bir <b>HMAC-DRBG</b>'den gelir — GLI, eCOGRA ve iTech Labs gibi laboratuvarların RNG sertifikasyonunda aradığı onaylı üreteç listesindendir. 32 baytlık seed'den deterministiktir; her tur <code>SeedHex</code> ve çekiliş sayısıyla damgalanır, replay bu sayede matematiksel bir garantidir.</span>
+      <span data-lang="en">Randomness comes from an <b>HMAC-DRBG</b> written to NIST SP 800-90A §10.1.2 — on the approved-generator list that labs like GLI, eCOGRA and iTech Labs check during RNG certification. It is deterministic from a 32-byte seed; every round is stamped with its <code>SeedHex</code> and draw count, which is what makes replay a mathematical guarantee.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Matematik sürümlenir ve korunur</span><span data-lang="en">Math is versioned and enforced</span></h4>
+      <p><span data-lang="tr">Her tura <code>MathHash</code> ve <code>ConfigHash</code> yazılır; hash yalnızca RTP'yi etkileyen alanları kapsar — kozmetik değişiklik yeniden sertifika istemez, matematik değişikliği ister. Prod açılışta sertifika zorunluluğu denetlenir; deterministik replay, canlı config turunkinden saparsa <code>422 config drift</code> ile durur.</span>
+      <span data-lang="en">Every round carries a <code>MathHash</code> and <code>ConfigHash</code>; the hash covers only RTP-affecting keys — cosmetic edits don't force re-certification, math edits do. Production boots refuse to start without valid certs, and deterministic replay halts with <code>422 config drift</code> if the live config no longer matches the round's.</span></p>
+    </div>
   </div>
 
   <div class="note">
@@ -160,6 +480,7 @@
 </div>
 </section>
 
+<!-- ==================== OYUNLAR ==================== -->
 <section style="border-top:none;padding-top:0">
 <div class="wrap">
 
@@ -193,43 +514,411 @@
     </div>
   </div>
 
-  <h3 style="font-size:1.15rem;margin:38px 0 16px" id="panel">
-    <span data-lang="tr">Yönetim paneli — 17 modül</span><span data-lang="en">Backoffice — 17 modules</span>
+  <!-- WILD REVOLVER DERINLEMESINE -->
+  <h3 style="font-size:1.05rem;margin:38px 0 10px">
+    <span data-lang="tr">Wild Revolver — özellik seti</span><span data-lang="en">Wild Revolver — the feature set</span>
   </h3>
   <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:18px">
-    <span data-lang="tr">Dashboard, oyunlar, operatörler, oyuncular, turlar, oturumlar, işlemler, bonuslar, jackpotlar, raporlar, risk, izleme, denetim kaydı, yapılandırma, kullanıcı ve roller. Rol bazlı yetkilendirme ve canlı WebSocket akışı ile.</span>
-    <span data-lang="en">Dashboard, games, operators, players, rounds, sessions, transactions, bonuses, jackpots, reports, risk, monitoring, audit log, configuration, users and roles. With role-based access and a live WebSocket feed.</span>
+    <span data-lang="tr">Üç oyunun en olgunu: ~8.400 satır C#, 41 script, tek sahne — ve o sahne elle değil, editör menüsünden kodla kurulur. Free spin'ler 3/4/5 scatter ile 10/15/20 spin verir, retrigger +5/+8/+10 ekler; free spin sırasında 2×/3×/5× çarpanlı wild'lar dağılıma göre düşer. İki scatter erken gelirse kalan makaralar yavaşlar ve kenarları parlar (anticipation) — turbo modunda bu bilinçli olarak kapalıdır. Bonus satın alma yedi durumlu bir akıştır: seçim → onay → simüle spin → kazanç ekranı → sayaç. Maksimum kazanç 5000× ile sınırlandırılmıştır; editördeki 10M spinlik simülatör matematiği seed 42 ile tekrarlanabilir biçimde ölçer.</span>
+    <span data-lang="en">The most mature of the three: ~8,400 lines of C#, 41 scripts, a single scene — and that scene is built by code from an editor menu, not by hand. Free spins award 10/15/20 for 3/4/5 scatters with +5/+8/+10 retriggers; during free spins, 2×/3×/5× multiplier wilds drop by configured distribution. When two scatters land early, the remaining reels slow down and glow (anticipation) — deliberately disabled in turbo. Buy Bonus is a seven-state flow: pick → confirm → simulated spin → win screen → counter. Max win is capped at 5000×; a 10M-spin editor simulator measures the math reproducibly at seed 42.</span>
   </p>
-
   <div class="gallery">
-    <div class="shot wide">
-      <a href="../../assets/img/slot-dashboard.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-dashboard.jpg" alt="Backoffice dashboard" loading="lazy"></a>
+    <div class="shot">
+      <a href="../../assets/img/slot-game-wr-howtoplay.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-game-wr-howtoplay.jpg" alt="Wild Revolver how-to-play screen" loading="lazy"></a>
       <div class="cap">
-        <b><span data-lang="tr">Dashboard — canlı operatör metrikleri</span><span data-lang="en">Dashboard — live operator metrics</span></b>
-        <span data-lang="tr">Toplam bahis/kazanç, GGR, ortalama RTP, aktif oyuncu ve operatör sayısı; saatlik bahis×kazanç grafiği; canlı spin akışı; isabet frekansı, kazanç kaynağı, bonus oranı ve kazanç kademeleri.</span>
-        <span data-lang="en">Total wager/win, GGR, average RTP, active players and operators; hourly wager×win chart; a live spin feed; hit frequency, win source, bonus rate and win tiers.</span>
+        <b><span data-lang="tr">How to Play</span><span data-lang="en">How to Play</span></b>
+        <span data-lang="tr">Free spin, wild ve büyük kazanç kuralları ile 5000× tavanı oyuncuya baştan, oyunun dilinde anlatılır.</span>
+        <span data-lang="en">Free-spin, wild and big-win rules plus the 5000× cap are told to the player upfront, in the game's own voice.</span>
       </div>
     </div>
     <div class="shot">
-      <a href="../../assets/img/slot-jackpots.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-jackpots.jpg" alt="Jackpot pools" loading="lazy"></a>
+      <a href="../../assets/img/slot-game-wr-buy.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-game-wr-buy.jpg" alt="Wild Revolver buy free spins confirmation" loading="lazy"></a>
       <div class="cap">
-        <b><span data-lang="tr">Jackpot havuzları</span><span data-lang="en">Jackpot pools</span></b>
-        <span data-lang="tr">Her uygun bahis havuza katkı verir; havuz eşiği aşınca tetiklenir. Havuz yapılandırması, katkılar ve kazanımlar panelden izlenir.</span>
-        <span data-lang="en">Every eligible bet contributes to the pool, which fires once its threshold is crossed. Pool config, contributions and wins are all tracked from the panel.</span>
+        <b><span data-lang="tr">Buy Free Spins</span><span data-lang="en">Buy Free Spins</span></b>
+        <span data-lang="tr">100×/150×/200× bahis karşılığı 10/15/20 free spin; ayrı bir onay adımı yanlış tıklamayı paradan ayırır.</span>
+        <span data-lang="en">10/15/20 free spins for 100×/150×/200× the bet; a separate confirm step keeps a stray click away from real money.</span>
       </div>
     </div>
     <div class="shot">
-      <a href="../../assets/img/slot-monitoring.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-monitoring.jpg" alt="Monitoring and wallet callbacks" loading="lazy"></a>
+      <a href="../../assets/img/slot-game-wr-freespins.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-game-wr-freespins.jpg" alt="Wild Revolver 20 free spins awarded" loading="lazy"></a>
       <div class="cap">
-        <b><span data-lang="tr">İzleme — cüzdan callback'leri</span><span data-lang="en">Monitoring — wallet callbacks</span></b>
-        <span data-lang="tr">Sistem sağlığı, cüzdan callback kayıtları ve API istek logları. Her çağrının operatörü, metodu, durumu ve süresi görünür.</span>
-        <span data-lang="en">System health, wallet callback logs and API request logs. Each call shows its operator, method, status and duration.</span>
+        <b><span data-lang="tr">Bonus kazanıldı</span><span data-lang="en">Bonus won</span></b>
+        <span data-lang="tr">Scatter'lar oturdu: 20 free spin. Soldaki rozet bonus boyunca kalan spin sayısını taşır; turbo bonusta otomatik devre dışıdır ve çıkışta eski haline döner.</span>
+        <span data-lang="en">The scatters landed: 20 free spins. The left badge tracks remaining spins through the bonus; turbo is auto-disabled during it and restored on exit.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SWEET FORTUNE + PLINKO DERINLEMESINE -->
+  <h3 style="font-size:1.05rem;margin:38px 0 10px">
+    <span data-lang="tr">Sweet Fortune &amp; Plinko — iki farklı zorluk</span><span data-lang="en">Sweet Fortune &amp; Plinko — two different problems</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:18px">
+    <span data-lang="tr">Sweet Fortune'da zorluk zincirdi: kazanan küme patlar, kalanlar düşer, üstten yenisi gelir — ve bu 30 kademeye kadar sürebilir. Tüm zincir sunucuda önceden hesaplanır ve <b style="color:var(--ink)">tek yanıtta</b> gelir; istemcideki <code>CascadeManager</code> matematiksiz, RNG'siz bir sıralayıcıdır. Üzerine Hold &amp; Spin (6+ coin → 3 respin, her yeni coin sayacı tazeler), dört jackpot kademesi (50×/100×/150×/200×) ve 1×–200× arası 20 kademeli coin tablosu biner. Plinko'da zorluk fizikti; çözümü yukarıdaki matematik bölümünde anlattım — burada görünen yüzü: 1–10 top aynı anda düşer, toplar birbirine çarpmaz (fizik katmanı matrisi), her biri gerçek sekmelerle sunucunun seçtiği kutuya iner.</span>
+    <span data-lang="en">In Sweet Fortune the hard part was the chain: winning clusters explode, survivors fall, new symbols drop in — up to 30 cascades deep. The whole chain is precomputed on the server and arrives <b style="color:var(--ink)">in a single response</b>; the client's <code>CascadeManager</code> is a sequencer with no math and no RNG. On top sit Hold &amp; Spin (6+ coins → 3 respins, each new coin resetting the counter), four jackpot tiers (50×/100×/150×/200×) and a 20-step coin table from 1× to 200×. In Plinko the hard part was physics, covered in the math section above — what you see here: 1–10 balls drop at once, balls never collide with each other (physics layer matrix), and each lands in the server-chosen bin through genuine bounces.</span>
+  </p>
+  <div class="gallery">
+    <div class="shot">
+      <a href="../../assets/img/slot-game-sf-cascade.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-game-sf-cascade.jpg" alt="Sweet Fortune mid-tumble, symbols dropping in" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Tumble anı</span><span data-lang="en">Mid-tumble</span></b>
+        <span data-lang="tr">Kazanan küme az önce patladı, yeni semboller düşüyor. Üst şeritteki dört bilet jackpot kademeleri. Bu animasyonun her karesi, sunucudan gelen adım listesinin oynatımıdır.</span>
+        <span data-lang="en">A winning cluster just exploded and new symbols are dropping in. The four tickets in the top strip are the jackpot tiers. Every frame of this animation is playback of the server's step list.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-game-plinko-drop.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-game-plinko-drop.jpg" alt="Plinko multi-ball drop in fullscreen with win chips" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Çoklu top düşüşü</span><span data-lang="en">Multi-ball drop</span></b>
+        <span data-lang="tr">Tam ekranda birden çok top havada; sağda kutuya inen her topun kazanç çipi beliriyor (+30, +150). Risk ve sıra sayısı soldan seçilir: 28 çarpan tablosundan biri devreye girer.</span>
+        <span data-lang="en">Fullscreen, several balls in flight; win chips (+30, +150) appear on the right as each lands. Risk and row count are picked on the left, selecting one of 28 multiplier tables.</span>
       </div>
     </div>
   </div>
 </div>
 </section>
 
+<!-- ==================== PANEL: 15 MODUL ==================== -->
+<section style="border-top:none;padding-top:0">
+<div class="wrap">
+
+  <h3 style="font-size:1.15rem;margin:0 0 10px" id="panel">
+    <span data-lang="tr">Yönetim paneli — 15 modül, tek tek</span><span data-lang="en">Backoffice — 15 modules, one by one</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:18px">
+    <span data-lang="tr">Panel, sağlayıcı tarafında çalışan herkesin — operasyon, finans, destek, QA — aynı sistemi kendi yetkisiyle görmesi için kuruldu: React 19 + TanStack Query + Recharts, canlı spin akışı tek WebSocket'ten. Aşağıda her modül gerçek ekranıyla; erişim ise role göre kırpılır ve asıl sınır sunucudadır (endpoint filtreleri), arayüz yalnızca yansıtır.</span>
+    <span data-lang="en">The panel exists so that everyone on the provider side — operations, finance, support, QA — sees the same system through their own permissions: React 19 + TanStack Query + Recharts, live spin feed over a single WebSocket. Below, every module with its real screen; access is trimmed per role, and the real boundary is server-side (endpoint filters) — the UI merely reflects it.</span>
+  </p>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th><span data-lang="tr">Rol</span><span data-lang="en">Role</span></th>
+          <th><span data-lang="tr">Modül erişimi</span><span data-lang="en">Module access</span></th>
+          <th><span data-lang="tr">Ayrıcalık örneği</span><span data-lang="en">Sample privilege</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Admin</b></td>
+          <td><span data-lang="tr">15 modülün tamamı</span><span data-lang="en">all 15 modules</span></td>
+          <td><span data-lang="tr">kullanıcı/rol yönetimi, config, manuel jackpot tetiği</span><span data-lang="en">user/role management, config, manual jackpot trigger</span></td>
+        </tr>
+        <tr>
+          <td><b>Manager</b></td>
+          <td>dashboard · games · operators · players · sessions · bonuses · jackpots · reports · risk · audit</td>
+          <td><span data-lang="tr">kampanya ve operatör yönetimi</span><span data-lang="en">campaign and operator management</span></td>
+        </tr>
+        <tr>
+          <td><b>Finance</b></td>
+          <td>dashboard · reports · transactions · players · audit</td>
+          <td><span data-lang="tr">refund / rollback yetkisi</span><span data-lang="en">refund / rollback rights</span></td>
+        </tr>
+        <tr>
+          <td><b>Support</b></td>
+          <td>dashboard · players · rounds · transactions · sessions · bonuses</td>
+          <td><span data-lang="tr">oyuncuya bonus tanımlama</span><span data-lang="en">granting a player bonus</span></td>
+        </tr>
+        <tr>
+          <td><b>QA</b></td>
+          <td>dashboard · games · rounds · transactions · sessions · jackpots · risk · monitoring · audit</td>
+          <td><span data-lang="tr">deterministik replay doğrulaması</span><span data-lang="en">deterministic replay verification</span></td>
+        </tr>
+        <tr>
+          <td><b>ReadOnly</b></td>
+          <td>dashboard · reports</td>
+          <td><span data-lang="tr">salt görüntüleme, hiçbir mutasyon yok</span><span data-lang="en">view only, no mutations</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="gallery">
+    <div class="shot wide">
+      <a href="../../assets/img/slot-dashboard.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-dashboard.jpg" alt="Backoffice dashboard" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">01 · Dashboard — canlı operatör metrikleri</span><span data-lang="en">01 · Dashboard — live operator metrics</span></b>
+        <span data-lang="tr">Toplam bahis/kazanç, GGR, ortalama RTP, aktif oyuncu ve operatör sayısı — hepsi bir önceki dönemle kıyaslı. Saatlik bahis×kazanç grafiği, 1H/6H/24H/7D aralık seçici ve WebSocket'ten akan canlı spin feed'i.</span>
+        <span data-lang="en">Total wager/win, GGR, average RTP, active players and operators — each compared to the previous period. Hourly wager×win chart, 1H/6H/24H/7D range picker, and the live spin feed streaming over WebSocket.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-panel-dashboard-breakdown.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-panel-dashboard-breakdown.jpg" alt="Dashboard breakdown donuts and top tables" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Dashboard — kırılımlar</span><span data-lang="en">Dashboard — breakdowns</span></b>
+        <span data-lang="tr">İsabet frekansı, kazanç kaynağı (base/bonus/scatter), bonus oranı ve kazanç kademeleri; altta en çok oynanan oyunlar ve operatörler — her tablo 7 ayrı anahtara göre sıralanabilir.</span>
+        <span data-lang="en">Hit frequency, win source (base/bonus/scatter), bonus rate and win tiers; below, top games and top operators — each table sortable by 7 different keys.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-panel-game-detail.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-panel-game-detail.jpg" alt="Game detail with paytable and reel weights" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">02 · Games — oyun detayı</span><span data-lang="en">02 · Games — game detail</span></b>
+        <span data-lang="tr">Ödeme tablosu, makara ağırlıkları ve tüm zamanlar istatistikleri; RTP varyantları buradan tanımlanır ve tek tıkla doğrulama probu koşulur. Görünüm oyun tipine göre değişir: payline, cluster ve plinko ayrı detay bileşeni alır. Toplu durdur/başlat da bu modülde.</span>
+        <span data-lang="en">Paytable, reel weights and all-time stats; RTP variants are defined here and a one-click verification probe runs against them. The view adapts to game type: payline, cluster and plinko each get their own detail component. Bulk pause/resume lives here too.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-panel-operator-edit.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-panel-operator-edit.jpg" alt="Operator edit dialog with wallet adapter and game allowlist" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">03 · Operators — operatör düzenleme</span><span data-lang="en">03 · Operators — editing an operator</span></b>
+        <span data-lang="tr">B2B tarafın kalbi: API anahtarı, cüzdan adaptörü seçimi (dahili ya da HTTP PAM callback + HMAC secret + zaman aşımı), operatöre özel oyun allowlist'i ve oyun başına RTP varyant ataması — aynı oyun iki operatörde farklı RTP ile koşabilir.</span>
+        <span data-lang="en">The heart of the B2B side: API key, wallet adapter choice (internal or HTTP PAM callback + HMAC secret + timeout), a per-operator game allowlist and per-game RTP variant assignment — the same game can run at different RTPs for two operators.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-panel-players.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-panel-players.jpg" alt="Players list with kind badges and filters" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">04 · Players — oyuncu listesi</span><span data-lang="en">04 · Players — player list</span></b>
+        <span data-lang="tr">Kayıtlı / misafir / bot ayrımı rozetlerle; operatör filtresi, hızlı filtreler (son 1 saatte aktif, 24+ saat sessiz, net kazançta / kayıpta) ve 10 sıralanabilir kolon.</span>
+        <span data-lang="en">Registered / guest / bot separated by badges; operator filter, quick filters (active last hour, quiet 24h+, net up / net down) and 10 sortable columns.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-panel-player-detail.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-panel-player-detail.jpg" alt="Player detail with profile and compliance tabs" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Players — oyuncu detayı &amp; uyumluluk</span><span data-lang="en">Players — detail &amp; compliance</span></b>
+        <span data-lang="tr">Profil sekmesinde bakiye, spin ve son turlar; uyumluluk sekmesinde KYC belge akışı (yükle → incele → onayla/reddet), self-exclusion ve dönemsel bahis/kayıp/oturum/yatırım limitleri. Limitler süs değil: spin yolunda, debit'ten önce denetlenir.</span>
+        <span data-lang="en">Profile tab: balance, spins, recent rounds; compliance tab: the KYC document flow (upload → review → approve/reject), self-exclusion, and periodic wager/loss/session/deposit limits. The limits aren't decoration: they're enforced in the spin path, before the debit.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-panel-session-detail.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-panel-session-detail.jpg" alt="Game session detail with live RTP and force end" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">05 · Sessions — oturum detayı</span><span data-lang="en">05 · Sessions — session detail</span></b>
+        <span data-lang="tr">Canlı sekmesi bellekteki açık oturumları, geçmiş sekmesi kalıcı kayıtları gösterir; oturum içi turlar ve anlık RTP burada. Sağ üstte gerekirse oturumu zorla bitirme.</span>
+        <span data-lang="en">The Live tab shows open in-memory sessions, History the persisted ones; per-session rounds and live RTP are here. Top right: force-end a session when needed.</span>
+      </div>
+    </div>
+    <div class="shot wide">
+      <a href="../../assets/img/slot-panel-rounds.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-panel-rounds.jpg" alt="Round history with filters and stats" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">06 · Rounds — tur geçmişi</span><span data-lang="en">06 · Rounds — round history</span></b>
+        <span data-lang="tr">Her spin bir satır: oyun/operatör filtreleri ve hızlı çipler (yalnız bonus, 20×+ büyük kazanç, yalnız kazanç/kayıp). Her satır replay'e açılır; rollback, her çocuk işlem için telafi edici Refund yazar ve operatör cüzdanına aynen yansıtılır.</span>
+        <span data-lang="en">Every spin is a row: game/operator filters plus quick chips (bonus only, 20×+ big wins, wins/losses only). Every row opens into replay; rollback writes a compensating Refund per child transaction and mirrors it to the operator wallet.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-panel-replay-cluster.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-panel-replay-cluster.jpg" alt="Cluster round replay with 6x5 grid" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Rounds — cluster replay</span><span data-lang="en">Rounds — cluster replay</span></b>
+        <span data-lang="tr">Payline replay'in kardeşi: 6×5 tumble zinciri adım adım geri oynatılır. Admin/QA için ayrıca deterministik sunucu doğrulaması var — seed'den grid byte-byte yeniden üretilir ve karşılaştırılır.</span>
+        <span data-lang="en">The sibling of payline replay: the 6×5 tumble chain plays back step by step. Admin/QA additionally get deterministic server verification — the grid is re-derived from the seed byte-for-byte and compared.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-panel-bonuses.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-panel-bonuses.jpg" alt="Bonus campaigns with operator and game coverage" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">07 · Bonuses — kampanyalar</span><span data-lang="en">07 · Bonuses — campaigns</span></b>
+        <span data-lang="tr">Kampanya yaşam döngüsü (aktif/duraklatılmış/iptal/süresi dolmuş), operatör ve oyun kapsamı, kullanım ilerlemesi. Grants sekmesi tek tek tanımlara iner: iptal, kampanya kullanım özeti ve grant başına spin-olay defteri — bonus spini hangi turda yandı, kayıtlı.</span>
+        <span data-lang="en">Campaign lifecycle (active/paused/cancelled/expired), operator and game coverage, usage progress. The Grants tab drills into individual grants: cancellation, campaign usage rollup and a per-grant spin-event ledger — which round consumed which bonus spin is on record.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-jackpots.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-jackpots.jpg" alt="Jackpot pools" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">08 · Jackpots — havuzlar</span><span data-lang="en">08 · Jackpots — pools</span></b>
+        <span data-lang="tr">Üç tip: sabit, progresif ve MustHit — eşiğine gelince kendiliğinden tetiklenir ve seed tutarına sıfırlanır. Katkı oranı, uygun oyun listesi, para birimi kapsamı, canlı sayaç, kazanım geçmişi ve manuel tetik.</span>
+        <span data-lang="en">Three types: fixed, progressive and MustHit — firing automatically at its threshold and resetting to the seed amount. Contribution rate, eligible-game list, currency scoping, live ticker, win history and a manual trigger.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-panel-reports-scheduled.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-panel-reports-scheduled.jpg" alt="Scheduled reports with cron expressions" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">09 · Reports — zamanlanmış raporlar</span><span data-lang="en">09 · Reports — scheduled reports</span></b>
+        <span data-lang="tr">Finansal, oyun ve operatör raporları CSV/XLSX indirilir; buradaki sekme cron ifadeleriyle otomatiğe bağlar (saatlik tur dökümü, haftalık oyun performansı, günlük finansal özet). Üretilen her artifact geçmişte durur, yeniden indirilebilir.</span>
+        <span data-lang="en">Financial, game and operator reports export as CSV/XLSX; this tab automates them with cron expressions (hourly rounds export, weekly game performance, daily financial summary). Every generated artifact stays in history, re-downloadable.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-panel-risk-alert.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-panel-risk-alert.jpg" alt="Risk alert detail with contributing factors" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">10 · Risk &amp; Fraud — uyarı detayı</span><span data-lang="en">10 · Risk &amp; Fraud — alert detail</span></b>
+        <span data-lang="tr">Dört kural 60 saniyede bir koşar: eşik üstü kazanç, RTP sapması, rollback istismarı, mükerrer işlem. Uyarı, katkı faktörleri JSON'u ile gelir; oyuncu ve operatör için bileşik risk skorları ayrı sayfada. Aynı sapmanın her dakika yeni satır yazmaması için saatlik dedupe var.</span>
+        <span data-lang="en">Four rules run every 60 seconds: over-threshold wins, RTP deviation, rollback abuse, duplicate transactions. Alerts carry a contributing-factors JSON; composite risk scores for players and operators get their own page. Hourly dedupe keeps a sustained deviation from writing a new row every minute.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-monitoring.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-monitoring.jpg" alt="Monitoring with API request logs" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">11 · Monitoring — sağlık ve loglar</span><span data-lang="en">11 · Monitoring — health and logs</span></b>
+        <span data-lang="tr">Üç sekme: sistem sağlığı (DB dahil), cüzdan callback kayıtları ve son API istekleri — operatör, metod, durum, süre ve gecikme histogramı ile. Spin bölümündeki callback JSON ekranı bu modülün detayıdır.</span>
+        <span data-lang="en">Three tabs: system health (DB included), wallet callback logs and recent API requests — operator, method, status, duration, plus a latency histogram. The callback JSON screen in the spin section is this module's detail view.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-panel-audit.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-panel-audit.jpg" alt="Audit log with before and after JSON" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">12 · Audit Log — kim, neyi, neden</span><span data-lang="en">12 · Audit Log — who changed what</span></b>
+        <span data-lang="tr">14 aksiyon tipi, 8 varlık tipi: config değişikliğinden <code>CertHashMismatch</code> ve <code>WalletCreditFailed</code>'e kadar. Yapılandırma değişikliklerinde önceki/sonraki değer JSON diff olarak açılır — ekranda görünen tam da bu.</span>
+        <span data-lang="en">14 action types across 8 entity types: from config edits to <code>CertHashMismatch</code> and <code>WalletCreditFailed</code>. Config changes expand into a before/after JSON diff — exactly what's on screen.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-panel-config.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-panel-config.jpg" alt="Configuration with maintenance kill switch" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">13 · Configuration — kill switch'ler</span><span data-lang="en">13 · Configuration — the kill switches</span></b>
+        <span data-lang="tr">Platform geneli bakım modu (<code>/api/session</code> ve <code>/api/spin</code> anında 423 döner, oyuncu sitesi bakım sayfasına geçer), özellik bayrakları, bahis limitleri, ülke bazlı allow/block kuralları ve bot sürüsünün ana şalteri. 14–15: Users &amp; Roles yukarıdaki matriste, canlı feed her sayfanın üstünde.</span>
+        <span data-lang="en">Platform-wide maintenance mode (<code>/api/session</code> and <code>/api/spin</code> immediately return 423, the player site switches to its maintenance page), feature flags, bet limits, per-country allow/block rules and the bot crowd's master switch. 14–15: Users &amp; Roles is the matrix above; the live feed rides on top of every page.</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ==================== PLAY-SITE ==================== -->
+<section style="border-top:none;padding-top:0">
+<div class="wrap">
+
+  <h3 style="font-size:1.15rem;margin:0 0 10px" id="playsite">
+    <span data-lang="tr">Oyuncu sitesi — kayıttan spine</span><span data-lang="en">Player site — from sign-up to spin</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:18px">
+    <span data-lang="tr">React 19 + Vite + Tailwind; sunucu durumu TanStack Query'de, kimlik Zustand'da. Üç giriş yolu vardır: kayıt (12 saatlik token), giriş ve tek tıkla misafir (1.000 demo bakiye, 24 saatlik token). Oyun sayfası Unity WebGL'i yükler, token'ı <code>SetAuth</code> ile içeri iter; Unity ise bakiye senkronunu ve bağlantı hatalarını köprüden dışarı yayınlar — oyunun hata overlay'i ile sitenin overlay'i aynı boru hattıdır.</span>
+    <span data-lang="en">React 19 + Vite + Tailwind; server state in TanStack Query, identity in Zustand. Three ways in: register (12-hour token), login, and one-click guest (1,000 demo balance, 24-hour token). The game page loads Unity WebGL and pushes the token in via <code>SetAuth</code>; Unity publishes balance syncs and connection errors back over the bridge — the game's error overlay and the site's are one pipeline.</span>
+  </p>
+
+  <div class="grid3">
+    <div class="card">
+      <h4><span data-lang="tr">Oturum düşüşü tek toast'tır</span><span data-lang="en">Session expiry is one toast</span></h4>
+      <p><span data-lang="tr">Token süresi dolduğunda paralel koşan N sorgu N ayrı logout tetiklemesin diye 2 saniyelik bastırma penceresi var: tek "oturum süresi doldu" bildirimi, tek yönlendirme. Derin bağlantı korunur — login sonrası lobiye değil, kaldığın oyuna dönersin.</span>
+      <span data-lang="en">When the token expires, a 2-second suppression window keeps N parallel queries from firing N logouts: one "session expired" toast, one redirect. Deep links survive — after login you land back in the game, not the lobby.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Lobby üç backend'den beslenir</span><span data-lang="en">The lobby feeds from three backends</span></h4>
+      <p><span data-lang="tr">Oyun kataloğu, her oyunun kendi servisine <code>Promise.allSettled</code> ile açılan paralel isteklerden birleşir. Sweet Fortune servisi çökse Wild Revolver ve Plinko listelenmeye devam eder — tek servis arızası lobiyi karartamaz.</span>
+      <span data-lang="en">The catalog merges parallel requests to each game's own service via <code>Promise.allSettled</code>. If the Sweet Fortune service dies, Wild Revolver and Plinko keep listing — no single failure can blank the lobby.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Bakım tek zincirdir</span><span data-lang="en">Maintenance is one chain</span></h4>
+      <p><span data-lang="tr">Panelden bakım açıldığında API 423 döner; site <code>/maintenance</code> sayfasına geçer ve 15 saniyede bir yoklayıp bakım bitince kendiliğinden geri döner. Unity içindeki oyun da aynı sinyali köprüden alır — üç istemci tek davranış.</span>
+      <span data-lang="en">Flip maintenance in the panel and the API returns 423; the site moves to <code>/maintenance</code>, polls every 15 seconds and returns by itself when it clears. The Unity game receives the same signal over the bridge — three clients, one behaviour.</span></p>
+    </div>
+  </div>
+
+  <div class="gallery">
+    <div class="shot wide">
+      <a href="../../assets/img/slot-play-lobby.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-play-lobby.jpg" alt="Player site lobby with game catalog" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Lobby — giriş yapılmış oyuncu</span><span data-lang="en">Lobby — signed-in player</span></b>
+        <span data-lang="tr">Kişisel selamlama, oyun kategorileri (slotlar, hızlı oyunlar; blackjack ve turnuvalar "yakında" kartlarıyla), üst barda canlı bakiye, cüzdan ve profil. Çevrimiçi oyuncu sayısı 10 saniyede bir tazelenir.</span>
+        <span data-lang="en">Personal greeting, game categories (slots, fast games; blackjack and tournaments as "coming soon" cards), live balance, wallet and profile in the top bar. The online-player count refreshes every 10 seconds.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-play-guest.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-play-guest.jpg" alt="Guest session start with toast" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Misafir akışı</span><span data-lang="en">Guest flow</span></b>
+        <span data-lang="tr">Tek tık: anonim hesap açılır, 1.000 demo bakiye yüklenir, 24 saatlik token verilir. Sağ üstteki toast'lar akışın kendisi: önceki oyuncu çıktı, misafir girdi.</span>
+        <span data-lang="en">One click: an anonymous account, 1,000 demo balance, a 24-hour token. The toasts top right are the flow itself: previous player signed out, guest signed in.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-play-login.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-play-login.jpg" alt="Login page with signed-out toast" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Login &amp; logout</span><span data-lang="en">Login &amp; logout</span></b>
+        <span data-lang="tr">Çıkışın toast'ı hâlâ ekranda, giriş formu hazır. Kayıt formu gerçek zamanlı doğrulama ve parola güç göstergesi taşır; kurallar sunucudakiyle bilinçli olarak birebirdir.</span>
+        <span data-lang="en">The sign-out toast is still on screen, the login form ready. Registration carries real-time validation and a password-strength meter; the rules deliberately mirror the server's exactly.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/slot-play-wallet.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/slot-play-wallet.jpg" alt="Wallet page with demo balance and transaction history" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Cüzdan</span><span data-lang="en">Wallet</span></b>
+        <span data-lang="tr">Demo bakiye, 60 saniye bekleme süreli musluk ve işlem geçmişi. Oyun içinde biriken kazanç, oyun kapanırken sunucu bakiyesiyle mutabık kılınır — üst bardaki sayı geriye oynamaz.</span>
+        <span data-lang="en">Demo balance, a faucet with a 60-second cooldown, and transaction history. In-game winnings reconcile with the server balance as the game closes — the top-bar number never flickers backwards.</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ==================== ALTYAPI ==================== -->
+<section style="border-top:none;padding-top:0">
+<div class="wrap">
+
+  <h3 style="font-size:1.15rem;margin:0 0 10px" id="altyapi">
+    <span data-lang="tr">Altyapı ve operasyon</span><span data-lang="en">Infrastructure and operations</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:18px">
+    <span data-lang="tr">Sistem kendi sunucumda, Docker Compose ile yayında koştu. Amaç minimum maliyetle gerçek bir prod disiplini kurmaktı: sağlık kontrollü konteynerler, sıcak yedekleme, geri dönüşlü migrasyon ve her deploy sonrası koşan bir smoke test.</span>
+    <span data-lang="en">The system ran in production on my own server under Docker Compose. The goal was real production discipline at minimum cost: health-checked containers, hot backups, reversible migrations, and a smoke test that runs after every deploy.</span>
+  </p>
+
+  <div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr))">
+    <div class="card">
+      <h4><span data-lang="tr">Sıfır açık port</span><span data-lang="en">Zero open ports</span></h4>
+      <p><span data-lang="tr">Trafik Cloudflare Tunnel üzerinden içeri akar — konteyner dışarıya bağlanır, sunucuda dinleyen tek public port yoktur. TLS, WAF ve bot koruması uçta; VM'ye SSH dışında hiçbir yoldan ulaşılamaz.</span>
+      <span data-lang="en">Traffic flows in over a Cloudflare Tunnel — the container dials out, and not a single public port listens on the server. TLS, WAF and bot protection live at the edge; nothing reaches the VM except SSH.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">25 MiB'lık duvar, 75 MB'lık oyun</span><span data-lang="en">A 25 MiB wall, a 75 MB game</span></h4>
+      <p><span data-lang="tr">Statik barındırıcının dosya başına 25 MiB limiti, 75 MB'lık Unity data bundle'ını reddetti. Çözüm: WebGL paketlerini .NET servisinin kendisi <code>immutable</code> önbellek başlıklarıyla sunar. Ders de kayıtlı: uçtaki önbellek deploy sonrası elle temizlenmezse eski build servis edilmeye devam eder — üç saatlik bir debug'ın özeti.</span>
+      <span data-lang="en">The static host's 25 MiB per-file limit rejected the 75 MB Unity data bundle. The fix: the .NET service itself serves the WebGL bundles with <code>immutable</code> cache headers. The lesson is logged too: unless the edge cache is purged after deploy, the old build keeps serving — the summary of a three-hour debug.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Operasyon script'leri</span><span data-lang="en">Operations scripts</span></h4>
+      <p><span data-lang="tr">~1.500 satır bash: sıcak SQLite yedeği (<code>.backup</code> + saklama süresi), sağlık kontrolü bekleyen restore, yedek + geri dönüş planlı güvenli migrasyon ve 328 satırlık smoke test — rol bekçileri, hız limiti, WS kimliği, HMAC'li cüzdan callback'i ve <b>bilerek düşürülen</b> bir credit senaryosu dahil ~15 uçtan uca kontrol.</span>
+      <span data-lang="en">~1,500 lines of bash: hot SQLite backup (<code>.backup</code> + retention), a restore that waits on health checks, safe migration with backup + rollback, and a 328-line smoke test — ~15 end-to-end checks including role guards, rate limiting, WS auth, the HMAC wallet callback and a <b>deliberately failed</b> credit scenario.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Bot sürüsü bir davranış modelidir</span><span data-lang="en">The bot crowd is a behaviour model</span></h4>
+      <p><span data-lang="tr">75 kalıcı persona: balina kuyruklu kasa dağılımı, risk iştahı, tercih edilen oyunlar, stop-loss (%40–85) ve take-profit (%140–300) eşikleri, gün içi yoğunluk eğrisi. İnsan temposunda (spin başına 2–9 sn) oynar, paneli gerçekçi veriyle besler, aynı anda yük testi görevi görür — ve paneldeki tek şalterle durur.</span>
+      <span data-lang="en">75 persistent personas: whale-tailed bankroll distribution, risk appetite, preferred games, stop-loss (40–85%) and take-profit (140–300%) thresholds, a diurnal activity curve. They play at human pace (2–9 s per spin), feed the panel realistic data, double as a load test — and stop from a single switch in the panel.</span></p>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th><span data-lang="tr">Ölçek</span><span data-lang="en">Scale</span></th>
+          <th class="num"><span data-lang="tr">Değer</span><span data-lang="en">Value</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span data-lang="tr">Uygulama kodu</span><span data-lang="en">Application code</span></td>
+          <td class="num">~62K <span data-lang="tr">satır</span><span data-lang="en">lines</span> — C# 46.7K · TS 15.6K</td>
+        </tr>
+        <tr>
+          <td>HTTP API</td>
+          <td class="num">~126 endpoint · 22 <span data-lang="tr">dosya</span><span data-lang="en">files</span></td>
+        </tr>
+        <tr>
+          <td><span data-lang="tr">Veri modeli</span><span data-lang="en">Data model</span></td>
+          <td class="num">29 <span data-lang="tr">tablo</span><span data-lang="en">tables</span> · 15 <span data-lang="tr">migrasyon</span><span data-lang="en">migrations</span></td>
+        </tr>
+        <tr>
+          <td><span data-lang="tr">Panel</span><span data-lang="en">Panel</span></td>
+          <td class="num">15 <span data-lang="tr">modül</span><span data-lang="en">modules</span> · 6 <span data-lang="tr">rol</span><span data-lang="en">roles</span></td>
+        </tr>
+        <tr>
+          <td><span data-lang="tr">Oyunlar</span><span data-lang="en">Games</span></td>
+          <td class="num">3 <span data-lang="tr">oyun</span><span data-lang="en">games</span> + 1 lite · 131 Unity script</td>
+        </tr>
+        <tr>
+          <td><span data-lang="tr">Doğrulama</span><span data-lang="en">Verification</span></td>
+          <td class="num">1.56M spin/s <span data-lang="tr">simülatör</span><span data-lang="en">simulator</span> · 20/20 xUnit</td>
+        </tr>
+        <tr>
+          <td><span data-lang="tr">Aylık maliyet</span><span data-lang="en">Monthly cost</span></td>
+          <td class="num">~$24 — <span data-lang="tr">tek VM, uç servisleri ücretsiz katmanda</span><span data-lang="en">one VM, edge services on free tiers</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <b><span data-lang="tr">Bilinçli sınırlar:</span><span data-lang="en">Deliberate limits:</span></b>
+    <span data-lang="tr">SQLite'ın tek yazar tavanı, yüksek erişilebilirlik ve refresh token yokluğu bilinen ödünlerdir; her biri, geçiş yolu ile birlikte (PostgreSQL, çoklu replika, kısa ömürlü token çifti) operasyon rehberine yazıldı. Neyin eksik olduğunu bilmek de sistemin bir parçası.</span>
+    <span data-lang="en">SQLite's single-writer ceiling, no high availability and no refresh tokens are known trade-offs; each is written into the ops runbook together with its migration path (PostgreSQL, replicas, short-lived token pairs). Knowing what's missing is part of the system too.</span>
+  </div>
+</div>
+</section>
+
+<!-- ==================== PROJE NAV ==================== -->
 <section style="border-top:none;padding-top:0">
 <div class="wrap">
   <div class="pnav">
