@@ -44,6 +44,7 @@
   </div>
 
   <div class="badges">
+    <span class="badge g">● <span data-lang="tr">Yayında</span><span data-lang="en">Live</span></span>
     <span class="badge g">Unity 6</span>
     <span class="badge g">.NET 8</span>
     <span class="badge g">React 19</span>
@@ -61,13 +62,21 @@
     <div class="metric"><div class="n">3</div><div class="l"><span data-lang="tr">oyun, 3 farklı matematik modeli<br>payline · cluster · binom</span><span data-lang="en">games, 3 different math models<br>payline · cluster · binomial</span></div></div>
     <div class="metric"><div class="n">5M</div><div class="l"><span data-lang="tr">spin simülasyonu<br>RTP 0.96787 (hedef 0.965)</span><span data-lang="en">spin simulation<br>RTP 0.96787 (target 0.965)</span></div></div>
     <div class="metric"><div class="n">126</div><div class="l"><span data-lang="tr">API endpoint<br>29 tablo · 15 migration</span><span data-lang="en">API endpoints<br>29 tables · 15 migrations</span></div></div>
-    <div class="metric"><div class="n">15</div><div class="l"><span data-lang="tr">modüllü yönetim paneli<br>6 rol · canlı WebSocket</span><span data-lang="en">backoffice modules<br>6 roles · live WebSocket</span></div></div>
+    <div class="metric"><div class="n">15</div><div class="l"><span data-lang="tr">modüllü yönetim paneli<br>7 rol · canlı WebSocket</span><span data-lang="en">backoffice modules<br>7 roles · live WebSocket</span></div></div>
   </div>
 
-  <div class="note">
+  <div class="note" style="border-left-color:var(--acc)">
     <b><span data-lang="tr">Durum:</span><span data-lang="en">Status:</span></b>
-    <span data-lang="tr">Bu sistem yerelde ve kendi sunucumda çalıştırıldı, ancak <b>şu anda yayında değil</b> — sunucu kapalı. Aşağıdaki görsellerin tamamı çalışan sistemin gerçek kayıtlarından alınmıştır; adres çubuğundaki <code>localhost</code> bunu doğruluyor. Depolar özeldir.</span>
-    <span data-lang="en">This system ran locally and on my own server, but it is <b>not live right now</b> — the server is off. Every screenshot below is taken from real recordings of the running system; the <code>localhost</code> in the address bar confirms it. The repositories are private.</span>
+    <span data-lang="tr"><b>Sistem yayında.</b> Oyuncu sitesi herkese açık — tek tıkla misafir olarak ya da kayıt olarak girilebilir; bakiye demo, gerçek para yoktur. Yönetim panelini incelemek isteyenler için salt-okunur bir <b>Spectator</b> hesabı var: 15 modülün tamamını görür, hiçbir değişiklik yapamaz (yazma kilidi sunucu tarafındadır). Aşağıdaki ekran görüntüleri sistemin yerel kayıtlarından alınmıştır — adres çubuğundaki <code>localhost</code> bundandır. Depolar özeldir.</span>
+    <span data-lang="en"><b>The system is live.</b> The player site is open to everyone — enter as a guest with one click or register; the balance is demo money, nothing real. To inspect the backoffice there is a read-only <b>Spectator</b> account: it sees all 15 modules and cannot change anything (the write lock is server-side). The screenshots below were captured from local recordings of the system — hence the <code>localhost</code> in the address bar. The repositories are private.</span>
+    <div class="btnrow" style="margin-top:14px">
+      <a class="btn primary" href="https://play.darkreel.games" target="_blank" rel="noopener">play.darkreel.games</a>
+      <a class="btn" href="https://panel.darkreel.games" target="_blank" rel="noopener">panel.darkreel.games</a>
+    </div>
+    <div style="margin-top:12px;font-family:var(--mono);font-size:13px">
+      <span data-lang="tr">Panel girişi:</span><span data-lang="en">Panel login:</span>
+      <code>spectator</code> / <code>demo1234</code>
+    </div>
   </div>
 
   <!-- SISTEM HARITASI -->
@@ -630,6 +639,11 @@
           <td>dashboard · reports</td>
           <td><span data-lang="tr">salt görüntüleme, hiçbir mutasyon yok</span><span data-lang="en">view only, no mutations</span></td>
         </tr>
+        <tr>
+          <td><b>Spectator</b></td>
+          <td><span data-lang="tr">15 modülün tamamı (salt okunur)</span><span data-lang="en">all 15 modules (read-only)</span></td>
+          <td><span data-lang="tr">dış inceleme hesabı — GET dışındaki her istek sunucuda <code>403 read_only_role</code> ile durur; yukarıdaki demo girişi bu roldür</span><span data-lang="en">external review account — anything but GET is stopped server-side with <code>403 read_only_role</code>; the demo login above is this role</span></td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -842,8 +856,8 @@
     <span data-lang="tr">Altyapı ve operasyon</span><span data-lang="en">Infrastructure and operations</span>
   </h3>
   <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:18px">
-    <span data-lang="tr">Sistem kendi sunucumda, Docker Compose ile yayında koştu. Amaç minimum maliyetle gerçek bir prod disiplini kurmaktı: sağlık kontrollü konteynerler, sıcak yedekleme, geri dönüşlü migrasyon ve her deploy sonrası koşan bir smoke test.</span>
-    <span data-lang="en">The system ran in production on my own server under Docker Compose. The goal was real production discipline at minimum cost: health-checked containers, hot backups, reversible migrations, and a smoke test that runs after every deploy.</span>
+    <span data-lang="tr">Sistem kendi sunucumda, Docker Compose ile yayında koşuyor. Amaç minimum maliyetle gerçek bir prod disiplini kurmaktı: sağlık kontrollü konteynerler, sıcak yedekleme, geri dönüşlü migrasyon ve her deploy sonrası koşan bir smoke test.</span>
+    <span data-lang="en">The system runs in production on my own server under Docker Compose. The goal was real production discipline at minimum cost: health-checked containers, hot backups, reversible migrations, and a smoke test that runs after every deploy.</span>
   </p>
 
   <div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr))">
