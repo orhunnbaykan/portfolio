@@ -223,6 +223,10 @@ section:first-of-type{border-top:none}
 a.card.cslink{display:block; color:inherit; text-decoration:none; transition:border-color .15s}
 a.card.cslink:hover{border-color:var(--acc); text-decoration:none}
 a.card.cslink h4{color:var(--ink)}
+/* oyun karti kapagi: dikey ekran goruntusu ortalanir, .fill yatay olani kirparak doldurur */
+.gcover{aspect-ratio:16/10; margin-bottom:16px; border-radius:8px; overflow:hidden; border:1px solid var(--line); background:var(--bg3); display:flex; justify-content:center}
+.gcover img{height:100%; width:auto; max-width:100%; object-fit:contain; display:block}
+.gcover.fill img{width:100%; object-fit:cover}
 .csgo{display:inline-block; margin-top:12px; font-size:13.5px; font-weight:600; color:var(--acc2); font-family:var(--mono)}
 
 /* ---------- alinti ---------- */

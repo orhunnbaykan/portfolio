@@ -1,0 +1,2916 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#ffeef7">
+<title>Marble Smash</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<style>
+/* ============================== TOKENS ============================== */
+:root{
+  --pink:#ff4f99; --pink-deep:#c2246c;
+  --brown:#8a5433; --cream:#f5f0e8; --green:#4dd166; --teal:#36c7b8; --purple:#9c59d1;
+  --sky-top:#ffeef7; --sky-mid:#e8f2ff; --sky-low:#dff3ff;
+  --ink:#5a3c56; --ink-soft:#8a6b86;
+  --card:#fffaf4; --card-edge:#f0ddcf;
+  --gold:#ffb830; --danger:#ff5a52; --amber:#ffa726;
+  --r-lg:22px; --r-md:15px; --r-sm:10px;
+  --font-display:'Fredoka',system-ui,sans-serif;
+  --font-body:'Nunito',system-ui,sans-serif;
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+  --safe-left:env(safe-area-inset-left,0px);
+  --safe-right:env(safe-area-inset-right,0px);
+  --shadow-pop:0 6px 18px rgba(120,60,110,.18);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  background:linear-gradient(160deg,#f9d9ec 0%,#dcebff 55%,#fdeed3 100%);
+  font-family:var(--font-body);
+  overflow:hidden;
+  -webkit-user-select:none;user-select:none;
+  -webkit-touch-callout:none;
+  touch-action:none;
+  color:var(--ink);
+}
+/* ============================== STAGE / LETTERBOX ============================== */
+#stage{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:center}
+/* portfolio back link — only where the 9:16 frame leaves a margin */
+#pf-back{position:fixed;z-index:50;display:none;top:calc(8px + env(safe-area-inset-top));left:calc(10px + env(safe-area-inset-left));
+  padding:5px 11px;border-radius:999px;background:rgba(255,255,255,.72);color:var(--pink-deep);
+  font:700 13px/1 var(--font-display);text-decoration:none;box-shadow:0 2px 8px rgba(150,80,140,.18)}
+@media (min-aspect-ratio:3/4),(max-aspect-ratio:1/2){#pf-back{display:block}}
+#game{
+  position:relative;
+  width:min(100vw,calc(100dvh * 9 / 16));
+  aspect-ratio:9/16;
+  max-height:100dvh;
+  border-radius:clamp(14px,3vmin,24px);
+  border:2px solid rgba(255,255,255,.65);
+  box-shadow:
+    0 0 0 6px rgba(255,255,255,.22),
+    0 18px 50px rgba(150,80,140,.30),
+    inset 0 0 0 1px rgba(255,182,215,.35);
+  overflow:hidden;
+  touch-action:none;
+  cursor:pointer;
+}
+#c{position:absolute;inset:0;width:100%;height:100%;display:block}
+/* ============================== HUD ============================== */
+#hud{position:absolute;inset:0;pointer-events:none;font-family:var(--font-display)}
+#hud-top{
+  position:absolute;top:calc(6px + var(--safe-top));left:calc(8px + var(--safe-left));right:calc(8px + var(--safe-right));
+  display:flex;align-items:center;gap:8px;
+}
+.badge{
+  background:var(--card);border:2px solid var(--card-edge);border-radius:var(--r-md);
+  padding:5px 12px;font-weight:700;font-size:clamp(12px,3.4vmin,17px);letter-spacing:.5px;
+  color:var(--pink-deep);box-shadow:var(--shadow-pop);white-space:nowrap;
+}
+#progress-wrap{
+  flex:1;height:clamp(18px,4.6vmin,24px);background:var(--card);border:2px solid var(--card-edge);
+  border-radius:999px;box-shadow:var(--shadow-pop);position:relative;overflow:hidden;
+}
+#progress-bar{
+  position:absolute;inset:2px;width:0%;border-radius:999px;
+  background:linear-gradient(90deg,#ff8fbf,var(--pink));
+  transition:width .35s cubic-bezier(.3,1.4,.5,1);
+}
+#progress-label{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:clamp(10px,2.6vmin,13px);font-weight:700;color:var(--ink);text-shadow:0 1px 0 rgba(255,255,255,.7);
+}
+.toggles{display:flex;gap:6px}
+.tog{
+  pointer-events:auto;width:clamp(30px,7.4vmin,40px);height:clamp(30px,7.4vmin,40px);
+  border:2px solid var(--card-edge);border-radius:50%;background:var(--card);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  box-shadow:var(--shadow-pop);transition:transform .12s ease;color:var(--ink-soft);
+}
+.tog:active{transform:scale(.88)}
+.tog svg{width:58%;height:58%;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tog.off{color:#c9b3c5;background:#f6eef4}
+.tog.nav{width:clamp(26px,6.2vmin,34px);height:clamp(26px,6.2vmin,34px);color:var(--pink-deep)}
+.tog.nav:disabled{opacity:.35;pointer-events:none}
+.tog.off .slash{display:block}
+.tog .slash{display:none;stroke:var(--danger)}
+/* ammo pill */
+#ammo-pill{
+  display:none !important;
+  position:absolute;left:calc(10px + var(--safe-left));bottom:calc(10px + var(--safe-bottom));
+  display:flex;align-items:center;gap:7px;background:var(--card);border:2px solid var(--card-edge);
+  border-radius:999px;padding:6px 14px 6px 10px;box-shadow:var(--shadow-pop);
+}
+#ammo-pill svg{width:clamp(16px,4vmin,22px);height:clamp(16px,4vmin,22px)}
+#ammo-count{font-weight:700;font-size:clamp(16px,4.6vmin,24px);color:var(--ink);min-width:2ch;text-align:center}
+#ammo-pill.low #ammo-count{color:var(--amber)}
+#ammo-pill.critical #ammo-count{color:var(--danger)}
+#ammo-pill.critical{animation:ammoPulse .6s ease-in-out infinite}
+#ammo-pill.empty{animation:ammoShake .4s ease}
+@keyframes ammoPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+@keyframes ammoShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+/* toast */
+#toast{
+  position:absolute;left:50%;top:26%;transform:translate(-50%,-50%) scale(.8);
+  background:rgba(90,60,86,.85);color:#fff;padding:8px 18px;border-radius:999px;
+  font-family:var(--font-display);font-weight:600;font-size:clamp(13px,3.6vmin,18px);
+  opacity:0;transition:opacity .25s ease,transform .25s cubic-bezier(.3,1.6,.5,1);
+  pointer-events:none;white-space:nowrap;
+}
+#toast.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+/* ============================== OVERLAYS ============================== */
+.overlay{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(70,40,70,.42);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  opacity:0;pointer-events:none;transition:opacity .3s ease;z-index:10;
+}
+.overlay.show{opacity:1;pointer-events:auto}
+.panel{
+  background:var(--card);border:3px solid var(--card-edge);border-radius:var(--r-lg);
+  padding:clamp(18px,5vmin,30px) clamp(20px,6vmin,36px);
+  width:min(82%,340px);text-align:center;box-shadow:0 18px 50px rgba(80,30,80,.35);
+  transform:scale(.7) translateY(24px);transition:transform .38s cubic-bezier(.28,1.5,.45,1);
+}
+.overlay.show .panel{transform:scale(1) translateY(0)}
+#panel-icon{font-size:clamp(34px,10vmin,52px);line-height:1.1}
+#panel-title{
+  font-family:var(--font-display);font-weight:700;letter-spacing:1px;
+  font-size:clamp(24px,7.4vmin,36px);margin:4px 0 2px;color:var(--pink-deep);
+}
+#panel-title.fail{color:var(--danger)}
+#panel-reason{font-weight:800;font-size:clamp(12px,3.4vmin,16px);color:var(--ink-soft);margin-bottom:12px}
+#panel-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.stat{
+  background:#fff3e6;border:2px solid #f3e0cc;border-radius:var(--r-md);padding:7px 4px 6px;
+}
+.stat .k{font-size:clamp(9px,2.4vmin,11px);font-weight:800;letter-spacing:1px;color:var(--ink-soft);text-transform:uppercase}
+.stat .v{font-family:var(--font-display);font-weight:700;font-size:clamp(16px,4.8vmin,23px);color:var(--ink)}
+.btn{
+  pointer-events:auto;display:block;width:100%;border:none;cursor:pointer;
+  font-family:var(--font-display);font-weight:700;letter-spacing:1px;
+  font-size:clamp(15px,4.4vmin,20px);color:#fff;padding:12px 0;border-radius:999px;
+  background:linear-gradient(180deg,#ff7ab5,var(--pink));
+  box-shadow:0 5px 0 var(--pink-deep),0 10px 18px rgba(194,36,108,.35);
+  transition:transform .1s ease,box-shadow .1s ease;
+}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--pink-deep),0 4px 10px rgba(194,36,108,.3)}
+/* splash */
+#splash{
+  position:absolute;inset:0;z-index:12;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  background:linear-gradient(170deg,#ffe4f1,#dff0ff 60%,#fff0d9);cursor:pointer;transition:opacity .4s ease;
+}
+#splash.hide{opacity:0;pointer-events:none}
+#splash-logo{font-size:clamp(44px,15vmin,72px);animation:logoBob 2.2s ease-in-out infinite}
+#splash h1{
+  font-family:var(--font-display);font-weight:700;font-size:clamp(30px,9.4vmin,46px);
+  color:var(--pink-deep);letter-spacing:1px;text-shadow:0 3px 0 #fff,0 6px 14px rgba(194,36,108,.25);
+}
+#splash p{font-weight:800;color:var(--ink-soft);font-size:clamp(12px,3.4vmin,16px);max-width:70%;text-align:center;line-height:1.45}
+#tap-hint{
+  margin-top:18px;font-family:var(--font-display);font-weight:600;letter-spacing:2px;
+  color:var(--pink);font-size:clamp(15px,4.4vmin,20px);animation:tapPulse 1.3s ease-in-out infinite;
+}
+@keyframes logoBob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-10px) rotate(4deg)}}
+@keyframes tapPulse{0%,100%{opacity:.45;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+/* ============================== REDUCED MOTION ============================== */
+@media (prefers-reduced-motion:reduce){
+  #splash-logo,#tap-hint,#ammo-pill.critical{animation:none}
+  .panel{transition:opacity .2s ease;transform:none}
+  .overlay.show .panel{transform:none}
+  #progress-bar{transition:none}
+}
+</style>
+</head>
+<body>
+<a id="pf-back" href="../../#oyunlar">← Portfolio</a>
+<div id="stage">
+  <div id="game">
+    <canvas id="c"></canvas>
+    <div id="hud">
+      <div id="hud-top">
+        <button class="tog nav" id="btn-prev" aria-label="Previous level">
+          <svg viewBox="0 0 24 24"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg>
+        </button>
+        <div class="badge" id="level-badge">LEVEL 1</div>
+        <button class="tog nav" id="btn-next" aria-label="Next level">
+          <svg viewBox="0 0 24 24"><path d="M9.5 5.5 16 12l-6.5 6.5"/></svg>
+        </button>
+        <div id="progress-wrap"><div id="progress-bar"></div><span id="progress-label">0%</span></div>
+        <div class="toggles">
+          <button class="tog" id="btn-sound" aria-label="Toggle sound">
+            <svg viewBox="0 0 24 24"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4z"/><path class="wave" d="M15.5 9.2a4 4 0 0 1 0 5.6"/><path class="wave" d="M17.8 6.9a7.2 7.2 0 0 1 0 10.2"/><path class="slash" d="M4 20 20 4"/></svg>
+          </button>
+          <button class="tog" id="btn-haptics" aria-label="Toggle vibration">
+            <svg viewBox="0 0 24 24"><rect x="8.5" y="4.5" width="7" height="15" rx="2"/><path d="M5.5 8.5v7M18.5 8.5v7"/><path class="slash" d="M4 20 20 4"/></svg>
+          </button>
+        </div>
+      </div>
+      <div id="ammo-pill">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="#3a3d52"/><circle cx="9.4" cy="9.2" r="2.6" fill="#6a6f8e"/></svg>
+        <span id="ammo-count">60</span>
+      </div>
+      <div id="toast"></div>
+    </div>
+    <div class="overlay" id="overlay">
+      <div class="panel">
+        <div id="panel-icon">🎉</div>
+        <h1 id="panel-title">LEVEL COMPLETE!</h1>
+        <p id="panel-reason"></p>
+        <div id="panel-stats"></div>
+        <button class="btn" id="btn-restart">PLAY AGAIN</button>
+      </div>
+    </div>
+    <div id="splash">
+      <div id="splash-logo">🐤</div>
+      <h1>MARBLE SMASH</h1>
+      <p>Blast the voxel target! Hold &amp; drag the target to spin it. Marbles ride the rail and sort into matching boxes. Clear every box to win — don't overflow the rail!</p>
+      <div id="tap-hint">TAP TO PLAY</div>
+    </div>
+  </div>
+</div>
+<script>
+(() => {
+'use strict';
+/* =====================================================================
+   01 TUNING — gameplay constants verified against the Unity project
+   (Assets/Levels/Level1.asset overrides LevelData.cs defaults)
+   ===================================================================== */
+const Tuning = Object.freeze({
+  // cannon (Level1.asset)
+  AMMO: 60,
+  SHOT_COOLDOWN: 0.35,
+  CANNONBALL_SPEED: 30,
+  BLAST_RADIUS: 0.22,   // tightened: one shot should feel precise, not sweeping
+  CANNONBALL_RADIUS: 0.15,
+  CANNONBALL_LIFE: 3,
+  MAX_BLAST_VOXELS: 4,   // cap per shot (softens the Unity OverlapSphere yield)
+  // conveyor (ConveyorManager.cs + Level1.asset)
+  LANE_LENGTH: 2.4,
+  LANE_HALF_HEIGHT: 0.45,
+  BALL_SPACING: 0.36,
+  BELT_SPEED: 1.4,
+  DISPATCH_HALF_WIDTH: 1.2,
+  CONVEYOR_CAPACITY: 16,
+  CONVEYOR_Y: 4.5,
+  // box grid (BoxGridManager.cs + Level1.asset)
+  GRID_COLUMNS: 5,
+  VISIBLE_ROWS: 3,
+  COLUMN_SPACING: 1.02,
+  ROW_SPACING: 0.76,
+  BOX_TOP_Y: 3.1,
+  BOX_CAPACITY: 3,
+  // voxels (VoxelObject.cs)
+  VOXEL_SIZE: 0.34,
+  VOXEL_VISUAL: 0.96,
+  VOXEL_ORIGIN_Y: 6.82,   // voxel model base (Unity scene: 6.9, nudged for framing)
+  // marbles (ColoredBall.cs)
+  MARBLE_RADIUS: 0.14,
+  MARBLE_GRAVITY: -9.81,
+  MARBLE_MAX_SPEED: 6,
+  MARBLE_RESTITUTION: 0.25,
+  // cannon placement (2D relayout; Unity cannon sits on a separate z-plane)
+  CANNON_Y: 0.75,
+  BARREL_LEN: 0.7,
+  AIM_MIN_Y: 1.9,
+  // tween durations (Unity DOTween values)
+  T_VOXEL_DEATH: 0.12,
+  T_CAPTURE: 0.15,
+  T_JUMP: 0.28,
+  JUMP_ARC: 0.6,
+  T_BOX_POP: 0.12,
+  T_BOX_SHIFT: 0.18,
+  // world viewport (9:16). Unity XY coordinates are preserved.
+  WORLD_W: 6.4125,
+  WORLD_H: 11.4,
+  // feel
+  COMBO_WINDOW: 2.5,
+  RAIL_WARN_AT: 13,
+});
+const PATH_LENGTH = 2 * Tuning.LANE_LENGTH + 2 * Math.PI * Tuning.LANE_HALF_HEIGHT;
+const SLOT_COUNT = Math.min(Tuning.CONVEYOR_CAPACITY, Math.floor(PATH_LENGTH / Tuning.BALL_SPACING));
+const CAPACITY = SLOT_COUNT;
+const RAIL_SLOT_SPACING = PATH_LENGTH / SLOT_COUNT;
+
+const REDUCED = { on: false };
+{
+  const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  REDUCED.on = mq.matches;
+  const upd = () => { REDUCED.on = mq.matches; };
+  if (mq.addEventListener) mq.addEventListener('change', upd);
+}
+
+/* =====================================================================
+   02 PALETTE — candy palette + shade helper (light/dark/deep variants)
+   ===================================================================== */
+function hexToHsl(hex) {
+  const n = parseInt(hex.slice(1), 16);
+  let r = (n >> 16 & 255) / 255, g = (n >> 8 & 255) / 255, b = (n & 255) / 255;
+  const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2;
+  let h = 0, s = 0;
+  if (mx !== mn) {
+    const d = mx - mn;
+    s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn);
+    h = mx === r ? ((g - b) / d + (g < b ? 6 : 0)) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4;
+    h *= 60;
+  }
+  return [h, s * 100, l * 100];
+}
+function hsl(h, s, l) { return `hsl(${h.toFixed(1)},${s.toFixed(1)}%,${l.toFixed(1)}%)`; }
+function makeColor(hex) {
+  const [h, s, l] = hexToHsl(hex);
+  return {
+    base: hex,
+    light: hsl(h, Math.min(100, s * 1.02), Math.min(96, l + 16)),
+    lighter: hsl(h, s, Math.min(97, l + 26)),
+    dark: hsl(h, s, Math.max(6, l - 16)),
+    deep: hsl(h, Math.min(100, s * 1.05), Math.max(5, l - 26)),
+  };
+}
+const Palette = {
+  pink: makeColor('#ff4f99'),
+  brown: makeColor('#8a5433'),
+  cream: makeColor('#f0e4d2'),
+  green: makeColor('#4dd166'),
+  teal: makeColor('#36c7b8'),
+  purple: makeColor('#9c59d1'),
+  yellow: makeColor('#ffd84d'),
+  orange: makeColor('#ff9d35'),
+  red: makeColor('#ef4f4f'),
+  white: makeColor('#f6f4ef'),
+};
+const CONFETTI_COLORS = ['#ff4f99', '#ffb830', '#4dd166', '#36c7b8', '#9c59d1', '#ffd84d', '#ff9d35', '#ef4f4f', '#ffffff'];
+
+/* =====================================================================
+   03 EASE + TWEEN — tiny tween engine (DOTween stand-in)
+   ===================================================================== */
+const Ease = {
+  linear: k => k,
+  outQuad: k => 1 - (1 - k) * (1 - k),
+  outCubic: k => 1 - Math.pow(1 - k, 3),
+  inBack: k => { const s = 1.70158; return k * k * ((s + 1) * k - s); },
+  outBack: k => { const s = 1.70158; const p = k - 1; return p * p * ((s + 1) * p + s) + 1; },
+  outElastic: k => k === 0 ? 0 : k === 1 ? 1 :
+    Math.pow(2, -10 * k) * Math.sin((k * 10 - 0.75) * (2 * Math.PI / 3)) + 1,
+};
+const Tween = {
+  list: [],
+  add(o) { o.t = 0; o.ease = o.ease || Ease.linear; this.list.push(o); return o; },
+  delay(sec, fn) { return this.add({ dur: sec, done: fn }); },
+  update(dt) {
+    for (let i = this.list.length - 1; i >= 0; i--) {
+      const o = this.list[i];
+      if (o.dead) { this.list.splice(i, 1); continue; }
+      o.t += dt;
+      const raw = Math.min(1, o.t / o.dur);
+      if (o.update) o.update(o.ease(raw), raw);
+      if (raw >= 1) { this.list.splice(i, 1); if (o.done) o.done(); }
+    }
+  },
+  killAll() { this.list.length = 0; },
+};
+
+/* =====================================================================
+   04 RAND
+   ===================================================================== */
+const rand = (a, b) => a + Math.random() * (b - a);
+const pick = arr => arr[(Math.random() * arr.length) | 0];
+const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
+
+/* =====================================================================
+   05 CAM — world<->screen mapping + trauma-model screen shake
+   ===================================================================== */
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const Cam = {
+  W: 0, H: 0, S: 1, dpr: 1,
+  trauma: 0, time: 0, shakeX: 0, shakeY: 0, shakeRot: 0,
+  resize() {
+    const box = canvas.getBoundingClientRect();
+    this.dpr = Math.min(2, window.devicePixelRatio || 1);
+    this.W = Math.round(box.width * this.dpr);
+    this.H = Math.round(box.height * this.dpr);
+    canvas.width = this.W;
+    canvas.height = this.H;
+    this.S = this.H / Tuning.WORLD_H;
+    Render.rebuildStatics();
+  },
+  wx(x) { return this.W / 2 + x * this.S; },
+  wy(y) { return this.H - y * this.S; },
+  // screen(css px) -> world
+  toWorld(cssX, cssY) {
+    const x = (cssX * this.dpr - this.W / 2) / this.S;
+    const y = (this.H - cssY * this.dpr) / this.S;
+    return { x, y };
+  },
+  addTrauma(t) { if (!REDUCED.on) this.trauma = clamp(this.trauma + t, 0, 1); },
+  update(dt) {
+    this.time += dt;
+    this.trauma = Math.max(0, this.trauma - 1.8 * dt);
+    const sh = this.trauma * this.trauma;
+    const t = this.time;
+    this.shakeX = (Math.sin(t * 37.7) + Math.sin(t * 13.1) * 0.6) / 1.6 * sh * 0.10 * this.S;
+    this.shakeY = (Math.cos(t * 41.3) + Math.sin(t * 17.9) * 0.6) / 1.6 * sh * 0.10 * this.S;
+    this.shakeRot = Math.sin(t * 29.5) * sh * 0.012;
+  },
+};
+
+/* =====================================================================
+   06 SFX — Web Audio synthesized sound effects
+   ===================================================================== */
+const SFX = (() => {
+  let ac = null, master = null, noiseBuf = null;
+  let muted = localStorage.getItem('mc_mute') === '1';
+  function ensure() {
+    if (!ac) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      ac = new AC();
+      master = ac.createGain();
+      master.gain.value = muted ? 0.0001 : 1;
+      master.connect(ac.destination);
+      noiseBuf = ac.createBuffer(1, ac.sampleRate, ac.sampleRate);
+      const d = noiseBuf.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    }
+    if (ac.state === 'suspended') ac.resume();
+  }
+  const ok = () => ac && ac.state === 'running' && !muted;
+  function tone(o) {
+    if (!ok()) return;
+    const t0 = ac.currentTime + (o.at || 0);
+    const osc = ac.createOscillator();
+    osc.type = o.type || 'sine';
+    osc.frequency.setValueAtTime(Math.max(1, o.f0), t0);
+    if (o.f1) osc.frequency.exponentialRampToValueAtTime(Math.max(1, o.f1), t0 + o.dur);
+    const g = ac.createGain();
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(o.vol || 0.3, t0 + (o.attack || 0.005));
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + o.dur);
+    osc.connect(g); g.connect(master);
+    osc.start(t0); osc.stop(t0 + o.dur + 0.05);
+  }
+  function noise(o) {
+    if (!ok()) return;
+    const t0 = ac.currentTime + (o.at || 0);
+    const src = ac.createBufferSource();
+    src.buffer = noiseBuf;
+    src.loop = true;
+    const f = ac.createBiquadFilter();
+    f.type = o.filter || 'lowpass';
+    f.frequency.setValueAtTime(o.f0 || 800, t0);
+    if (o.f1) f.frequency.exponentialRampToValueAtTime(Math.max(20, o.f1), t0 + o.dur);
+    f.Q.value = o.q || 0.8;
+    const g = ac.createGain();
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(o.vol || 0.3, t0 + (o.attack || 0.004));
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + o.dur);
+    src.connect(f); f.connect(g); g.connect(master);
+    src.start(t0); src.stop(t0 + o.dur + 0.05);
+  }
+  const st = (n) => Math.pow(2, n / 12); // semitone ratio
+  return {
+    unlock() { ensure(); },
+    get muted() { return muted; },
+    setMuted(b) {
+      muted = b;
+      localStorage.setItem('mc_mute', b ? '1' : '0');
+      if (master) master.gain.setTargetAtTime(b ? 0.0001 : 1, ac.currentTime, 0.02);
+    },
+    fire() {
+      noise({ filter: 'lowpass', f0: 420, f1: 80, dur: 0.14, vol: 0.5 });
+      tone({ type: 'sine', f0: 150, f1: 55, dur: 0.12, vol: 0.4 });
+    },
+    dryFire() { tone({ type: 'square', f0: 190, f1: 150, dur: 0.07, vol: 0.12 }); },
+    blast(n) {
+      noise({ filter: 'bandpass', f0: 900, dur: 0.07, vol: 0.35, q: 1.2 });
+      const c = Math.min(6, n);
+      for (let i = 0; i < c; i++) {
+        tone({ type: 'square', f0: (500 + rand(-30, 30)) * (1 + 0.07 * i), f1: 290, dur: 0.07, vol: 0.16, at: i * 0.013 });
+      }
+    },
+    armorHit() {
+      tone({ type: 'square', f0: 260, f1: 190, dur: 0.09, vol: 0.2 });
+      noise({ filter: 'lowpass', f0: 500, f1: 200, dur: 0.06, vol: 0.18 });
+    },
+    iceHit() {
+      tone({ type: 'triangle', f0: 1450, f1: 920, dur: 0.11, vol: 0.18 });
+      noise({ filter: 'highpass', f0: 2500, f1: 1300, dur: 0.07, vol: 0.10 });
+    },
+    flame() {
+      noise({ filter: 'bandpass', f0: 900, f1: 420, dur: 0.95, vol: 0.32 });
+      tone({ type: 'sawtooth', f0: 120, f1: 82, dur: 0.75, vol: 0.08 });
+    },
+    melt() {
+      tone({ type: 'sine', f0: 720, f1: 1260, dur: 0.28, vol: 0.22 });
+      tone({ type: 'triangle', f0: 1040, f1: 1560, dur: 0.22, vol: 0.14, at: 0.08 });
+    },
+    railLand() { tone({ type: 'triangle', f0: 1150 * rand(0.95, 1.05), f1: 880, dur: 0.045, vol: 0.15 }); },
+    whip() { tone({ type: 'sine', f0: 500, f1: 940, dur: 0.09, vol: 0.2 }); },
+    boxCatch(slot) {
+      const f = [700, 840, 1000][clamp(slot - 1, 0, 2)];
+      tone({ type: 'sine', f0: f, dur: 0.07, vol: 0.24 });
+      noise({ filter: 'highpass', f0: 2200, dur: 0.03, vol: 0.1 });
+    },
+    boxComplete(combo) {
+      const shift = st(Math.min(8, (combo - 1) * 2));
+      noise({ filter: 'bandpass', f0: 1400, dur: 0.05, vol: 0.28, q: 1 });
+      tone({ type: 'sine', f0: 660 * shift, dur: 0.3, vol: 0.24, at: 0.01 });
+      tone({ type: 'sine', f0: 831 * shift, dur: 0.32, vol: 0.2, at: 0.05 });
+      tone({ type: 'sine', f0: 988 * shift, dur: 0.35, vol: 0.18, at: 0.09 });
+    },
+    shiftUp() { tone({ type: 'triangle', f0: 300, f1: 360, dur: 0.05, vol: 0.12 }); },
+    railWarn(level) { tone({ type: 'sawtooth', f0: 220, f1: 190, dur: 0.16, vol: 0.1 + 0.05 * level }); },
+    ammoLow() { tone({ type: 'square', f0: 330, f1: 296, dur: 0.09, vol: 0.12 }); },
+    win() {
+      const notes = [523, 659, 784, 1047];
+      notes.forEach((f, i) => tone({ type: 'triangle', f0: f, dur: 0.16, vol: 0.26, at: i * 0.12 }));
+      tone({ type: 'sine', f0: 523, dur: 0.55, vol: 0.14, at: 0.48 });
+      tone({ type: 'sine', f0: 659, dur: 0.55, vol: 0.14, at: 0.48 });
+      tone({ type: 'sine', f0: 784, dur: 0.6, vol: 0.14, at: 0.48 });
+      noise({ filter: 'highpass', f0: 4000, dur: 0.5, vol: 0.08, at: 0.45 });
+    },
+    fail() {
+      tone({ type: 'sine', f0: 400, f1: 210, dur: 0.4, vol: 0.28 });
+      tone({ type: 'sine', f0: 300, f1: 150, dur: 0.5, vol: 0.22, at: 0.12 });
+      noise({ filter: 'lowpass', f0: 300, f1: 70, dur: 0.4, vol: 0.3 });
+    },
+    click() { tone({ type: 'sine', f0: 1600, dur: 0.03, vol: 0.14 }); },
+  };
+})();
+
+/* =====================================================================
+   07 HAPTICS
+   ===================================================================== */
+const Haptics = {
+  enabled: localStorage.getItem('mc_haptics') !== '0',
+  supported: 'vibrate' in navigator,
+  set(b) { this.enabled = b; localStorage.setItem('mc_haptics', b ? '1' : '0'); },
+  buzz(p) { if (this.enabled && this.supported) navigator.vibrate(p); },
+};
+
+/* =====================================================================
+   08 PARTICLES — pooled (zero allocation during play)
+   ===================================================================== */
+const Particles = (() => {
+  const MAX = 400;
+  const pool = [];
+  for (let i = 0; i < MAX; i++) pool.push({ active: false });
+  let cursor = 0;
+  function take() {
+    for (let i = 0; i < MAX; i++) {
+      cursor = (cursor + 1) % MAX;
+      if (!pool[cursor].active) return pool[cursor];
+    }
+    cursor = (cursor + 1) % MAX; // overwrite oldest-ish
+    return pool[cursor];
+  }
+  function emit(kind, x, y, o) {
+    const p = take();
+    p.active = true; p.kind = kind; p.x = x; p.y = y;
+    p.vx = o.vx || 0; p.vy = o.vy || 0; p.g = o.g || 0;
+    p.life = p.maxLife = o.life || 0.6;
+    p.size = o.size || 0.06; p.sizeEnd = o.sizeEnd !== undefined ? o.sizeEnd : p.size;
+    p.color = o.color || '#fff'; p.rot = rand(0, Math.PI * 2); p.rotV = o.rotV || 0;
+    p.drag = o.drag !== undefined ? o.drag : 0.99;
+  }
+  const scale = () => REDUCED.on ? 0.3 : 1;
+  return {
+    chipBurst(x, y, col) {
+      const n = Math.max(2, Math.round(rand(6, 9) * scale()));
+      for (let i = 0; i < n; i++) {
+        const a = rand(0, Math.PI * 2), sp = rand(1.2, 3.4);
+        emit('chip', x, y, {
+          vx: Math.cos(a) * sp, vy: Math.sin(a) * sp + 1.2, g: -9,
+          life: rand(0.4, 0.75), size: rand(0.045, 0.1), sizeEnd: 0.01,
+          color: Math.random() < 0.7 ? col.base : col.light, rotV: rand(-9, 9), drag: 0.985,
+        });
+      }
+    },
+    dust(x, y) {
+      const n = Math.round(3 * scale());
+      for (let i = 0; i < n; i++) {
+        emit('dust', x + rand(-0.08, 0.08), y, {
+          vx: rand(-0.4, 0.4), vy: rand(0.15, 0.5), g: -1,
+          life: rand(0.25, 0.45), size: 0.05, sizeEnd: 0.14,
+          color: 'rgba(255,255,255,0.75)', drag: 0.96,
+        });
+      }
+    },
+    confetti(x, y) {
+      const n = Math.max(6, Math.round(22 * scale()));
+      for (let i = 0; i < n; i++) {
+        const a = rand(-Math.PI * 0.95, -Math.PI * 0.05); // fan upward
+        const sp = rand(1.6, 4.2);
+        emit('confetti', x, y, {
+          vx: Math.cos(a) * sp * -1, vy: Math.abs(Math.sin(a)) * sp + 1, g: -7.5,
+          life: rand(0.6, 1.15), size: rand(0.05, 0.09),
+          color: pick(CONFETTI_COLORS), rotV: rand(-12, 12), drag: 0.985,
+        });
+      }
+    },
+    spark(x, y, dirX, dirY) {
+      const n = Math.round(6 * scale());
+      for (let i = 0; i < n; i++) {
+        const spread = rand(-0.6, 0.6);
+        const c = Math.cos(spread), s = Math.sin(spread);
+        const dx = dirX * c - dirY * s, dy = dirX * s + dirY * c;
+        const sp = rand(2.5, 5.5);
+        emit('spark', x, y, {
+          vx: dx * sp, vy: dy * sp, g: -4,
+          life: rand(0.1, 0.24), size: rand(0.03, 0.06), sizeEnd: 0.005,
+          color: Math.random() < 0.5 ? '#fff4b0' : '#ffb830', drag: 0.95,
+        });
+      }
+    },
+    ring(x, y, col, maxR) {
+      emit('ring', x, y, { life: 0.35, size: 0.08, sizeEnd: maxR || 0.55, color: col, g: 0 });
+    },
+    update(dt) {
+      for (let i = 0; i < MAX; i++) {
+        const p = pool[i];
+        if (!p.active) continue;
+        p.life -= dt;
+        if (p.life <= 0) { p.active = false; continue; }
+        p.vy += p.g * dt;
+        p.vx *= p.drag; p.vy *= p.drag;
+        p.x += p.vx * dt; p.y += p.vy * dt;
+        p.rot += p.rotV * dt;
+        if (p.kind === 'confetti') p.x += Math.sin(p.life * 11 + p.rot) * 0.6 * dt;
+      }
+    },
+    draw() {
+      const S = Cam.S;
+      for (let i = 0; i < MAX; i++) {
+        const p = pool[i];
+        if (!p.active) continue;
+        const k = p.life / p.maxLife;
+        const sx = Cam.wx(p.x), sy = Cam.wy(p.y);
+        if (p.kind === 'ring') {
+          const r = (p.size + (p.sizeEnd - p.size) * (1 - k)) * S;
+          ctx.globalAlpha = k * 0.8;
+          ctx.strokeStyle = p.color;
+          ctx.lineWidth = Math.max(1.5, 3.5 * k * S / 60);
+          ctx.beginPath(); ctx.arc(sx, sy, r, 0, Math.PI * 2); ctx.stroke();
+          ctx.globalAlpha = 1;
+        } else if (p.kind === 'dust') {
+          const r = (p.size + (p.sizeEnd - p.size) * (1 - k)) * S;
+          ctx.globalAlpha = k * 0.6;
+          ctx.fillStyle = p.color;
+          ctx.beginPath(); ctx.arc(sx, sy, r, 0, Math.PI * 2); ctx.fill();
+          ctx.globalAlpha = 1;
+        } else if (p.kind === 'spark') {
+          const r = (p.size * k + p.sizeEnd) * S;
+          ctx.globalAlpha = k;
+          ctx.globalCompositeOperation = 'lighter';
+          ctx.fillStyle = p.color;
+          ctx.beginPath(); ctx.arc(sx, sy, r, 0, Math.PI * 2); ctx.fill();
+          ctx.globalCompositeOperation = 'source-over';
+          ctx.globalAlpha = 1;
+        } else { // chip / confetti — rotated quads
+          const s = (p.kind === 'chip' ? p.size * (0.4 + 0.6 * k) : p.size) * S;
+          ctx.globalAlpha = p.kind === 'confetti' ? Math.min(1, k * 2.2) : k;
+          ctx.save();
+          ctx.translate(sx, sy); ctx.rotate(p.rot);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-s / 2, -s * 0.35, s, s * 0.7);
+          ctx.restore();
+          ctx.globalAlpha = 1;
+        }
+      }
+    },
+    clear() { for (const p of pool) p.active = false; },
+  };
+})();
+
+/* =====================================================================
+   09 FLOATTEXT — pooled floating labels (world space)
+   ===================================================================== */
+const FloatText = (() => {
+  const pool = [];
+  for (let i = 0; i < 8; i++) pool.push({ active: false });
+  let idx = 0;
+  return {
+    spawn(x, y, str, color, size) {
+      const f = pool[idx]; idx = (idx + 1) % pool.length;
+      f.active = true; f.x = x; f.y = y; f.str = str;
+      f.color = color || '#fff'; f.size = size || 0.34;
+      f.life = f.maxLife = 0.75;
+    },
+    update(dt) { for (const f of pool) if (f.active && (f.life -= dt) <= 0) f.active = false; },
+    draw() {
+      for (const f of pool) {
+        if (!f.active) continue;
+        const k = 1 - f.life / f.maxLife; // 0->1
+        const rise = Ease.outCubic(k) * 0.55;
+        const popS = k < 0.25 ? Ease.outBack(k / 0.25) : 1;
+        const alpha = k > 0.6 ? 1 - (k - 0.6) / 0.4 : 1;
+        const sx = Cam.wx(f.x), sy = Cam.wy(f.y + rise);
+        const px = f.size * Cam.S * popS;
+        ctx.globalAlpha = alpha;
+        ctx.font = `700 ${px.toFixed(1)}px Fredoka, "Segoe UI", sans-serif`;
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.lineWidth = Math.max(2, px * 0.14);
+        ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+        ctx.strokeText(f.str, sx, sy);
+        ctx.fillStyle = f.color;
+        ctx.fillText(f.str, sx, sy);
+        ctx.globalAlpha = 1;
+      }
+    },
+    clear() { for (const f of pool) f.active = false; },
+  };
+})();
+
+/* =====================================================================
+   10 LEVEL — voxel model generation (port of VoxelObject.Build)
+   + funnel wall segments
+   ===================================================================== */
+const Level = {
+  // Every builder returns { cells:[{gx,gy,z,color,hp?}], counts:{color:n} }.
+
+  // Level 2: smiley face — yellow head, brown eyes + nose, red smile. The eyes
+  // and mouth are LOCKED blocker groups: shots bounce off with no effect until
+  // the matching key box below is filled, which flies a key up and unlocks the
+  // group (see Locks). Both depth layers are locked so the model can't be
+  // opened from behind by rotating it.
+  // Per-layer color counts are multiples of 3 by design, so finishBuild never
+  // trims back-layer cells and the model has no hidden holes.
+  buildSmiley() {
+    const cells = [];
+    const rows = [
+      '..YYYYYYY..',
+      '.YYYYYYYYY.',
+      'YYBBYYYBBYY',
+      'YYBBYYYBBYY',
+      'YYYYYBYYYYY',
+      'YRYYYYYYYRY',
+      'YYRYYYYYRYY',
+      '.YYRRRRRYY.',
+      '..YYYYYYY..',
+    ];
+    const colorMap = { Y: 'yellow', B: 'brown', R: 'red' };
+    const maxGy = rows.length - 1;
+    for (let row = 0; row < rows.length; row++) {
+      const gy = maxGy - row;
+      for (let gx = 0; gx < rows[row].length; gx++) {
+        const color = colorMap[rows[row][gx]];
+        if (!color) continue;
+        let lock = null;
+        if (color === 'brown' && row <= 3) lock = gx < 5 ? 'eyeL' : 'eyeR'; // eyes (nose stays free)
+        else if (color === 'red') lock = 'mouth';
+        for (let z = 0; z <= 1; z++)
+          cells.push(lock ? { gx, gy, z, color, lock } : { gx, gy, z, color });
+      }
+    }
+    return this.finishBuild(cells, 5);
+  },
+
+  // Level 3: gift box — pink bow + ribbon band over a teal lid and festive
+  // purple/yellow stripes. Per-layer color counts are multiples of 3 by design,
+  // so finishBuild never trims back-layer cells.
+  buildGift() {
+    const cells = [];
+    const rows = [
+      '.PP...PP.',
+      '..PPPPP..',
+      'TTTTTTTTT',
+      'TTTTTTTTT',
+      'PPPPPPPPP',
+      'VVVVVVVVV',
+      'YYYYYYYYY',
+      'VVVVVVVVV',
+      'YYYYYYYYY',
+    ];
+    const colorMap = { P: 'pink', T: 'teal', V: 'purple', Y: 'yellow' };
+    const maxGy = rows.length - 1;
+    for (let row = 0; row < rows.length; row++) {
+      const gy = maxGy - row;
+      for (let gx = 0; gx < rows[row].length; gx++) {
+        const color = colorMap[rows[row][gx]];
+        if (!color) continue;
+        for (let z = 0; z <= 1; z++) cells.push({ gx, gy, z, color });
+      }
+    }
+    return this.finishBuild(cells, 4);
+  },
+
+  // Level 1: chick — bright yellow body, brown head tuft + eyes, orange
+  // beak/feet and a cream belly. Per-layer color counts are multiples of 3 by
+  // design, so finishBuild never trims back-layer cells.
+  buildChick() {
+    const cells = [];
+    const rows = [
+      '.....B.....',
+      '....YYY....',
+      '...YYYYY...',
+      '..YYYYYYY..',
+      '.YYYYYYYYY.',
+      '.YYBYYYBYY.',
+      '.YYYYOYYYY.',
+      'YYYYYYYYYYY',
+      'YYYYCCCYYYY',
+      '.YYYCCCYYY.',
+      '..YYYYYYY..',
+      '...OOYOO...',
+      '..OO...OO..',
+    ];
+    const colorMap = { Y: 'yellow', O: 'orange', B: 'brown', C: 'cream' };
+    const maxGy = rows.length - 1;
+    for (let row = 0; row < rows.length; row++) {
+      const gy = maxGy - row;
+      for (let gx = 0; gx < rows[row].length; gx++) {
+        const color = colorMap[rows[row][gx]];
+        if (!color) continue;
+        for (let z = 0; z <= 1; z++) cells.push({ gx, gy, z, color });
+      }
+    }
+    const built = this.finishBuild(cells, 5);
+    // 13 rows tall with the tuft — shrink and shift a touch so the rotating
+    // model stays clear of the HUD bar.
+    this.objectScale = 0.94;
+    this.objectOffsetY = -0.40;
+    return built;
+  },
+
+  // shared: trim z==1 per color to multiples of 3 (solvability), count colors
+  finishBuild(cells, centerGX) {
+    this.centerGX = centerGX;
+    this.objectScale = 1;
+    this.objectOffsetY = 0;
+    const byColor = {};
+    for (const c of cells) byColor[c.color] = (byColor[c.color] || 0) + 1;
+    for (const col of Object.keys(byColor)) {
+      let excess = byColor[col] % 3;
+      if (!excess) continue;
+      for (let i = 0; i < cells.length && excess > 0; i++) {
+        if (cells[i].color === col && cells[i].z === 1) { cells.splice(i, 1); i--; excess--; }
+      }
+    }
+    const counts = {};
+    for (const c of cells) counts[c.color] = (counts[c.color] || 0) + 1;
+    for (const col of Object.keys(counts))
+      console.assert(counts[col] % 3 === 0, `solvability broken: ${col}=${counts[col]}`);
+    return { cells, counts };
+  },
+
+  centerGX: 2,
+  objectScale: 1,
+  objectOffsetY: 0,
+  // world position of a voxel cell (center)
+  voxelPos(c) {
+    return {
+      x: (c.gx - this.centerGX) * Tuning.VOXEL_SIZE,
+      y: Tuning.VOXEL_ORIGIN_Y + (this.objectOffsetY || 0) + c.gy * Tuning.VOXEL_SIZE,
+    };
+  },
+  // funnel planks (slightly extended vs Unity scene for guaranteed catchment)
+  funnelWalls: [
+    { x1: -2.9, y1: 6.73, x2: -0.35, y2: 5.61 },
+    { x1: 2.9, y1: 6.73, x2: 0.35, y2: 5.61 },
+    // short guides: keep fast marbles from flying sideways past the rail
+    { x1: -0.35, y1: 5.61, x2: -0.5, y2: 5.0 },
+    { x1: 0.35, y1: 5.61, x2: 0.5, y2: 5.0 },
+  ],
+};
+
+const LEVELS = [
+  { name: 1, ammo: 60, build: () => Level.buildChick() },
+  { name: 2, ammo: 70, build: () => Level.buildSmiley() },
+  { name: 3, ammo: 100, build: () => Level.buildGift() },
+];
+
+/* =====================================================================
+   11 ENTITIES — voxels, cannonballs, marbles
+   ===================================================================== */
+const Object3D = {
+  angle: 0,   // yaw (drag left/right)
+  angleX: 0,  // pitch (drag up/down) — both unlimited, around the same pivot
+  scale: 1.00,
+  pivotY: 8.5,
+  project(x, y, z) {
+    const cy = Math.cos(this.angle), sy = Math.sin(this.angle);
+    const cx = Math.cos(this.angleX), sx = Math.sin(this.angleX);
+    // yaw around the vertical pivot axis...
+    const px = x * cy + z * sy;
+    const pz = -x * sy + z * cy;
+    // ...then pitch around the horizontal axis through pivotY
+    const ry = y - this.pivotY;
+    const py = ry * cx - pz * sx;
+    const depth = ry * sx + pz * cx;
+    return {x: px * this.scale,
+      y: this.pivotY + (py + depth * .20) * this.scale,
+      depth: depth * this.scale};
+  },
+  center(v) { return this.project(v.x, v.y, (.5 - v.z) * Tuning.VOXEL_SIZE); },
+  faces(v, padding = 0) {
+    const h = Tuning.VOXEL_SIZE * Tuning.VOXEL_VISUAL * v.scale / 2 + padding;
+    const z = (.5 - v.z) * Tuning.VOXEL_SIZE;
+    const corners = [[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]]
+      .map(([dx,dy,dz]) => this.project(v.x+dx*h,v.y+dy*h,z+dz*h));
+    return [[0,3,2,1],[4,5,6,7],[0,4,7,3],[1,2,6,5],[3,7,6,2],[0,1,5,4]].map((ids,i) => {
+      const points = ids.map(j=>corners[j]);
+      return {points, depth: points.reduce((n,p)=>n+p.depth,0)/4, side:i, v};
+    });
+  },
+  update(dt) {
+    // Idle spin: the object slowly yaws on its own, but freezes while the
+    // player holds it (drag-rotate, see Input) and while a shot is in flight.
+    // The player-set pitch (angleX) is left untouched.
+    if (Game.state === 'playing' && !Cannon.inFlight && !REDUCED.on && !Input.drag)
+      this.angle = (this.angle + dt * .30) % (Math.PI * 2);
+  },
+};
+
+
+const Entities = {
+  voxels: [],       // {x,y,z,color,alive,dying,scale}
+  cannonballs: [],  // {x,y,px,py,vx,vy,age}
+  marbles: [],      // {x,y,vx,vy,color,state,sy,syV,slot,box,slotIdx,r,jump:{}}
+  remaining: 0,
+  totalVoxels: 0,
+
+  reset(cells) {
+    Object3D.angle = 0; // level opens front-facing; player rotates manually
+    Object3D.angleX = 0;
+    Object3D.scale = Level.objectScale || 1;
+    const ys = cells.map(c => Level.voxelPos(c).y);
+    Object3D.pivotY = ys.length ? (Math.min(...ys) + Math.max(...ys)) / 2 : 8.5;
+    this.voxels.length = 0;
+    this.cannonballs.length = 0;
+    this.marbles.length = 0;
+    for (const c of cells) {
+      const p = Level.voxelPos(c);
+      this.voxels.push({
+        x: p.x, y: p.y, z: c.z, color: c.color, alive: true, dying: false, scale: 1,
+        hp: c.hp || 1, maxHp: c.hp || 1, hitFlash: 0,
+        iced: !!c.ice, iceAlpha: c.ice ? 1 : 0, iceFlash: 0,
+        lockGroup: c.lock || null, locked: !!c.lock,
+      });
+    }
+    this.remaining = this.totalVoxels = this.voxels.length;
+  },
+
+  spawnCannonball(x, y, tx, ty) {
+    // The ball flies to the exact aimed point and detonates there
+    // (2D equivalent of the Unity ball hitting the voxel plane at the tap point).
+    let dx = tx - x, dy = ty - y;
+    const dist = Math.hypot(dx, dy) || 1;
+    dx /= dist; dy /= dist;
+    this.cannonballs.push({
+      x, y, px: x, py: y,
+      vx: dx * Tuning.CANNONBALL_SPEED, vy: dy * Tuning.CANNONBALL_SPEED,
+      tx, ty, totalDist: dist, traveled: 0, age: 0,
+    });
+  },
+
+  spawnMarble(x, y, color) {
+    this.marbles.push({
+      x, y, vx: rand(-0.5, 0.5), vy: 0.5, color,
+      state: 'free', sy: 1, syV: 0, r: Tuning.MARBLE_RADIUS,
+      slot: -1, box: null, slotIdx: 0, jump: null, capT: 0, capFrom: null,
+    });
+  },
+
+  hitVoxel(v) {
+    if (!v.alive || v.dying) return;
+    v.dying = true;
+    this.remaining--;
+    const p = Object3D.center(v);
+    this.spawnMarble(p.x, p.y, v.color);
+    Particles.chipBurst(p.x, p.y, Palette[v.color]);
+    const vv = v;
+    Tween.add({
+      dur: Tuning.T_VOXEL_DEATH, ease: Ease.inBack,
+      update: k => { vv.scale = 1 - k; },
+      done: () => { vv.alive = false; },
+    });
+  },
+
+  blastAt(bx, by) {
+    // OverlapSphere port: distance from blast point to voxel AABB < BLAST_RADIUS.
+    // Softened vs Unity: at most MAX_BLAST_VOXELS closest voxels are destroyed,
+    // so one shot doesn't wipe a whole neighbourhood.
+    const half = Tuning.VOXEL_SIZE * Tuning.VOXEL_VISUAL * Object3D.scale / 2;
+    const hits = [];
+    for (const v of this.voxels) {
+      if (!v.alive || v.dying) continue;
+      const p = Object3D.center(v);
+      const extentX = half * (Math.abs(Math.cos(Object3D.angle)) + Math.abs(Math.sin(Object3D.angle)));
+      const extentY = half * (Math.abs(Math.cos(Object3D.angleX)) + Math.abs(Math.sin(Object3D.angleX)));
+      const dx = Math.max(Math.abs(bx - p.x) - extentX, 0);
+      const dy = Math.max(Math.abs(by - p.y) - extentY * 1.2, 0);
+      if (dx * dx + dy * dy < Tuning.BLAST_RADIUS * Tuning.BLAST_RADIUS) {
+        const cx = bx - p.x, cy = by - p.y;
+        hits.push({ v, d: cx * cx + cy * cy, depth:p.depth });
+      }
+    }
+    hits.sort((a, b) => a.d - b.d || b.depth - a.depth);
+    const n = Math.min(hits.length, Tuning.MAX_BLAST_VOXELS);
+    let armored = 0, iceBlocked = 0, lockBlocked = 0;
+    for (let i = 0; i < n; i++) {
+      const v = hits[i].v;
+      if (v.locked) {
+        // Locked voxels are true blockers: shots have no effect until the
+        // matching key box is filled and its key unlocks the group. No hit
+        // flash here on purpose — a flash reads as "attackable"; the only
+        // feedback is the lock icon rattling and the dull armor thud.
+        Locks.shake[v.lockGroup] = 1;
+        lockBlocked++;
+      } else if (v.iced) {
+        // Frozen voxels are true blockers: cannon shots cannot reach the piece
+        // underneath until the Level 3 flamethrower melts the ice.
+        v.iceFlash = 1;
+        iceBlocked++;
+        IceBlocker.onIceHit(v);
+      } else if (v.hp > 1) {
+        // armored: absorb the hit, keep the cube (same feedback language)
+        v.hp--;
+        v.hitFlash = 1;
+        armored++;
+        const p = Object3D.center(v);
+        Particles.dust(p.x, p.y);
+      } else {
+        this.hitVoxel(v);
+      }
+    }
+    if (armored > 0 || lockBlocked > 0) SFX.armorHit();
+    if (iceBlocked > 0) SFX.iceHit();
+    return n;
+  },
+
+  updateCannonballs(dt) {
+    for (let i = this.cannonballs.length - 1; i >= 0; i--) {
+      const b = this.cannonballs[i];
+      b.age += dt;
+      b.px = b.x; b.py = b.y;
+      const stepLen = Tuning.CANNONBALL_SPEED * dt;
+      const remaining = b.totalDist - b.traveled;
+      if (remaining <= stepLen) {
+        // arrival: impact exactly at the aimed point
+        b.x = b.tx; b.y = b.ty;
+        const n = this.blastAt(b.tx, b.ty);
+        if (n > 0) {
+          Cam.addTrauma(Math.min(0.5, 0.12 + 0.03 * n));
+          SFX.blast(n);
+          Haptics.buzz(20);
+          Particles.ring(b.tx, b.ty, '#ffffff', 0.5);
+          Game.shotsHit++;
+        } else {
+          // whiffed into empty space: soft poof, no blast juice
+          Particles.dust(b.tx, b.ty);
+          Particles.ring(b.tx, b.ty, 'rgba(255,255,255,0.7)', 0.25);
+        }
+        this.cannonballs.splice(i, 1);
+        Cannon.inFlight--;
+        continue;
+      }
+      b.x += b.vx * dt;
+      b.y += b.vy * dt;
+      b.traveled += stepLen;
+      if (b.age > Tuning.CANNONBALL_LIFE) { this.cannonballs.splice(i, 1); Cannon.inFlight--; }
+    }
+  },
+
+  collideFunnel(m) {
+    const R = m.r;
+    for (const w of Level.funnelWalls) {
+      const wx = w.x2 - w.x1, wy = w.y2 - w.y1;
+      const len2 = wx * wx + wy * wy;
+      let t = ((m.x - w.x1) * wx + (m.y - w.y1) * wy) / len2;
+      t = clamp(t, 0, 1);
+      const cx = w.x1 + wx * t, cy = w.y1 + wy * t;
+      let dx = m.x - cx, dy = m.y - cy;
+      const d = Math.hypot(dx, dy);
+      if (d < R && d > 1e-6) {
+        dx /= d; dy /= d;
+        m.x = cx + dx * R; m.y = cy + dy * R;
+        const vn = m.vx * dx + m.vy * dy;
+        if (vn < 0) {
+          m.vx -= (1 + Tuning.MARBLE_RESTITUTION) * vn * dx;
+          m.vy -= (1 + Tuning.MARBLE_RESTITUTION) * vn * dy;
+          m.vx *= 0.985; m.vy *= 0.985;
+        }
+      }
+    }
+    // side walls
+    const lim = Tuning.WORLD_W / 2 - 0.06;
+    if (m.x < -lim + R) { m.x = -lim + R; if (m.vx < 0) m.vx *= -Tuning.MARBLE_RESTITUTION; }
+    if (m.x > lim - R) { m.x = lim - R; if (m.vx > 0) m.vx *= -Tuning.MARBLE_RESTITUTION; }
+  },
+
+  updateMarbles(dt) {
+    const free = [];
+    for (const m of this.marbles) {
+      // squash-stretch spring (all states)
+      const diff = 1 - m.sy;
+      m.syV += diff * 14 * dt * 60 * 0.016;
+      m.syV *= 0.82;
+      m.sy += m.syV;
+      if (m.state === 'free') free.push(m);
+    }
+    // free-fall physics, 2 substeps
+    for (let s = 0; s < 2; s++) {
+      const h = dt / 2;
+      for (const m of free) {
+        m.vy += Tuning.MARBLE_GRAVITY * h;
+        const sp = Math.hypot(m.vx, m.vy);
+        if (sp > Tuning.MARBLE_MAX_SPEED) {
+          m.vx *= Tuning.MARBLE_MAX_SPEED / sp;
+          m.vy *= Tuning.MARBLE_MAX_SPEED / sp;
+        }
+        m.x += m.vx * h;
+        m.y += m.vy * h;
+        this.collideFunnel(m);
+      }
+      // marble-marble separation (free only)
+      for (let i = 0; i < free.length; i++)
+        for (let j = i + 1; j < free.length; j++) {
+          const a = free[i], b = free[j];
+          let dx = b.x - a.x, dy = b.y - a.y;
+          const d = Math.hypot(dx, dy), min = a.r + b.r;
+          if (d < min && d > 1e-6) {
+            dx /= d; dy /= d;
+            const push = (min - d) / 2;
+            a.x -= dx * push; a.y -= dy * push;
+            b.x += dx * push; b.y += dy * push;
+            const rvn = (b.vx - a.vx) * dx + (b.vy - a.vy) * dy;
+            if (rvn < 0) {
+              const imp = -rvn * 0.55;
+              a.vx -= dx * imp; a.vy -= dy * imp;
+              b.vx += dx * imp; b.vy += dy * imp;
+            }
+          }
+        }
+    }
+    // safety net: never lose a marble below the rail (breaks solvability)
+    for (const m of free) {
+      if (m.state === 'free' && m.y < 3.55) {
+        m.x = rand(-0.2, 0.2); m.y = 5.45; m.vx = 0; m.vy = 0;
+      }
+    }
+    // rail capture check
+    for (const m of free) {
+      if (m.state !== 'free' || m.vy > 0.3) continue;
+      const qx = Math.max(Math.abs(m.x) - Tuning.LANE_LENGTH / 2, 0);
+      const dc = Math.hypot(qx, m.y - Tuning.CONVEYOR_Y);
+      if (Math.abs(dc - Tuning.LANE_HALF_HEIGHT) < 0.3) Conveyor.tryCapture(m);
+    }
+  },
+
+  removeMarble(m) {
+    const i = this.marbles.indexOf(m);
+    if (i >= 0) this.marbles.splice(i, 1);
+  },
+};
+
+/* =====================================================================
+   11B LEVEL 3 ICE BLOCKER + BOX FLAMETHROWER
+   ===================================================================== */
+const IceBlocker = {
+  enabled: false,
+  triggered: false,
+  melted: true,
+  finished: true,
+  t: 0,
+  warnCooldown: 0,
+  sourceX: 0, sourceY: 0,
+  targetX: 0, targetY: 9.8,
+  nozzleLift: 0, flame: 0, meltK: 0,
+
+  reset() {
+    this.enabled = Game.levelIndex === 2 && Entities.voxels.some(v => v.iced);
+    this.triggered = false;
+    this.melted = !this.enabled;
+    this.finished = !this.enabled;
+    this.t = 0; this.warnCooldown = 0;
+    this.nozzleLift = 0; this.flame = 0; this.meltK = 0;
+    const frozen = Entities.voxels.filter(v => v.iced && v.z === 0);
+    if (frozen.length) {
+      this.targetX = frozen.reduce((a, v) => a + v.x, 0) / frozen.length;
+      this.targetY = frozen.reduce((a, v) => a + v.y, 0) / frozen.length;
+    } else {
+      this.targetX = 0; this.targetY = 9.8;
+    }
+  },
+
+  onIceHit(v) {
+    if (!this.enabled || this.melted) return;
+    v.iceFlash = 1;
+    const p = Object3D.center(v);
+    Particles.ring(p.x, p.y, '#bfefff', 0.34);
+    this.warnCooldown = Math.max(0, this.warnCooldown);
+    if (this.warnCooldown <= 0) {
+      HUD.toast('ICE BLOCKED! FILL THE FLAME BOX');
+      this.warnCooldown = 1.0;
+    }
+  },
+
+  trigger(box) {
+    if (!this.enabled || this.triggered || this.melted) return false;
+    this.triggered = true;
+    this.finished = false;
+    this.t = 0;
+    this.sourceX = box.x;
+    this.sourceY = box.y - 0.30;
+    HUD.toast('FLAMETHROWER ACTIVATED!');
+    SFX.flame();
+    Haptics.buzz([20, 30, 20]);
+    return true;
+  },
+
+  update(dt) {
+    if (this.warnCooldown > 0) this.warnCooldown -= dt;
+    if (!this.enabled || !this.triggered || this.finished) return;
+    this.t += dt;
+    const targets = Entities.voxels.filter(v=>v.iced);
+    if(targets.length){
+      const points=targets.map(v=>Object3D.center(v));
+      this.targetX=points.reduce((n,p)=>n+p.x,0)/points.length;
+      this.targetY=points.reduce((n,p)=>n+p.y,0)/points.length;
+    }
+
+    // 0-.28s: nozzle rises. .22-1.25s: flame fires. .46-1.18s: ice melts.
+    this.nozzleLift = clamp(this.t / 0.28, 0, 1);
+    const flameIn = clamp((this.t - 0.20) / 0.18, 0, 1);
+    const flameOut = 1 - clamp((this.t - 1.12) / 0.22, 0, 1);
+    this.flame = flameIn * flameOut;
+    this.meltK = clamp((this.t - 0.46) / 0.72, 0, 1);
+
+    for (const v of Entities.voxels) {
+      if (!v.iced) continue;
+      v.iceAlpha = 1 - this.meltK;
+      v.iceFlash *= 0.88;
+    }
+
+    if (!this.melted && this.meltK >= 1) {
+      this.melted = true;
+      for (const v of Entities.voxels) {
+        if (!v.iced) continue;
+        v.iced = false;
+        v.iceAlpha = 0;
+        if (v.z === 0) {
+          const p = Object3D.center(v);
+          Particles.dust(p.x + rand(-0.05, 0.05), p.y + rand(-0.04, 0.04));
+          if (Math.random() < 0.55) Particles.ring(p.x, p.y, '#d9f7ff', 0.22);
+        }
+      }
+      Particles.ring(this.targetX, this.targetY, '#ffffff', 0.95);
+      SFX.melt();
+      Haptics.buzz([15, 20, 30]);
+      HUD.toast('ICE MELTED — FIRE!');
+    }
+
+    if (this.t >= 1.48) {
+      this.flame = 0;
+      this.finished = true;
+    }
+  },
+};
+
+/* =====================================================================
+   11B2 ASSETS — embedded golden lock & key sprites (transparent PNGs)
+   ===================================================================== */
+const Assets = (() => {
+  const make = b64 => { const i = new Image(); i.src = 'data:image/png;base64,' + b64; return i; };
+  return {
+    lock: make('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'),
+    key: make('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'),
+  };
+})();
+
+/* =====================================================================
+   11C LOCK + KEY (Level 2) — locked voxel groups opened by key boxes.
+   Filling a key box sends a key flying up to the next locked group and
+   unlocks it; until then shots on locked voxels have no effect (see blastAt).
+   ===================================================================== */
+const Locks = {
+  queue: [],    // groups not yet unlocked, opened in this order
+  flights: [],  // {t, dur, sx, sy, group}
+  anims: [],    // unlock pops: {group, x, y, t}
+  shake: {},    // group -> shake intensity, bumped when a locked voxel is hit
+  reset() {
+    this.flights.length = 0;
+    this.anims.length = 0;
+    this.shake = {};
+    this.queue = ['eyeL', 'eyeR', 'mouth']
+      .filter(g => Entities.voxels.some(v => v.lockGroup === g && v.locked));
+  },
+  get active() { return this.queue.length > 0 || this.flights.length > 0; },
+  launch(box) {
+    const group = this.queue.shift();
+    if (!group) return;
+    this.flights.push({ t: 0, dur: 0.85, sx: box.x, sy: box.y + 0.25, group });
+    SFX.whip();
+  },
+  groupCenter(group) {
+    let n = 0, x = 0, y = 0, depth = 0;
+    for (const v of Entities.voxels) {
+      if (v.lockGroup !== group || !v.alive) continue;
+      const p = Object3D.center(v);
+      x += p.x; y += p.y; depth += p.depth; n++;
+    }
+    return n ? { x: x / n, y: y / n, depth: depth / n } : { x: 0, y: Object3D.pivotY, depth: 0 };
+  },
+  // key position along its arc; group center is re-read every frame so the
+  // key homes in even while the object is being rotated
+  pos(f) {
+    const k = Ease.outQuad(Math.min(1, f.t / f.dur));
+    const c = this.groupCenter(f.group);
+    return { x: f.sx + (c.x - f.sx) * k, y: f.sy + (c.y - f.sy) * k + Math.sin(Math.PI * k) * 0.9, k };
+  },
+  update(dt) {
+    for (const g of Object.keys(this.shake))
+      this.shake[g] = Math.max(0, this.shake[g] - dt * 2.6);
+    for (let i = this.anims.length - 1; i >= 0; i--) {
+      this.anims[i].t += dt;
+      if (this.anims[i].t >= 0.75) this.anims.splice(i, 1);
+    }
+    for (let i = this.flights.length - 1; i >= 0; i--) {
+      const f = this.flights[i];
+      f.t += dt;
+      if (f.t >= f.dur) {
+        const c = this.groupCenter(f.group);
+        for (const v of Entities.voxels) {
+          if (v.lockGroup === f.group && v.locked) {
+            v.locked = false;
+            v.hitFlash = 1;
+            const p = Object3D.center(v);
+            Particles.dust(p.x, p.y);
+          }
+        }
+        // pronounced unlock feedback: lock pops open, burst + confetti + kick
+        this.anims.push({ group: f.group, x: c.x, y: c.y, t: 0 });
+        Particles.ring(c.x, c.y, '#ffd34d', 0.85);
+        Particles.confetti(c.x, c.y);
+        Cam.addTrauma(0.14);
+        SFX.melt();
+        Haptics.buzz([15, 25, 15]);
+        this.flights.splice(i, 1);
+      }
+    }
+  },
+};
+
+/* =====================================================================
+   12 CONVEYOR — stadium rail, verbatim port of ConveyorManager.cs
+   ===================================================================== */
+const Conveyor = {
+  baseOffset: 0,
+  slotBalls: new Array(SLOT_COUNT).fill(null),
+  slotSettled: new Array(SLOT_COUNT).fill(false),
+  count: 0,
+  warnFlash: 0,
+  dangerActive: false,
+  dangerTimer: 0,
+  dangerDuration: 2.0,
+
+  reset() {
+    this.baseOffset = 0;
+    this.slotBalls.fill(null);
+    this.slotSettled.fill(false);
+    this.count = 0;
+    this.warnFlash = 0;
+    this.dangerActive = false;
+    this.dangerTimer = 0;
+  },
+
+  beginDanger() {
+    if (this.dangerActive || Game.state !== 'playing') return;
+    this.dangerActive = true;
+    this.dangerTimer = this.dangerDuration;
+    this.warnFlash = this.dangerDuration;
+    SFX.railWarn(1);
+    Haptics.buzz([25, 35, 25]);
+  },
+
+  cancelDanger() {
+    this.dangerActive = false;
+    this.dangerTimer = 0;
+  },
+
+  slotDistance(i) {
+    let d = (this.baseOffset + i * RAIL_SLOT_SPACING) % PATH_LENGTH;
+    return d < 0 ? d + PATH_LENGTH : d;
+  },
+
+  // Path: top lane left->right, right cap, bottom lane right->left, left cap.
+  pathPoint(d) {
+    const L = Tuning.LANE_LENGTH, r = Tuning.LANE_HALF_HEIGHT;
+    const half = L * 0.5, capLen = Math.PI * r;
+    let lx, ly;
+    if (d < L) { lx = -half + d; ly = r; }
+    else if (d < L + capLen) {
+      const a = (d - L) / r;
+      lx = half + Math.sin(a) * r; ly = Math.cos(a) * r;
+    } else if (d < 2 * L + capLen) {
+      lx = half - (d - L - capLen); ly = -r;
+    } else {
+      const a = (d - 2 * L - capLen) / r;
+      lx = -half - Math.sin(a) * r; ly = -Math.cos(a) * r;
+    }
+    return { x: lx, y: Tuning.CONVEYOR_Y + ly };
+  },
+
+  inDispatchZone(d) {
+    const L = Tuning.LANE_LENGTH, capLen = Math.PI * Tuning.LANE_HALF_HEIGHT;
+    if (d < L + capLen || d > 2 * L + capLen) return false;
+    const x = L * 0.5 - (d - L - capLen);
+    return Math.abs(x) < Tuning.DISPATCH_HALF_WIDTH;
+  },
+
+  update(dt) {
+    this.baseOffset = (this.baseOffset + Tuning.BELT_SPEED * dt) % PATH_LENGTH;
+    this.warnFlash = Math.max(0, this.warnFlash - dt);
+    for (let i = 0; i < SLOT_COUNT; i++) {
+      const ball = this.slotBalls[i];
+      if (!ball || !this.slotSettled[i]) continue;
+      const d = this.slotDistance(i);
+      const p = this.pathPoint(d);
+      ball.x = p.x; ball.y = p.y;
+      if (this.inDispatchZone(d)) {
+        const box = Boxes.getOpenBox(ball.color);
+        if (box) this.dispatch(i, ball, box);
+      }
+    }
+
+    // Full rail: only a true dead-end fails the run. While any queued marble
+    // still matches an open box it WILL dispatch once it circulates to the
+    // dispatch zone (a full loop takes ~5.4s), so hold the countdown instead
+    // of expiring before the rescue can physically arrive. The 2-second fail
+    // countdown only ticks while no queued marble can go anywhere.
+    if (this.count >= CAPACITY) {
+      this.beginDanger();
+      if (this.dangerActive) {
+        const rescuable = this.slotBalls.some(b => b && Boxes.getOpenBox(b.color));
+        if (rescuable) {
+          this.dangerTimer = this.dangerDuration;
+        } else {
+          this.dangerTimer = Math.max(0, this.dangerTimer - dt);
+          if (this.dangerTimer <= 0) Game.fail('Conveyor jammed — no matching box!');
+        }
+      }
+    } else if (this.dangerActive) {
+      // At least one marble dispatched, so the jam has been relieved.
+      this.cancelDanger();
+    }
+  },
+
+  tryCapture(m) {
+    if (Game.state !== 'playing') return;
+    // A full rail no longer fails instantly. Start/continue the 2-second jam
+    // countdown and keep the marble in play while we wait for a slot to open.
+    if (this.count >= CAPACITY) {
+      this.beginDanger();
+      m.vy = Math.max(m.vy, 1.1);
+      m.y += 0.04;
+      return;
+    }
+    let best = -1, bestDist = Infinity;
+    for (let i = 0; i < SLOT_COUNT; i++) {
+      if (this.slotBalls[i]) continue;
+      const p = this.pathPoint(this.slotDistance(i));
+      const dx = p.x - m.x, dy = p.y - m.y;
+      const dd = dx * dx + dy * dy;
+      if (dd < bestDist) { bestDist = dd; best = i; }
+    }
+    if (best < 0) {
+      this.beginDanger();
+      m.vy = Math.max(m.vy, 1.1);
+      return;
+    }
+
+    m.state = 'capturing';
+    m.slot = best;
+    this.slotBalls[best] = m;
+    this.count++;
+    if (this.count >= CAPACITY) this.beginDanger();
+    const fromX = m.x, fromY = m.y;
+    const slot = best, mm = m;
+    Tween.add({
+      dur: Tuning.T_CAPTURE, ease: Ease.outQuad,
+      update: k => {
+        const p = this.pathPoint(this.slotDistance(slot));
+        mm.x = fromX + (p.x - fromX) * k;
+        mm.y = fromY + (p.y - fromY) * k;
+      },
+      done: () => {
+        this.slotSettled[slot] = true;
+        mm.state = 'riding';
+        mm.sy = 0.65; mm.syV = 0; // land squash
+        Particles.dust(mm.x, mm.y - mm.r);
+      },
+    });
+    SFX.railLand();
+    // fairness feedback: warn as the rail approaches capacity — subtle only
+    // (rail flash + sound + haptic); no center-screen toasts, they distract.
+    if (this.count >= Tuning.RAIL_WARN_AT) {
+      this.warnFlash = 0.6;
+      SFX.railWarn((this.count - Tuning.RAIL_WARN_AT) / (CAPACITY - Tuning.RAIL_WARN_AT));
+      if (this.count === CAPACITY - 1) Haptics.buzz(30);
+    }
+  },
+
+  dispatch(slot, ball, box) {
+    this.slotBalls[slot] = null;
+    this.slotSettled[slot] = false;
+    this.count--;
+    box.reserved++;
+    const idx = box.placed + box.reserved - 1;
+    ball.state = 'jumping';
+    ball.sy = 1.25;
+    const fromX = ball.x, fromY = ball.y;
+    const bb = ball, target = box;
+    Tween.add({
+      dur: Tuning.T_JUMP, ease: Ease.linear,
+      update: (k) => {
+        const to = target.slotPos(idx);
+        bb.x = fromX + (to.x - fromX) * k;
+        bb.y = fromY + (to.y - fromY) * k + Tuning.JUMP_ARC * 4 * k * (1 - k);
+      },
+      done: () => Boxes.place(target, bb, idx),
+    });
+    SFX.whip();
+  },
+};
+
+/* =====================================================================
+   13 BOXES — port of BoxGridManager.cs + ColorBox.cs
+   ===================================================================== */
+const Boxes = {
+  columns: [],
+  totalBoxes: 0,
+  bobT: 0,
+
+  // largest-remainder proportional interleave (order = counts insertion order,
+  // matching the C# Dictionary semantics of the original)
+  init(counts) {
+    this.columns.length = 0;
+    this.bobT = 0;
+    const totals = {};
+    for (const k of Object.keys(counts)) totals[k] = Math.floor(counts[k] / 3);
+    const remaining = Object.assign({}, totals);
+    const boxCount = Object.values(totals).reduce((a, b) => a + b, 0);
+    const order = [];
+    for (let i = 0; i < boxCount; i++) {
+      let best = null, bestScore = -1;
+      for (const k of Object.keys(remaining)) {
+        if (remaining[k] <= 0) continue;
+        const score = remaining[k] / totals[k];
+        if (score > bestScore) { bestScore = score; best = k; }
+      }
+      order.push(best);
+      remaining[best]--;
+    }
+
+    // Optional level rule (frontBoxColor): make the first visible row a single
+    // color so wrong-color marbles can intentionally jam the rail. Unused by
+    // the current level set.
+    const frontColor = Game.currentLevel().frontBoxColor;
+    if (frontColor && (totals[frontColor] || 0) >= Tuning.GRID_COLUMNS) {
+      let skip = Tuning.GRID_COLUMNS;
+      const rest = [];
+      for (const color of order) {
+        if (color === frontColor && skip > 0) { skip--; continue; }
+        rest.push(color);
+      }
+      order.length = 0;
+      for (let i = 0; i < Tuning.GRID_COLUMNS; i++) order.push(frontColor);
+      order.push(...rest);
+    }
+
+    for (let c = 0; c < Tuning.GRID_COLUMNS; c++) this.columns.push([]);
+    for (let i = 0; i < order.length; i++) {
+      const col = i % Tuning.GRID_COLUMNS;
+      const row = this.columns[col].length;
+      const pos = this.boxPosition(col, row);
+      this.columns[col].push({
+        color: order[i], placed: 0, reserved: 0,
+        x: pos.x, y: pos.y, scale: 1,
+        visible: row < Tuning.VISIBLE_ROWS,
+        marbles: [null, null, null],
+        // world position of slot i on the box lip (ColorBox.SlotOffset)
+        slotPos(i) { return { x: this.x + (i - 1) * 0.23, y: this.y + 0.11 }; },
+      });
+    }
+    this.totalBoxes = order.length;
+
+    // Ice/flamethrower support stays available for levels that actually contain ice.
+    // The current JSON Level 3 has no ice, so no flamethrower hatch is spawned there.
+    if (Game.levelIndex === 2 && Entities.voxels.some(v => v.iced)) {
+      const triggerColor = 'teal';
+      let trigger = null;
+      for (const column of this.columns) {
+        const front = column[0];
+        if (front && front.color === triggerColor) { trigger = front; break; }
+      }
+      if (!trigger) {
+        for (const column of this.columns) {
+          trigger = column.find(b => b.color === triggerColor);
+          if (trigger) break;
+        }
+      }
+      if (trigger) trigger.flameTrigger = true;
+    }
+
+    // Lock & key: one key box per locked group. Keys are YELLOW boxes because
+    // brown/red marbles only come from the locked blocks themselves — a
+    // brown/red key box could never be filled. Keys are placed as close to the
+    // front row as possible (spread across columns) so unlocking starts early.
+    const lockGroups = new Set(Entities.voxels.filter(v => v.locked).map(v => v.lockGroup)).size;
+    if (lockGroups > 0) {
+      let assigned = 0;
+      for (let row = 0; assigned < lockGroups && row < 20; row++) {
+        for (const column of this.columns) {
+          if (assigned >= lockGroups) break;
+          const b = column[row];
+          if (b && b.color === 'yellow' && !b.isKey) { b.isKey = true; assigned++; }
+        }
+      }
+    }
+  },
+
+  boxPosition(col, row) {
+    return {
+      x: (col - (Tuning.GRID_COLUMNS - 1) * 0.5) * Tuning.COLUMN_SPACING,
+      y: Tuning.BOX_TOP_Y - row * Tuning.ROW_SPACING,
+    };
+  },
+
+  getOpenBox(color) {
+    for (const column of this.columns) {
+      if (!column.length) continue;
+      const front = column[0];
+      if (front.color === color && front.placed + front.reserved < Tuning.BOX_CAPACITY && !front.clearing)
+        return front;
+    }
+    return null;
+  },
+
+  place(box, marble, idx) {
+    box.reserved--;
+    box.placed++;
+    marble.state = 'boxed';
+    marble.box = box;
+    marble.slotIdx = idx;
+    marble.r = 0.1;
+    marble.sy = 0.6; marble.syV = 0;
+    box.scale = 1.06; // little receive bump
+    Tween.add({ dur: 0.12, ease: Ease.outQuad, update: (k) => { box.scale = 1.06 - 0.06 * k; } });
+    box.marbles[idx] = marble;
+    SFX.boxCatch(box.placed);
+
+    if (box.placed >= Tuning.BOX_CAPACITY) {
+      box.clearing = true;
+      const b = box;
+      const flameSequence = !!box.flameTrigger && IceBlocker.trigger(box);
+      if (box.isKey) Locks.launch(box); // filled key box: fly the key to its lock group
+      const beginClear = () => {
+        // anticipation -> punch -> clear
+        Tween.add({
+          dur: 0.07, ease: Ease.outQuad,
+          update: k => { b.scale = 1 - 0.14 * k; },
+          done: () => Tween.add({
+            dur: Tuning.T_BOX_POP, ease: Ease.outBack,
+            update: k => { b.scale = 0.86 + 0.44 * k; },
+            done: () => this.clearBox(b),
+          }),
+        });
+      };
+      if (flameSequence) Tween.delay(1.40, beginClear);
+      else beginClear();
+    }
+  },
+
+  clearBox(box) {
+    for (const m of box.marbles) if (m) Entities.removeMarble(m);
+    Particles.confetti(box.x, box.y + 0.1);
+    Particles.ring(box.x, box.y, Palette[box.color].base, 0.7);
+    Cam.addTrauma(0.15);
+    Haptics.buzz([15, 30, 15]);
+    Game.onBoxCleared(box);
+
+    this.totalBoxes--;
+    const column = this.columns.find(c => c.includes(box));
+    if (column) {
+      const colIndex = this.columns.indexOf(column);
+      column.splice(column.indexOf(box), 1);
+      for (let r = 0; r < column.length; r++) {
+        const b = column[r];
+        if (r < Tuning.VISIBLE_ROWS) b.visible = true;
+        const to = this.boxPosition(colIndex, r);
+        const fx = b.x, fy = b.y;
+        Tween.add({
+          dur: Tuning.T_BOX_SHIFT, ease: Ease.outBack,
+          update: k => { b.x = fx + (to.x - fx) * k; b.y = fy + (to.y - fy) * k; },
+        });
+      }
+      if (column.length) SFX.shiftUp();
+    }
+    if (this.totalBoxes <= 0) Game.win();
+  },
+
+  update(dt) { this.bobT += dt; },
+};
+
+/* =====================================================================
+   14 CANNON — port of CannonController.cs
+   ===================================================================== */
+const Cannon = {
+  x: 0, y: Tuning.CANNON_Y,
+  angle: Math.PI / 2, targetAngle: Math.PI / 2,
+  recoil: 0, cooldown: 0,
+  ammo: Tuning.AMMO, inFlight: 0,
+
+  reset() {
+    this.angle = this.targetAngle = Math.PI / 2;
+    this.recoil = 0; this.cooldown = 0;
+    this.ammo = Infinity; this.inFlight = 0;
+  },
+
+  aim(wx, wy) {
+    const ty = Math.max(wy, Tuning.AIM_MIN_Y);
+    this.targetAngle = Math.atan2(ty - this.y, wx - this.x);
+  },
+
+  muzzle() {
+    return {
+      x: this.x + Math.cos(this.angle) * (Tuning.BARREL_LEN - this.recoil * 0.18),
+      y: this.y + Math.sin(this.angle) * (Tuning.BARREL_LEN - this.recoil * 0.18),
+    };
+  },
+
+  tryShoot(wx, wy) {
+    if (Game.state !== 'playing') return;
+    if (Conveyor.dangerActive) {
+      SFX.dryFire(); // shot blocked while the rail is full — sound only, no toast
+      return;
+    }
+    if (this.ammo <= 0) {
+      SFX.dryFire();
+      HUD.ammoEmptyFeedback();
+      return;
+    }
+    if (this.cooldown > 0) return;
+    this.cooldown = Tuning.SHOT_COOLDOWN;
+    this.aim(wx, wy);
+    this.angle = this.targetAngle; // snap on fire, ease otherwise
+    const m = this.muzzle();
+    const ty = Math.max(wy, Tuning.AIM_MIN_Y);
+    Entities.spawnCannonball(m.x, m.y, wx, ty);
+    this.inFlight++;
+    this.ammo--;
+    Game.shotsFired++;
+    this.recoil = 1;
+    Cam.addTrauma(0.18);
+    const sdx = Math.cos(this.angle), sdy = Math.sin(this.angle);
+    Particles.spark(m.x, m.y, sdx, sdy);
+    SFX.fire();
+    Haptics.buzz(10);
+    HUD.setAmmo(this.ammo);
+    if (this.ammo === 10 || this.ammo === 5) SFX.ammoLow();
+  },
+
+  update(dt) {
+    this.cooldown = Math.max(0, this.cooldown - dt);
+    this.recoil = Math.max(0, this.recoil - dt * 5);
+    // ease barrel toward aim
+    let diff = this.targetAngle - this.angle;
+    while (diff > Math.PI) diff -= Math.PI * 2;
+    while (diff < -Math.PI) diff += Math.PI * 2;
+    this.angle += diff * Math.min(1, 14 * dt);
+  },
+};
+
+/* =====================================================================
+   15 GAME — state machine (port of GameManager.cs semantics)
+   ===================================================================== */
+const Game = {
+  state: 'splash', // splash | playing | won | failed
+  levelIndex: 0, // always open at Level 1; arrows / NEXT LEVEL navigate
+  currentLevel() { return LEVELS[this.levelIndex]; },
+  hasNextLevel() { return this.levelIndex < LEVELS.length - 1; },
+  nextLevel() {
+    if (this.hasNextLevel()) this.levelIndex++;
+    else this.levelIndex = 0; // finished the last level -> loop back to Level 1
+    this.start();
+  },
+  shotsFired: 0, shotsHit: 0,
+  boxesCleared: 0, totalBoxesAtStart: 0, combo: 0, bestCombo: 0, comboTimer: 0,
+
+  start() {
+    this.reset();
+    this.state = 'playing';
+  },
+
+  reset() {
+    Tween.killAll();
+    Particles.clear();
+    FloatText.clear();
+    const { cells, counts } = this.currentLevel().build();
+    Entities.reset(cells);
+    Boxes.init(counts);
+    this.totalBoxesAtStart = Boxes.totalBoxes;
+    IceBlocker.reset();
+    Locks.reset();
+    Conveyor.reset();
+    Cannon.reset();
+    Cam.trauma = 0;
+    this.shotsFired = 0; this.shotsHit = 0;
+    this.boxesCleared = 0; this.combo = 0; this.bestCombo = 0; this.comboTimer = 0;
+    HUD.reset();
+  },
+
+  onBoxCleared(box) {
+    this.boxesCleared++;
+    HUD.setProgress(this.totalBoxesAtStart ? this.boxesCleared / this.totalBoxesAtStart : 0);
+    this.combo = this.comboTimer > 0 ? this.combo + 1 : 1;
+    this.comboTimer = Tuning.COMBO_WINDOW;
+    this.bestCombo = Math.max(this.bestCombo, this.combo);
+    SFX.boxComplete(this.combo);
+    if (this.combo >= 2) {
+      FloatText.spawn(box.x, box.y + 0.3, `COMBO x${this.combo}`, '#ffb830', 0.3);
+      if (this.combo >= 3) FloatText.spawn(0, 5.6, pick(['SWEET!', 'TASTY!', 'YUM!']), Palette.pink.base, 0.42);
+    } else {
+      FloatText.spawn(box.x, box.y + 0.3, 'CLEAR!', Palette[box.color].base, 0.28);
+    }
+  },
+
+  win() {
+    if (this.state !== 'playing') return;
+    this.state = 'won';
+    SFX.win();
+    Haptics.buzz([20, 40, 20, 40, 60]);
+    Cam.addTrauma(0.2);
+    for (let i = 0; i < 3; i++)
+      Tween.delay(i * 0.18, () => Particles.confetti(rand(-1.6, 1.6), rand(4, 7)));
+    Tween.delay(0.85, () => HUD.showEnd(true, ''));
+  },
+
+  fail(reason) {
+    if (this.state !== 'playing') return;
+    this.state = 'failed';
+    this.failReason = reason;
+    SFX.fail();
+    Haptics.buzz(80);
+    Cam.addTrauma(0.45);
+    // show cause first, consequence after (fail-cause-before-consequence rule)
+    Tween.delay(0.6, () => HUD.showEnd(false, reason));
+  },
+
+  update(dt) {
+    if (this.state !== 'playing') return;
+    if (this.comboTimer > 0) {
+      this.comboTimer -= dt;
+      if (this.comboTimer <= 0) this.combo = 0;
+    }
+    // Out of ammo check — identical semantics to GameManager.LateUpdate
+    if (Cannon.ammo <= 0 && Cannon.inFlight <= 0 && Entities.remaining > 0)
+      this.fail('Out of ammo!');
+  },
+};
+
+/* =====================================================================
+   16 HUD — DOM overlay
+   ===================================================================== */
+const HUD = {
+  el: {
+    progressBar: document.getElementById('progress-bar'),
+    progressLabel: document.getElementById('progress-label'),
+    ammoPill: document.getElementById('ammo-pill'),
+    ammoCount: document.getElementById('ammo-count'),
+    overlay: document.getElementById('overlay'),
+    panelIcon: document.getElementById('panel-icon'),
+    panelTitle: document.getElementById('panel-title'),
+    panelReason: document.getElementById('panel-reason'),
+    panelStats: document.getElementById('panel-stats'),
+    toast: document.getElementById('toast'),
+    btnSound: document.getElementById('btn-sound'),
+    btnHaptics: document.getElementById('btn-haptics'),
+  },
+  toastTimer: null,
+  lastProgress: -1,
+
+  reset() {
+    this.el.overlay.classList.remove('show');
+    document.getElementById('level-badge').textContent = 'LEVEL ' + Game.currentLevel().name;
+    document.getElementById('btn-prev').disabled = Game.levelIndex <= 0;
+    document.getElementById('btn-next').disabled = Game.levelIndex >= LEVELS.length - 1;
+    this.setAmmo(Cannon.ammo);
+    this.el.ammoPill.classList.remove('low', 'critical', 'empty');
+    this.setProgress(0);
+  },
+
+  setAmmo(n) {
+    this.el.ammoCount.textContent = n;
+    this.el.ammoPill.classList.toggle('low', n < 20 && n >= 10);
+    this.el.ammoPill.classList.toggle('critical', n < 10);
+  },
+
+  ammoEmptyFeedback() {
+    const p = this.el.ammoPill;
+    p.classList.remove('empty');
+    void p.offsetWidth; // restart animation
+    p.classList.add('empty');
+    this.toast('OUT OF AMMO!');
+  },
+
+  setProgress(k) {
+    const pct = Math.round(k * 100);
+    if (pct === this.lastProgress) return;
+    this.lastProgress = pct;
+    this.el.progressBar.style.width = pct + '%';
+    this.el.progressLabel.textContent = pct + '%';
+  },
+
+  toast(msg) {
+    const t = this.el.toast;
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(this.toastTimer);
+    this.toastTimer = setTimeout(() => t.classList.remove('show'), 1400);
+  },
+
+  countUp(el, target, suffix) {
+    const obj = { v: 0 };
+    Tween.add({
+      dur: 0.7, ease: Ease.outCubic,
+      update: k => { el.textContent = Math.round(target * k) + (suffix || ''); },
+    });
+  },
+
+  showEnd(won, reason) {
+    const e = this.el;
+    e.panelIcon.textContent = won ? '🎉' : '💥';
+    e.panelTitle.textContent = won ? 'LEVEL COMPLETE!' : 'LEVEL FAILED';
+    e.panelTitle.classList.toggle('fail', !won);
+    e.panelReason.textContent = won ? 'Every box cleared — delicious!' : reason;
+    const acc = Game.shotsFired ? Math.round(100 * Game.shotsHit / Game.shotsFired) : 0;
+    e.panelStats.innerHTML =
+      '<div class="stat"><div class="k">Shots Used</div><div class="v" id="st-shots">0</div></div>' +
+      '<div class="stat"><div class="k">Accuracy</div><div class="v" id="st-acc">0%</div></div>' +
+      '<div class="stat"><div class="k">Boxes</div><div class="v" id="st-box">0</div></div>' +
+      '<div class="stat"><div class="k">Best Combo</div><div class="v" id="st-combo">x0</div></div>';
+    e.overlay.classList.add('show');
+    this.countUp(document.getElementById('st-shots'), Game.shotsFired);
+    this.countUp(document.getElementById('st-acc'), acc, '%');
+    this.countUp(document.getElementById('st-box'), Game.boxesCleared);
+    const cb = document.getElementById('st-combo');
+    Tween.add({ dur: 0.7, ease: Ease.outCubic, update: k => { cb.textContent = 'x' + Math.round(Game.bestCombo * k); } });
+    document.getElementById('btn-restart').textContent =
+      won ? (Game.hasNextLevel() ? 'NEXT LEVEL' : 'PLAY AGAIN') : 'RETRY';
+  },
+
+  syncToggles() {
+    this.el.btnSound.classList.toggle('off', SFX.muted);
+    this.el.btnHaptics.classList.toggle('off', !Haptics.enabled);
+  },
+};
+
+/* =====================================================================
+   17 INPUT
+   ===================================================================== */
+const Input = {
+  aimX: 0, aimY: 6, aimAge: 99, pointerDown: false,
+  drag: null, // {mode:'pending'|'rotate', startClientX, startClientY, angle0, wx, wy}
+  // True when the world point is inside the live model's bounding box (with a
+  // small margin) — presses here may become a rotate-drag instead of a shot.
+  overObject(w) {
+    let minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9;
+    for (const v of Entities.voxels) {
+      if (!v.alive) continue;
+      const p = Object3D.center(v);
+      if (p.x < minX) minX = p.x; if (p.x > maxX) maxX = p.x;
+      if (p.y < minY) minY = p.y; if (p.y > maxY) maxY = p.y;
+    }
+    if (minX > maxX) return false;
+    const m = 0.3;
+    return w.x > minX - m && w.x < maxX + m && w.y > minY - m && w.y < maxY + m;
+  },
+  init() {
+    const game = document.getElementById('game');
+    const splash = document.getElementById('splash');
+
+    splash.addEventListener('pointerdown', e => {
+      e.stopPropagation();
+      SFX.unlock();
+      splash.classList.add('hide');
+      Game.start();
+    });
+
+    game.addEventListener('pointerdown', e => {
+      SFX.unlock();
+      if (e.target.closest('.tog') || e.target.closest('.btn') || e.target.closest('.overlay')) return;
+      const w = Cam.toWorld(e.clientX - game.getBoundingClientRect().left,
+                            e.clientY - game.getBoundingClientRect().top);
+      this.aimX = w.x; this.aimY = w.y; this.aimAge = 0;
+      this.pointerDown = true;
+      Cannon.aim(w.x, w.y);
+      if (Game.state === 'playing' && this.overObject(w)) {
+        // On the object: wait to see whether this press becomes a rotate-drag.
+        // A quick tap (released without moving) still shoots on pointerup.
+        this.drag = { mode: 'pending', startClientX: e.clientX, startClientY: e.clientY,
+                      angle0: Object3D.angle, angleX0: Object3D.angleX, wx: w.x, wy: w.y };
+      } else {
+        Cannon.tryShoot(w.x, w.y);
+      }
+    });
+    game.addEventListener('pointermove', e => {
+      const r = game.getBoundingClientRect();
+      const w = Cam.toWorld(e.clientX - r.left, e.clientY - r.top);
+      this.aimX = w.x; this.aimY = w.y; this.aimAge = 0;
+      if (this.drag && this.pointerDown) {
+        const dx = e.clientX - this.drag.startClientX;
+        const dy = e.clientY - this.drag.startClientY;
+        if (this.drag.mode === 'pending' && Math.hypot(dx, dy) > 9) this.drag.mode = 'rotate';
+        if (this.drag.mode === 'rotate') {
+          Object3D.angle = this.drag.angle0 + dx * 0.011;   // horizontal drag: yaw
+          Object3D.angleX = this.drag.angleX0 + dy * 0.011; // vertical drag: pitch (unlimited)
+          return; // don't re-aim the cannon while spinning
+        }
+      }
+      if (Game.state === 'playing') Cannon.aim(w.x, w.y);
+    });
+    const up = () => {
+      this.pointerDown = false;
+      if (this.drag) {
+        // Released without dragging: it was a tap on the object — shoot there.
+        if (this.drag.mode === 'pending' && Game.state === 'playing') Cannon.tryShoot(this.drag.wx, this.drag.wy);
+        this.drag = null;
+      }
+    };
+    game.addEventListener('pointerup', up);
+    game.addEventListener('pointercancel', up);
+    game.addEventListener('contextmenu', e => e.preventDefault());
+
+    HUD.el.btnSound.addEventListener('click', () => {
+      SFX.unlock();
+      SFX.setMuted(!SFX.muted);
+      HUD.syncToggles();
+      SFX.click();
+    });
+    HUD.el.btnHaptics.addEventListener('click', () => {
+      Haptics.set(!Haptics.enabled);
+      HUD.syncToggles();
+      SFX.click();
+      if (Haptics.enabled) Haptics.buzz(15);
+    });
+    const switchLevel = (delta) => {
+      const idx = clamp(Game.levelIndex + delta, 0, LEVELS.length - 1);
+      if (idx === Game.levelIndex) return;
+      SFX.unlock();
+      SFX.click();
+      Game.levelIndex = idx;
+      HUD.el.overlay.classList.remove('show');
+      document.getElementById('splash').classList.add('hide');
+      Game.start();
+    };
+    document.getElementById('btn-prev').addEventListener('click', () => switchLevel(-1));
+    document.getElementById('btn-next').addEventListener('click', () => switchLevel(1));
+    document.getElementById('btn-restart').addEventListener('click', () => {
+      SFX.click();
+      HUD.el.overlay.classList.remove('show');
+      if (Game.state === 'won') Game.nextLevel(); // last level loops back to Level 1
+      else Game.start();
+    });
+  },
+  update(dt) { this.aimAge += dt; },
+};
+
+/* =====================================================================
+   18 RENDER — pseudo-3D candy-shop pipeline
+   ===================================================================== */
+const Render = {
+  bg: null, vignette: null,
+
+  rebuildStatics() {
+    const W = Cam.W, H = Cam.H, S = Cam.S;
+    if (!W || !H) return;
+    // --- background ---
+    const bg = document.createElement('canvas');
+    bg.width = W; bg.height = H;
+    const b = bg.getContext('2d');
+    const sky = b.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, '#ffe9f4');
+    sky.addColorStop(0.45, '#e8f2ff');
+    sky.addColorStop(0.78, '#dff3ff');
+    sky.addColorStop(1, '#fdeed3');
+    b.fillStyle = sky;
+    b.fillRect(0, 0, W, H);
+    // soft counter band behind cannon
+    const counterY = Cam.wy(1.55);
+    const cg = b.createLinearGradient(0, counterY, 0, H);
+    cg.addColorStop(0, 'rgba(255,236,205,0)');
+    cg.addColorStop(0.25, 'rgba(255,236,205,0.85)');
+    cg.addColorStop(1, '#ffe3b8');
+    b.fillStyle = cg;
+    b.fillRect(0, counterY, W, H - counterY);
+    b.fillStyle = 'rgba(255,255,255,0.55)';
+    b.fillRect(0, counterY + H * 0.028, W, Math.max(1.5, S * 0.02));
+    // bokeh
+    for (let i = 0; i < 12; i++) {
+      const r = rand(0.25, 0.8) * S;
+      b.globalAlpha = rand(0.04, 0.1);
+      b.fillStyle = pick(['#ffffff', '#ffd3ec', '#c8e8ff']);
+      b.beginPath();
+      b.arc(rand(0, W), rand(0, H * 0.75), r, 0, Math.PI * 2);
+      b.fill();
+    }
+    b.globalAlpha = 1;
+    this.bg = bg;
+    // --- vignette ---
+    const vg = document.createElement('canvas');
+    vg.width = W; vg.height = H;
+    const v = vg.getContext('2d');
+    const g = v.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.45, W / 2, H / 2, Math.max(W, H) * 0.75);
+    g.addColorStop(0, 'rgba(90,40,80,0)');
+    g.addColorStop(1, 'rgba(90,40,80,0.16)');
+    v.fillStyle = g;
+    v.fillRect(0, 0, W, H);
+    this.vignette = vg;
+  },
+
+  roundRect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  },
+
+  softFace(points, inset=0) {
+    const cx=points.reduce((n,p)=>n+p.x,0)/points.length;
+    const cy=points.reduce((n,p)=>n+p.y,0)/points.length;
+    const q=points.map(p=>({x:p.x+(cx-p.x)*inset,y:p.y+(cy-p.y)*inset}));
+    ctx.beginPath();
+    for(let i=0;i<q.length;i++){
+      const a=q[(i+q.length-1)%q.length],b=q[i],c=q[(i+1)%q.length];
+      const x=b.x+(a.x-b.x)*.018,y=b.y+(a.y-b.y)*.018;
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+      ctx.quadraticCurveTo(b.x,b.y,b.x+(c.x-b.x)*.018,b.y+(c.y-b.y)*.018);
+    }
+    ctx.closePath();
+  },
+
+
+  drawVoxels() {
+    const faces = [];
+    for (const v of Entities.voxels) {
+      if (!v.alive || v.scale < .01) continue;
+      faces.push(...Object3D.faces(v));
+    }
+    faces.sort((a,b)=>a.depth-b.depth);
+    for (const face of faces) {
+      const {v,points,side}=face, pal=Palette[v.color];
+      const screen=points.map(p=>({x:Cam.wx(p.x),y:Cam.wy(p.y)}));
+      const left=Math.min(...screen.map(p=>p.x)),top=Math.min(...screen.map(p=>p.y));
+      const right=Math.max(...screen.map(p=>p.x)),bottom=Math.max(...screen.map(p=>p.y));
+      if((right-left)*(bottom-top)<.3)continue;
+      this.softFace(screen);
+      const [nx,ny,nz]=[[0,0,-1],[0,0,1],[-1,0,0],[1,0,0],[0,1,0],[0,-1,0]][side];
+      // rotate the face normal through yaw then pitch so shading tracks both axes
+      const c=Math.cos(Object3D.angle),s=Math.sin(Object3D.angle);
+      const cx2=Math.cos(Object3D.angleX),sx2=Math.sin(Object3D.angleX);
+      const rnx=nx*c+nz*s, rnz1=-nx*s+nz*c;
+      const rny=ny*cx2-rnz1*sx2, rnz=ny*sx2+rnz1*cx2;
+      const light=rnx*-.4+rny*.65+rnz*.64;
+      const [hue,sat,lum]=hexToHsl(pal.base);
+      const variation=Math.sin(v.x*43.7+v.y*19.3+v.z*7.1)*.65;
+      const faceLum=Math.max(14,Math.min(88,lum+light*13-6+variation));
+      const surface=ctx.createLinearGradient(left,top,right,bottom);
+      surface.addColorStop(0,hsl(hue,sat*.66,Math.min(90,faceLum+.6)));
+      surface.addColorStop(1,hsl(hue,sat*.66,Math.max(12,faceLum-.6)));
+      ctx.fillStyle=surface;ctx.fill();
+      // Fine contact seams, no bright borders or padded/inset frames.
+      ctx.strokeStyle='rgba(34,32,37,.15)';
+      ctx.lineWidth=Math.max(.4,Cam.S*.007);ctx.stroke();
+      if(v.iced && v.iceAlpha>.01) {
+        ctx.fillStyle=`rgba(144,225,249,${v.iceAlpha*.65})`;ctx.fill();
+        ctx.strokeStyle=`rgba(232,252,255,${v.iceAlpha*.9})`;ctx.lineWidth=1.3;ctx.stroke();
+        if(v.iceFlash>.02){ctx.fillStyle=`rgba(255,255,255,${v.iceFlash*.35})`;ctx.fill();}
+      }
+      if(v.locked){ // locked: solid stone-gray, clearly inert until unlocked
+        ctx.fillStyle='rgba(106,104,122,.62)';ctx.fill();
+        ctx.strokeStyle='rgba(58,56,74,.5)';ctx.lineWidth=Math.max(.6,Cam.S*.012);ctx.stroke();
+      }
+      if(v.hitFlash>.02){ctx.fillStyle=`rgba(255,255,255,${v.hitFlash*.45})`;ctx.fill();}
+    }
+    // HP badges. A badge is hidden only when a nearer cube sits almost exactly
+    // in front of its cube (true occlusion, e.g. the model faces away) — not
+    // merely because a plain neighbor projects nearby while the model rotates.
+    // Badges still keep a minimum spacing among themselves for readability.
+    const occupied=[], badges=[];
+    for(const v of Entities.voxels.filter(v=>v.alive&&!v.dying).sort((a,b)=>Object3D.center(b).depth-Object3D.center(a).depth)) {
+      const p=Object3D.center(v), x=Cam.wx(p.x), y=Cam.wy(p.y);
+      if(v.hp>1
+        && !occupied.some(q=>Math.hypot(q.x-x,q.y-y)<Cam.S*.11)
+        && !badges.some(q=>Math.hypot(q.x-x,q.y-y)<Cam.S*.22))
+        badges.push({x,y,hp:v.hp});
+      occupied.push({x,y});
+      v.hitFlash*=.86;
+      v.iceFlash*=.84;
+    }
+    for(const b of badges) {
+      ctx.fillStyle='rgba(255,255,255,.9)';ctx.beginPath();ctx.arc(b.x,b.y,Cam.S*.105,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='#c2246c';
+      ctx.font=`700 ${Cam.S*.15}px Fredoka,sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(b.hp,b.x,b.y);
+    }
+  },
+
+
+
+  drawFunnel() {
+    const S=Cam.S;
+    ctx.save();
+    ctx.lineCap='round';ctx.lineJoin='round';
+    // Open collector: two continuous rails, leaving the falling marbles visible.
+    for(const sign of [-1,1]) {
+      const x1=Cam.wx(sign*2.9),y1=Cam.wy(6.73);
+      const x2=Cam.wx(sign*.35),y2=Cam.wy(5.61);
+      const x3=Cam.wx(sign*.5),y3=Cam.wy(5.0);
+      const path=(dy=0)=>{
+        ctx.beginPath();ctx.moveTo(x1,y1+dy);
+        ctx.lineTo(x2,y2+dy);ctx.lineTo(x3,y3+dy);
+      };
+      // Small offset underside gives thickness without a solid bowl.
+      path(.045*S);ctx.strokeStyle='rgba(103,78,139,.18)';ctx.lineWidth=.18*S;ctx.stroke();
+      path();ctx.strokeStyle='#a68cbe';ctx.lineWidth=.17*S;ctx.stroke();
+      const surface=ctx.createLinearGradient(0,y1-.06*S,0,y3);
+      surface.addColorStop(0,'#e5d8f0');surface.addColorStop(.6,'#cbb5df');surface.addColorStop(1,'#bca3d3');
+      path(-.015*S);ctx.strokeStyle=surface;ctx.lineWidth=.115*S;ctx.stroke();
+      path(-.045*S);ctx.strokeStyle='rgba(255,255,255,.65)';ctx.lineWidth=.025*S;ctx.stroke();
+      // Compact rounded end cap, matching the rail rather than a large rim.
+      ctx.beginPath();ctx.arc(x1,y1,.084*S,0,Math.PI*2);
+      ctx.fillStyle='#ded0ec';ctx.fill();
+      ctx.beginPath();ctx.arc(x1-.018*S,y1-.022*S,.025*S,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,255,255,.65)';ctx.fill();
+    }
+    ctx.restore();
+  },
+
+
+  stadiumPath(inset) {
+    const S = Cam.S;
+    const halfW = Tuning.LANE_LENGTH / 2 + Tuning.LANE_HALF_HEIGHT;
+    const x = Cam.wx(-halfW) - inset, y = Cam.wy(Tuning.CONVEYOR_Y + Tuning.LANE_HALF_HEIGHT) - inset;
+    const w = halfW * 2 * S + inset * 2, h = Tuning.LANE_HALF_HEIGHT * 2 * S + inset * 2;
+    this.roundRect(x, y, w, h, h / 2);
+  },
+
+  drawConveyor() {
+    const S = Cam.S;
+    const fill = Conveyor.count / CAPACITY;
+    // groove color: gray -> amber -> red
+    let groove;
+    if (fill < 0.6) groove = '#b9c3d6';
+    else if (fill < 0.82) groove = '#e8b46a';
+    else groove = '#ef7a72';
+    const dangerPulse = Conveyor.dangerActive && !REDUCED.on
+      ? 0.5 + 0.5 * Math.sin(Cam.time * 18) : (Conveyor.dangerActive ? 1 : 0);
+    const pulse = Conveyor.dangerActive ? dangerPulse :
+      (Conveyor.count >= Tuning.RAIL_WARN_AT && !REDUCED.on
+        ? 0.5 + 0.5 * Math.sin(Cam.time * 10) : 0);
+    if (Conveyor.dangerActive) groove = '#ff3b30';
+    // outer chrome
+    this.stadiumPath(0);
+    ctx.strokeStyle = '#8f86b8';
+    ctx.lineWidth = 0.30 * S;
+    ctx.stroke();
+    // groove
+    this.stadiumPath(0);
+    ctx.strokeStyle = groove;
+    ctx.lineWidth = 0.21 * S;
+    ctx.stroke();
+    if (pulse > 0) {
+      this.stadiumPath(0);
+      ctx.globalAlpha = Conveyor.dangerActive ? (0.42 + pulse * 0.48) : pulse * 0.45;
+      ctx.strokeStyle = '#ff3b30';
+      ctx.lineWidth = (Conveyor.dangerActive ? 0.31 : 0.24) * S;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    }
+    // moving belt ticks
+    ctx.fillStyle = 'rgba(255,255,255,0.55)';
+    const start = Conveyor.baseOffset % RAIL_SLOT_SPACING;
+    for (let d = start; d < PATH_LENGTH; d += RAIL_SLOT_SPACING) {
+      const p = Conveyor.pathPoint(d);
+      ctx.beginPath();
+      ctx.arc(Cam.wx(p.x), Cam.wy(p.y), 0.028 * S, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    // capacity pill (canvas-drawn, centered inside the conveyor)
+    const px = Cam.wx(0), py = Cam.wy(Tuning.CONVEYOR_Y);
+    const pw = 0.85 * S, ph = 0.34 * S;
+    this.roundRect(px - pw / 2, py - ph / 2, pw, ph, ph / 2);
+    ctx.fillStyle = Conveyor.dangerActive
+      ? `rgba(235,48,48,${0.72 + dangerPulse * 0.24})`
+      : (fill >= 0.82 ? 'rgba(255,90,82,0.92)' : 'rgba(255,250,244,0.92)');
+    ctx.fill();
+    ctx.strokeStyle = Conveyor.dangerActive ? '#a91313' : 'rgba(140,110,140,0.4)';
+    ctx.lineWidth = Conveyor.dangerActive ? 2.2 : 1.5;
+    ctx.stroke();
+    ctx.fillStyle = (Conveyor.dangerActive || fill >= 0.82) ? '#fff' : '#5a3c56';
+    ctx.font = `600 ${0.2 * S}px Fredoka, sans-serif`;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    const capText = `${Conveyor.count}/${CAPACITY}`;
+    ctx.fillText(capText, px, py + 0.01 * S);
+  },
+
+  drawMarble(m, rOverride) {
+    const S = Cam.S;
+    const r = (rOverride || m.r) * S;
+    const sx = Cam.wx(m.x), sy = Cam.wy(m.y);
+    const pal = Palette[m.color];
+    const scX = 1 + (1 - m.sy) * 0.7, scY = m.sy;
+    ctx.save();
+    ctx.translate(sx, sy);
+    ctx.scale(scX, scY);
+    const g = ctx.createRadialGradient(-r * 0.32, -r * 0.36, r * 0.1, 0, 0, r * 1.15);
+    g.addColorStop(0, pal.lighter);
+    g.addColorStop(0.5, pal.base);
+    g.addColorStop(1, pal.deep);
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fill();
+    // specular
+    ctx.fillStyle = 'rgba(255,255,255,0.85)';
+    ctx.beginPath();
+    ctx.ellipse(-r * 0.34, -r * 0.4, r * 0.26, r * 0.17, -0.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  },
+
+  drawBoxes() {
+    const S = Cam.S;
+    const t = Boxes.bobT;
+    for (let c = 0; c < Boxes.columns.length; c++) {
+      const column = Boxes.columns[c];
+      for (let r = column.length - 1; r >= 0; r--) {
+        const box = column[r];
+        if (!box.visible) continue;
+        const isFront = r === 0;
+        const bob = isFront && !REDUCED.on ? Math.sin(t * 2 + c * 1.3) * 0.012 : 0;
+        const bx = Cam.wx(box.x), by = Cam.wy(box.y + bob);
+        const sc = box.scale;
+
+        // Slightly larger / deeper box so three marbles visibly fit side-by-side.
+        const w = 0.84 * S * sc, h = 0.50 * S * sc;
+        const pal = Palette[box.color];
+        const alpha = isFront ? 1 : 0.55;
+
+        ctx.save();
+        ctx.translate(bx, by);
+        ctx.globalAlpha = alpha;
+
+        // Back wall / dark inner cavity.
+        ctx.fillStyle = pal.deep;
+        this.roundRect(-w * 0.46, -h * 0.58, w * 0.92, h * 0.66, h * 0.13);
+        ctx.fill();
+
+        // Inner rim highlight makes the cavity read as depth, rather than a flat panel.
+        ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+        ctx.lineWidth = Math.max(1, 0.014 * S);
+        this.roundRect(-w * 0.43, -h * 0.54, w * 0.86, h * 0.55, h * 0.11);
+        ctx.stroke();
+
+        // Side flaps / walls.
+        ctx.fillStyle = pal.light;
+        ctx.beginPath();
+        ctx.moveTo(-w / 2, -h * 0.12); ctx.lineTo(-w / 2 - w * 0.08, -h * 0.52);
+        ctx.lineTo(-w / 2 + w * 0.15, -h * 0.56); ctx.lineTo(-w / 2 + w * 0.21, -h * 0.08);
+        ctx.closePath(); ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(w / 2, -h * 0.12); ctx.lineTo(w / 2 + w * 0.08, -h * 0.52);
+        ctx.lineTo(w / 2 - w * 0.15, -h * 0.56); ctx.lineTo(w / 2 - w * 0.21, -h * 0.08);
+        ctx.closePath(); ctx.fill();
+        ctx.restore();
+
+        // IMPORTANT: marbles are rendered inside the cavity BEFORE the front wall.
+        // The front wall then masks their lower edge, so they visually sit in the box.
+        if (isFront || box.placed > 0) {
+          for (let i = 0; i < 3; i++) {
+            const m = box.marbles[i];
+            if (!m || m.state !== 'boxed') continue;
+            m.x = box.x + (i - 1) * 0.23 * sc;
+            m.y = box.y + bob + 0.11;
+            ctx.globalAlpha = alpha;
+            this.drawMarble(m, 0.095 * sc);
+            ctx.globalAlpha = 1;
+          }
+        }
+
+        // Front wall, drawn after marbles to create real-looking occlusion.
+        ctx.save();
+        ctx.translate(bx, by);
+        ctx.globalAlpha = alpha;
+        const frontTop = -h * 0.09;
+        const frontH = h * 0.64;
+        const fg = ctx.createLinearGradient(0, frontTop, 0, frontTop + frontH);
+        fg.addColorStop(0, pal.base);
+        fg.addColorStop(1, pal.dark);
+        ctx.fillStyle = fg;
+        this.roundRect(-w / 2, frontTop, w, frontH, h * 0.16);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+        ctx.lineWidth = Math.max(1, 0.018 * S);
+        this.roundRect(-w / 2 + 1.5, frontTop + 1.5, w - 3, frontH - 3, h * 0.14);
+        ctx.stroke();
+
+        // Subtle top lip reinforces that the balls are behind the wall.
+        ctx.strokeStyle = pal.light;
+        ctx.lineWidth = Math.max(1.5, 0.028 * S);
+        ctx.beginPath();
+        ctx.moveTo(-w * 0.42, frontTop + 0.5);
+        ctx.lineTo(w * 0.42, frontTop + 0.5);
+        ctx.stroke();
+
+        // Fill dots (n/3 indicator) moved lower so they don't overlap the marbles.
+        for (let i = 0; i < 3; i++) {
+          ctx.fillStyle = i < box.placed ? '#fff' : 'rgba(255,255,255,0.28)';
+          ctx.beginPath();
+          ctx.arc((i - 1) * w * 0.20, frontTop + frontH * 0.64, 0.032 * S * sc, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Key box cue: a prominent golden key badge on the front wall.
+        if (box.isKey && !box.clearing) {
+          const kx = w * 0.30, ky = frontTop + frontH * 0.34;
+          const bob = 1 + 0.06 * Math.sin(Cam.time * 3 + box.x * 2);
+          ctx.fillStyle = 'rgba(255,255,255,.94)';
+          ctx.strokeStyle = 'rgba(120,90,20,.45)';
+          ctx.lineWidth = Math.max(1, 0.014 * S * sc);
+          ctx.beginPath();
+          ctx.arc(kx, ky, 0.125 * S * sc * bob, 0, Math.PI * 2);
+          ctx.fill(); ctx.stroke();
+          if (!Render.drawSprite(Assets.key, kx, ky, 0.215 * S * sc * bob, -0.7)) {
+            ctx.font = `${0.13 * S * sc}px sans-serif`;
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.fillText('🔑', kx, ky + 0.008 * S * sc);
+          }
+        }
+
+        // Flamethrower hatch cue: a small metal/orange module under the trigger box.
+        if (isFront && box.flameTrigger && !IceBlocker.melted) {
+          const mw = w * 0.34, mh = h * 0.17;
+          ctx.fillStyle = '#6f7890';
+          this.roundRect(-mw / 2, h * 0.49, mw, mh, mh * 0.45);
+          ctx.fill();
+          ctx.fillStyle = '#ff9e3d';
+          this.roundRect(-mw * 0.25, h * 0.515, mw * 0.50, mh * 0.32, mh * 0.16);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+    }
+  },
+
+  // Draw one of the embedded golden sprites centered at (x,y) with the given
+  // on-screen height, rotation and alpha. Returns false if not yet decoded so
+  // callers can fall back to an emoji glyph.
+  drawSprite(img, x, y, hPx, rot = 0, alpha = 1, glowBlur = 0) {
+    if (!img.complete || !img.naturalWidth) return false;
+    const w = hPx * img.naturalWidth / img.naturalHeight;
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(rot);
+    ctx.globalAlpha *= alpha;
+    if (glowBlur > 0) { ctx.shadowColor = 'rgba(255,205,70,.85)'; ctx.shadowBlur = glowBlur; }
+    else { ctx.shadowColor = 'rgba(40,30,60,.35)'; ctx.shadowBlur = 6; ctx.shadowOffsetY = 2; }
+    ctx.drawImage(img, -w / 2, -hPx / 2, w, hPx);
+    ctx.restore();
+    return true;
+  },
+
+  // One prominent golden padlock per locked group, centered on the group and
+  // tracking it through rotation. Rattles when shots bounce off; pops open,
+  // rises and fades when its key arrives.
+  drawGroupLocks() {
+    const S = Cam.S;
+    for (const g of ['eyeL', 'eyeR', 'mouth']) {
+      if (!Entities.voxels.some(v => v.lockGroup === g && v.locked && v.alive)) continue;
+      const c = Locks.groupCenter(g);
+      const shake = Locks.shake[g] || 0;
+      const x = Cam.wx(c.x) + Math.sin(Cam.time * 46) * shake * S * 0.05;
+      const y = Cam.wy(c.y);
+      const pulse = 1 + 0.045 * Math.sin(Cam.time * 2.6) + shake * 0.18;
+      const alpha = c.depth < 0 ? 0.4 : 1; // fade when the group faces away
+      const rot = Math.sin(Cam.time * 46) * shake * 0.12;
+      if (!this.drawSprite(Assets.lock, x, y, S * 0.52 * pulse, rot, alpha)) {
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath(); ctx.arc(x, y, S * 0.20 * pulse, 0, Math.PI * 2); ctx.fill();
+        ctx.font = `${S * 0.26 * pulse}px sans-serif`;
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('🔒', x, y + S * 0.012);
+        ctx.restore();
+      }
+    }
+    for (const a of Locks.anims) {
+      const k = Math.min(1, a.t / 0.75);
+      const x = Cam.wx(a.x), y = Cam.wy(a.y + Ease.outQuad(k) * 0.7);
+      const s = 1 + 0.9 * Ease.outBack(Math.min(1, k * 1.6));
+      const rot = 0.4 * Math.sin(k * Math.PI * 3);
+      if (!this.drawSprite(Assets.lock, x, y, S * 0.52 * s, rot, 1 - k * k, 18)) {
+        ctx.save();
+        ctx.globalAlpha = 1 - k * k;
+        ctx.translate(x, y); ctx.rotate(rot);
+        ctx.font = `${S * 0.30 * s}px sans-serif`;
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('🔓', 0, 0);
+        ctx.restore();
+      }
+    }
+  },
+
+  drawKeys() {
+    for (const f of Locks.flights) {
+      const p = Locks.pos(f);
+      const x = Cam.wx(p.x), y = Cam.wy(p.y);
+      const rot = Math.sin(p.k * Math.PI * 2) * 0.3 - 0.5;
+      const s = 1 + 0.35 * Math.sin(p.k * Math.PI); // slight pop mid-flight
+      if (!this.drawSprite(Assets.key, x, y, Cam.S * 0.48 * s, rot, 1, 14)) {
+        ctx.save();
+        ctx.translate(x, y); ctx.rotate(rot);
+        ctx.font = `${Cam.S * 0.30 * s}px sans-serif`;
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('🔑', 0, 0);
+        ctx.restore();
+      }
+    }
+  },
+
+  drawIceBlocker() {
+    if (!IceBlocker.enabled || !IceBlocker.triggered || IceBlocker.finished) return;
+    const S = Cam.S;
+    const lift = Ease.outBack(IceBlocker.nozzleLift);
+    const sx = Cam.wx(IceBlocker.sourceX);
+    const baseYWorld = IceBlocker.sourceY - 0.16 + lift * 0.28;
+    const sy = Cam.wy(baseYWorld);
+
+    // telescoping flamethrower unit emerging from below the completed box
+    const bodyW = 0.30 * S, bodyH = 0.28 * S;
+    ctx.save();
+    ctx.translate(sx, sy);
+    ctx.fillStyle = 'rgba(80,55,70,0.16)';
+    ctx.beginPath(); ctx.ellipse(0, bodyH * 0.58, bodyW * 0.75, bodyH * 0.22, 0, 0, Math.PI * 2); ctx.fill();
+    const mg = ctx.createLinearGradient(-bodyW / 2, 0, bodyW / 2, 0);
+    mg.addColorStop(0, '#727b91'); mg.addColorStop(0.5, '#d6dbe6'); mg.addColorStop(1, '#626b82');
+    ctx.fillStyle = mg;
+    this.roundRect(-bodyW / 2, -bodyH / 2, bodyW, bodyH, bodyW * 0.20);
+    ctx.fill();
+    ctx.fillStyle = '#ff8a30';
+    this.roundRect(-bodyW * 0.24, -bodyH * 0.20, bodyW * 0.48, bodyH * 0.26, bodyH * 0.10);
+    ctx.fill();
+    // nozzle
+    ctx.fillStyle = '#4f586d';
+    this.roundRect(-0.075 * S, -0.34 * S, 0.15 * S, 0.24 * S, 0.06 * S);
+    ctx.fill();
+    ctx.fillStyle = '#ffb24a';
+    ctx.beginPath(); ctx.ellipse(0, -0.36 * S, 0.10 * S, 0.055 * S, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+
+    if (IceBlocker.flame <= 0.01) return;
+    const tx = Cam.wx(IceBlocker.targetX);
+    const ty = Cam.wy(IceBlocker.targetY);
+    const startY = sy - 0.39 * S;
+    const f = IceBlocker.flame;
+    const flick = Math.sin(Cam.time * 31) * 0.045 * S;
+    const midX = (sx + tx) * 0.5 + Math.sin(Cam.time * 17) * 0.12 * S;
+    const midY = (startY + ty) * 0.5 + flick;
+
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.lineCap = 'round';
+    // outer orange plume
+    ctx.globalAlpha = 0.78 * f;
+    ctx.strokeStyle = '#ff6b2c';
+    ctx.lineWidth = (0.30 + 0.05 * Math.sin(Cam.time * 23)) * S;
+    ctx.beginPath(); ctx.moveTo(sx, startY); ctx.quadraticCurveTo(midX, midY, tx, ty); ctx.stroke();
+    // hot yellow core
+    ctx.globalAlpha = 0.88 * f;
+    ctx.strokeStyle = '#ffd34d';
+    ctx.lineWidth = (0.17 + 0.025 * Math.sin(Cam.time * 29 + 1)) * S;
+    ctx.beginPath(); ctx.moveTo(sx, startY); ctx.quadraticCurveTo(midX - 0.04 * S, midY, tx, ty); ctx.stroke();
+    // white core nearest the nozzle
+    ctx.globalAlpha = 0.85 * f;
+    ctx.strokeStyle = '#fff3b0';
+    ctx.lineWidth = 0.075 * S;
+    ctx.beginPath(); ctx.moveTo(sx, startY);
+    ctx.quadraticCurveTo((sx + midX) * 0.5, (startY + midY) * 0.5, midX, midY);
+    ctx.stroke();
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  },
+
+  drawCannonballs() {
+    const S = Cam.S;
+    for (const b of Entities.cannonballs) {
+      const sx = Cam.wx(b.x), sy = Cam.wy(b.y);
+      const px = Cam.wx(b.px), py = Cam.wy(b.py);
+      // streak
+      ctx.strokeStyle = 'rgba(58,61,82,0.35)';
+      ctx.lineWidth = Tuning.CANNONBALL_RADIUS * 1.5 * S;
+      ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(sx, sy); ctx.stroke();
+      const depth = b.totalDist ? clamp(b.traveled / b.totalDist, 0, 1) : 0;
+      const r = Tuning.CANNONBALL_RADIUS * (1 - depth * 0.3) * S;
+      const g = ctx.createRadialGradient(sx - r * 0.3, sy - r * 0.3, r * 0.1, sx, sy, r);
+      g.addColorStop(0, '#6a6f8e');
+      g.addColorStop(1, '#22243a');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(sx, sy, r, 0, Math.PI * 2); ctx.fill();
+    }
+  },
+
+  drawStar(x, y, r, color) {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    for (let i = 0; i < 10; i++) {
+      const rr = i % 2 === 0 ? r : r * 0.45;
+      const a = -Math.PI / 2 + i * Math.PI / 5;
+      const px = x + Math.cos(a) * rr, py = y + Math.sin(a) * rr;
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.fill();
+  },
+
+  drawCannon() {
+    const S = Cam.S;
+    const cx = Cam.wx(Cannon.x), cy = Cam.wy(Cannon.y);
+    // ---- contact shadow ----
+    ctx.fillStyle = 'rgba(150,110,170,0.20)';
+    ctx.beginPath();
+    ctx.ellipse(cx, cy + 0.52 * S, 0.74 * S, 0.09 * S, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // ---- lavender pedestal ----
+    // bottom slab
+    let g = ctx.createLinearGradient(0, cy + 0.28 * S, 0, cy + 0.56 * S);
+    g.addColorStop(0, '#c3b0ee');
+    g.addColorStop(0.7, '#a58ade');
+    g.addColorStop(1, '#8a6fc7');
+    ctx.fillStyle = g;
+    this.roundRect(cx - 0.68 * S, cy + 0.28 * S, 1.36 * S, 0.27 * S, 0.13 * S);
+    ctx.fill();
+    // pink trim ring
+    ctx.fillStyle = '#f78fbe';
+    this.roundRect(cx - 0.56 * S, cy + 0.245 * S, 1.12 * S, 0.06 * S, 0.03 * S);
+    ctx.fill();
+    // top disc
+    g = ctx.createLinearGradient(0, cy + 0.12 * S, 0, cy + 0.27 * S);
+    g.addColorStop(0, '#cdbbf3');
+    g.addColorStop(1, '#a98fd9');
+    ctx.fillStyle = g;
+    this.roundRect(cx - 0.5 * S, cy + 0.12 * S, 1.0 * S, 0.15 * S, 0.075 * S);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    this.roundRect(cx - 0.44 * S, cy + 0.135 * S, 0.88 * S, 0.045 * S, 0.022 * S);
+    ctx.fill();
+
+    // ---- barrel: bulbous pink mortar tube (rotated toward aim) ----
+    const len = (Tuning.BARREL_LEN - Cannon.recoil * 0.12) * S;
+    const a = -Cannon.angle;
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(a);
+    // teardrop profile: narrow tail, fat bulge, slight neck, wide muzzle
+    const bodyG = ctx.createLinearGradient(0, -0.3 * S, 0, 0.3 * S);
+    bodyG.addColorStop(0, '#ff9fce');
+    bodyG.addColorStop(0.45, '#f45fa2');
+    bodyG.addColorStop(1, '#c93c78');
+    ctx.fillStyle = bodyG;
+    ctx.beginPath();
+    ctx.moveTo(-0.10 * S, -0.15 * S);
+    ctx.bezierCurveTo(0.02 * S, -0.335 * S, 0.30 * S, -0.335 * S, 0.48 * S, -0.215 * S);
+    ctx.lineTo(len, -0.24 * S);
+    ctx.lineTo(len, 0.24 * S);
+    ctx.lineTo(0.48 * S, 0.215 * S);
+    ctx.bezierCurveTo(0.30 * S, 0.335 * S, 0.02 * S, 0.335 * S, -0.10 * S, 0.15 * S);
+    ctx.closePath();
+    ctx.fill();
+    // cream band with pink stripe edges
+    ctx.fillStyle = '#f6ecdd';
+    ctx.fillRect(0.44 * S, -0.235 * S, 0.17 * S, 0.47 * S);
+    ctx.fillStyle = '#f78fbe';
+    ctx.fillRect(0.42 * S, -0.24 * S, 0.035 * S, 0.48 * S);
+    ctx.fillRect(0.60 * S, -0.24 * S, 0.035 * S, 0.48 * S);
+    // glossy sweep on the bulge
+    ctx.fillStyle = 'rgba(255,255,255,0.55)';
+    ctx.beginPath();
+    ctx.ellipse(0.17 * S, -0.15 * S, 0.16 * S, 0.055 * S, 0.12, 0, Math.PI * 2);
+    ctx.fill();
+    // muzzle: thick cream ring
+    ctx.fillStyle = '#fff6e8';
+    ctx.beginPath();
+    ctx.ellipse(len, 0, 0.13 * S, 0.29 * S, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(210,180,150,0.5)';
+    ctx.lineWidth = Math.max(1, 0.018 * S);
+    ctx.beginPath();
+    ctx.ellipse(len, 0, 0.13 * S, 0.29 * S, 0, 0, Math.PI * 2);
+    ctx.stroke();
+    // bore
+    ctx.fillStyle = '#b23a70';
+    ctx.beginPath();
+    ctx.ellipse(len + 0.01 * S, 0, 0.066 * S, 0.185 * S, 0, 0, Math.PI * 2);
+    ctx.fill();
+    // loaded ball peeking out of the bore (hidden when out of ammo)
+    if (Cannon.ammo > 0) {
+      const ballG = ctx.createRadialGradient(len - 0.015 * S, -0.05 * S, 0.01 * S, len, 0, 0.16 * S);
+      ballG.addColorStop(0, '#ffc3de');
+      ballG.addColorStop(0.55, '#f45fa2');
+      ballG.addColorStop(1, '#c93c78');
+      ctx.fillStyle = ballG;
+      ctx.beginPath();
+      ctx.ellipse(len - 0.005 * S, 0, 0.052 * S, 0.15 * S, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,0.85)';
+      ctx.beginPath();
+      ctx.ellipse(len - 0.02 * S, -0.06 * S, 0.018 * S, 0.045 * S, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+
+    // ---- lavender arch brackets holding the barrel (drawn in front) ----
+    for (const side of [-1, 1]) {
+      const bx = cx + side * 0.38 * S;
+      g = ctx.createLinearGradient(bx - 0.12 * S, 0, bx + 0.12 * S, 0);
+      g.addColorStop(0, side < 0 ? '#c3b0ee' : '#a58ade');
+      g.addColorStop(1, side < 0 ? '#a58ade' : '#8a6fc7');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.moveTo(bx - 0.14 * S, cy + 0.2 * S);
+      ctx.lineTo(bx - 0.14 * S, cy - 0.04 * S);
+      ctx.arc(bx, cy - 0.04 * S, 0.14 * S, Math.PI, 0);
+      ctx.lineTo(bx + 0.14 * S, cy + 0.2 * S);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+      ctx.lineWidth = Math.max(1, 0.02 * S);
+      ctx.stroke();
+      // cream button with pink center
+      ctx.fillStyle = '#fff6e8';
+      ctx.beginPath(); ctx.arc(bx, cy - 0.02 * S, 0.075 * S, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#f45fa2';
+      ctx.beginPath(); ctx.arc(bx, cy - 0.01 * S, 0.04 * S, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,0.8)';
+      ctx.beginPath(); ctx.arc(bx - 0.013 * S, cy - 0.025 * S, 0.013 * S, 0, Math.PI * 2); ctx.fill();
+    }
+
+    // ---- cream plaque with pink star ----
+    ctx.fillStyle = '#fff6e8';
+    this.roundRect(cx - 0.29 * S, cy + 0.30 * S, 0.58 * S, 0.22 * S, 0.11 * S);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(210,180,150,0.55)';
+    ctx.lineWidth = Math.max(1, 0.018 * S);
+    this.roundRect(cx - 0.29 * S, cy + 0.30 * S, 0.58 * S, 0.22 * S, 0.11 * S);
+    ctx.stroke();
+    this.drawStar(cx, cy + 0.41 * S, 0.075 * S, '#f45fa2');
+  },
+  frame() {
+    const W = Cam.W, H = Cam.H;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    if (this.bg) ctx.drawImage(this.bg, 0, 0);
+    // camera shake
+    ctx.save();
+    ctx.translate(W / 2 + Cam.shakeX, H / 2 + Cam.shakeY);
+    ctx.rotate(Cam.shakeRot);
+    ctx.translate(-W / 2, -H / 2);
+
+    this.drawVoxels();
+    this.drawFunnel();
+    this.drawConveyor();
+    // marbles: riding/capturing/free/jumping/overflow (boxed drawn with boxes)
+    for (const m of Entities.marbles) {
+      if (m.state === 'boxed') continue;
+      if (m.state === 'overflow') {
+        ctx.globalAlpha = 0.5 + 0.5 * Math.sin(Cam.time * 20);
+        this.drawMarble(m);
+        ctx.globalAlpha = 1;
+      } else if (m.state !== 'jumping') this.drawMarble(m);
+    }
+    this.drawBoxes();
+    this.drawIceBlocker();
+    this.drawGroupLocks();
+    this.drawKeys();
+    // jumping marbles pass in front of boxes
+    for (const m of Entities.marbles) if (m.state === 'jumping') this.drawMarble(m);
+    this.drawCannonballs();
+    this.drawCannon();
+    Particles.draw();
+    FloatText.draw();
+    ctx.restore();
+    if (this.vignette) ctx.drawImage(this.vignette, 0, 0);
+    this.drawFrame();
+  },
+
+  // subtle candy frame separating the playfield from the page
+  drawFrame() {
+    const W = Cam.W, H = Cam.H, d = Cam.dpr;
+    const r = 16 * d, inset = 3 * d;
+    ctx.strokeStyle = 'rgba(255,255,255,0.55)';
+    ctx.lineWidth = 4 * d;
+    this.roundRect(inset, inset, W - inset * 2, H - inset * 2, r);
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(255,140,190,0.28)';
+    ctx.lineWidth = 1.5 * d;
+    this.roundRect(inset + 3 * d, inset + 3 * d, W - (inset + 3 * d) * 2, H - (inset + 3 * d) * 2, r - 3 * d);
+    ctx.stroke();
+  },
+};
+
+/* =====================================================================
+   19 MAIN LOOP — fixed 60 Hz update, rAF render
+   ===================================================================== */
+const DT = 1 / 60;
+let last = performance.now();
+let acc = 0;
+const DEBUG = /[?&]debug/.test(location.search);
+const DEMO = /[?&]demo/.test(location.search); // auto-plays for quick visual checks
+let demoTimer = 0;
+let fps = 0, fpsAcc = 0, fpsN = 0;
+
+function step(dt) {
+  Object3D.update(dt);
+  if (DEMO && Game.state === 'playing') {
+    demoTimer -= dt;
+    if (demoTimer <= 0 && Cannon.cooldown <= 0 && Conveyor.count <= 9) {
+      const alive = Entities.voxels.filter(v => v.alive && !v.dying && !v.iced);
+      if (alive.length) {
+        const v = alive[(Math.random() * alive.length) | 0];
+        const p = Object3D.center(v);
+        Input.aimX = p.x; Input.aimY = p.y; Input.aimAge = 0;
+        Cannon.tryShoot(p.x + rand(-0.1, 0.1), p.y + rand(-0.1, 0.1));
+        demoTimer = 0.8;
+      }
+    }
+  }
+  Tween.update(dt);
+  Cam.update(dt);
+  Input.update(dt);
+  if (Game.state === 'playing') {
+    Cannon.update(dt);
+    Entities.updateCannonballs(dt);
+    Entities.updateMarbles(dt);
+    Conveyor.update(dt);
+    Boxes.update(dt);
+    IceBlocker.update(dt);
+    Locks.update(dt);
+    Game.update(dt);
+    // Progress advances only when a 3-marble box is completed.
+  }
+  Particles.update(dt);
+  FloatText.update(dt);
+}
+
+function loop(now) {
+  requestAnimationFrame(loop);
+  let dt = (now - last) / 1000;
+  last = now;
+  if (dt > 0.1) dt = 0.1; // tab-back protection
+  acc += dt;
+  let steps = 0;
+  while (acc >= DT && steps < 5) { step(DT); acc -= DT; steps++; }
+  if (steps === 5) acc = 0;
+  Render.frame();
+  if (DEBUG) {
+    fpsAcc += dt; fpsN++;
+    if (fpsAcc >= 0.5) { fps = Math.round(fpsN / fpsAcc); fpsAcc = 0; fpsN = 0; }
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.fillStyle = '#000';
+    ctx.font = '12px monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText(`${fps}fps marbles:${Entities.marbles.length} rail:${Conveyor.count}/${CAPACITY} tw:${Tween.list.length}`, 8, Cam.H - 8);
+  }
+}
+
+/* =====================================================================
+   INIT
+   ===================================================================== */
+window.addEventListener('resize', () => Cam.resize());
+window.addEventListener('orientationchange', () => setTimeout(() => Cam.resize(), 120));
+document.addEventListener('visibilitychange', () => { if (!document.hidden) last = performance.now(); });
+
+window.__MC = { Object3D, Tuning, Palette, Level, LEVELS, Entities, IceBlocker, Conveyor, Boxes, Cannon, Game, Tween, Cam, HUD, Input, SFX, Haptics, step, CAPACITY, SLOT_COUNT, RAIL_SLOT_SPACING, PATH_LENGTH };
+Input.init();
+HUD.syncToggles();
+Cam.resize();
+Game.reset(); // pre-build the scene so it shows behind the splash
+if (DEMO) {
+  document.getElementById('splash').classList.add('hide');
+  Game.start();
+}
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

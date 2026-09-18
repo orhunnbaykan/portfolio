@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="tr" data-title-tr="Moflow — AI Pazarlama Ekibi — Orhun Baykan" data-title-en="Moflow — AI Marketing Team — Orhun Baykan">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moflow — AI Pazarlama Ekibi — Orhun Baykan</title>
+<meta name="description" content="Tek bir marka URL'sinden araştırma, strateji, SEO ve içerik üreten 7 ajanlı AI pazarlama platformu. 112 API route, 35 tablo, ~1.300 test, sunucu tarafında kilitli salt-okunur demo hesabı.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='4' y='4' width='92' height='92' rx='18' fill='%230C1014' stroke='%2346D181' stroke-width='6'/><text y='72' x='50' text-anchor='middle' font-size='58' font-family='monospace' font-weight='700' fill='%2346D181'>OB</text></svg>">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body>
+
+<!-- ==================== UST BAR ==================== -->
+<div class="topbar">
+  <div class="wrap">
+    <a class="brand" href="../../">ORHUN<span>.</span>BAYKAN</a>
+    <nav class="navlinks" id="navlinks">
+      <a href="#hat"><span data-lang="tr">Ajan hattı</span><span data-lang="en">Pipeline</span></a>
+      <a href="#mimari"><span data-lang="tr">Mimari</span><span data-lang="en">Architecture</span></a>
+      <a href="#demo"><span data-lang="tr">Demo hesabı</span><span data-lang="en">Demo account</span></a>
+      <a href="#kalite"><span data-lang="tr">Kalite</span><span data-lang="en">Quality</span></a>
+      <a href="#ekranlar"><span data-lang="tr">Ekranlar</span><span data-lang="en">Screens</span></a>
+      <a href="#altyapi"><span data-lang="tr">Altyapı</span><span data-lang="en">Infra</span></a>
+      <a href="../platform/"><span data-lang="tr">← Proje 02</span><span data-lang="en">← Project 02</span></a>
+    </nav>
+    <button class="menubtn" id="menubtn" type="button" aria-label="Menu" aria-controls="navlinks" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <button class="langbtn" id="langbtn" type="button" aria-label="Change language">
+      <span data-lang="tr">EN</span><span data-lang="en">TR</span>
+    </button>
+  </div>
+</div>
+
+<!-- ==================== PROJE C: MOFLOW ==================== -->
+<section id="moflow" class="phero">
+<div class="wrap">
+  <a class="crumb" href="../../">← <span data-lang="tr">Portföy</span><span data-lang="en">Portfolio</span></a>
+  <div class="shead">
+    <div class="stag"><span data-lang="tr">Kişisel proje · 03</span><span data-lang="en">Personal project · 03</span></div>
+    <h1><span data-lang="tr">Moflow — AI Pazarlama Ekibi</span><span data-lang="en">Moflow — AI Marketing Team</span></h1>
+    <p class="sub">
+      <span data-lang="tr">Tek bir marka URL'sinden yola çıkıp kitle analizi, pazar araştırması, konumlama, strateji, SEO, blog ve platforma özel içerik üreten yedi ajanlı bir SaaS kurdum. Her çıktıyı bir LLM hakem puanlar, düşük skor yeniden üretimi tetikler, öğrenilenler markanın hafızasına yazılıp bir sonraki koşuyu besler. Müşteri paneli, yönetim paneli, tanıtım sitesi, API ve kuyruk worker'ı ile birlikte kapalı betada yayında.</span>
+      <span data-lang="en">I built a seven-agent SaaS that starts from a single brand URL and produces audience analysis, market research, positioning, strategy, SEO, a blog article and platform-specific content. An LLM judge scores every output, a low score triggers regeneration, and what was learned is written to the brand's memory to feed the next run. It is live in closed beta with a customer panel, a backoffice, a marketing site, an API and a queue worker.</span>
+    </p>
+  </div>
+
+  <div class="badges">
+    <span class="badge g">● <span data-lang="tr">Yayında · kapalı beta</span><span data-lang="en">Live · closed beta</span></span>
+    <span class="badge g">TypeScript 5.9</span>
+    <span class="badge g">Hono 4</span>
+    <span class="badge g">React 19</span>
+    <span class="badge g">Next.js 16</span>
+    <span class="badge">Drizzle ORM</span>
+    <span class="badge">MySQL 8.4</span>
+    <span class="badge">Better Auth</span>
+    <span class="badge">Zod 4</span>
+    <span class="badge">Tailwind 4 · Radix</span>
+    <span class="badge">Vite 8</span>
+    <span class="badge">Claude · DeepSeek</span>
+    <span class="badge">fal.ai · satori</span>
+    <span class="badge">Vitest</span>
+    <span class="badge">Playwright · axe</span>
+    <span class="badge">Docker · Caddy</span>
+    <span class="badge">GitHub Actions</span>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="n">7</div><div class="l"><span data-lang="tr">üretici ajan<br>+ hakem (judge) + planlayıcı</span><span data-lang="en">generating agents<br>+ judge + planner</span></div></div>
+    <div class="metric"><div class="n">112</div><div class="l"><span data-lang="tr">API route · 5 yetki katmanı<br>35 tablo · 19 migration</span><span data-lang="en">API routes · 5 authz layers<br>35 tables · 19 migrations</span></div></div>
+    <div class="metric"><div class="n">~1.3K</div><div class="l"><span data-lang="tr">test · 136 test dosyası<br>17/17 E2E · API satır kapsamı %93</span><span data-lang="en">tests · 136 test files<br>17/17 E2E · 93% API line coverage</span></div></div>
+    <div class="metric"><div class="n">$0.20</div><div class="l"><span data-lang="tr">tam zincir maliyeti<br>8 koşu + görseller · ~1 dk 45 sn</span><span data-lang="en">per full chain<br>8 runs + images · ~1 min 45 s</span></div></div>
+  </div>
+
+  <div class="note" style="border-left-color:var(--acc)">
+    <b><span data-lang="tr">Durum:</span><span data-lang="en">Status:</span></b>
+    <span data-lang="tr"><b>Sistem 3 Eylül 2026'dan beri kapalı betada yayında.</b> Kayıt herkese açık ama hesaplar tek tek onaylanıyor; o yüzden incelemek isteyenler için iki <b>salt-okunur demo hesabı</b> var. Biri müşteri panelini gerçek bir ajan zincirinin çıktılarıyla, diğeri yönetim panelini (müşteriler, izler, maliyet ve kalite panoları, Prompt Studio) gösterir. İkisi de her şeyi görür, hiçbir şeyi değiştiremez — yazma kilidi arayüzde değil sunucudadır (<a href="#demo">nasıl çalışıyor</a>). Henüz alan adı alınmadığı için adresler geçici; depo özeldir.</span>
+    <span data-lang="en"><b>The system has been live in closed beta since 3 September 2026.</b> Sign-up is open but accounts are approved one by one, so there are two <b>read-only demo accounts</b> for anyone who wants a look. One shows the customer panel with the outputs of a real agent chain, the other shows the backoffice (customers, traces, cost and quality dashboards, Prompt Studio). Both see everything and can change nothing — the write lock lives on the server, not in the UI (<a href="#demo">how it works</a>). No domain has been bought yet, so the addresses are temporary; the repository is private.</span>
+    <div class="btnrow" style="margin-top:14px">
+      <a class="btn primary" href="https://136-244-90-5.sslip.io" target="_blank" rel="noopener"><span data-lang="tr">Tanıtım sitesi</span><span data-lang="en">Landing site</span> ↗</a>
+      <a class="btn" href="https://app.136-244-90-5.sslip.io" target="_blank" rel="noopener"><span data-lang="tr">Müşteri paneli</span><span data-lang="en">Customer panel</span> ↗</a>
+      <a class="btn" href="https://admin.136-244-90-5.sslip.io" target="_blank" rel="noopener"><span data-lang="tr">Yönetim paneli</span><span data-lang="en">Backoffice</span> ↗</a>
+    </div>
+    <div style="margin-top:12px;font-family:var(--mono);font-size:13px;line-height:1.9">
+      <div><span data-lang="tr">Panel girişi:</span><span data-lang="en">Panel login:</span> <code>demo@moflow.demo</code> / <code>PAROLA_BEKLENIYOR_1</code></div>
+      <div><span data-lang="tr">Yönetim girişi:</span><span data-lang="en">Backoffice login:</span> <code>demo-admin@moflow.demo</code> / <code>PAROLA_BEKLENIYOR_2</code></div>
+    </div>
+  </div>
+
+  <div class="pull">
+    <span data-lang="tr">“Tek bir dev prompt sığ ve kopuk çıktı üretir. Fark, işi bölmekte ve her koşunun bir sonrakine öğrettiği döngüde.”</span>
+    <span data-lang="en">“One giant prompt produces shallow, disconnected output. The difference is in dividing the work — and in the loop where every run teaches the next.”</span>
+    <span class="who"><span data-lang="tr">— projenin çıkış fikri</span><span data-lang="en">— the project's thesis</span></span>
+  </div>
+
+  <!-- AJAN HATTI -->
+  <h3 style="font-size:1.15rem;margin:38px 0 10px" id="hat">
+    <span data-lang="tr">Ajan hattı</span><span data-lang="en">The agent pipeline</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:20px">
+    <span data-lang="tr">Kullanıcı yalnızca bir URL verir. Sayfa SSRF korumalı bir istemciyle taranır, marka kimliği taslağı çıkarılır ve API yedi ajanı bir zincir olarak kuyruğa yazar. Worker adımları sırayla alır; her ajan yalnızca gerçekten ihtiyaç duyduğu üst çıktıları okur. İlerleme panele SSE ile canlı akar.</span>
+    <span data-lang="en">The user supplies just a URL. The page is scraped through an SSRF-guarded client, a brand identity draft is extracted, and the API enqueues the seven agents as a chain. The worker claims the steps in order; each agent reads only the upstream outputs it actually needs. Progress streams to the panel live over SSE.</span>
+  </p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 900 330" width="100%" height="auto" role="img" aria-label="Agent pipeline diagram">
+      <defs>
+        <marker id="mg" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#3FB950"/></marker>
+        <marker id="mb" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#58A6FF"/></marker>
+        <marker id="md" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#6B7280"/></marker>
+      </defs>
+
+      <!-- giris -->
+      <rect x="18" y="18" width="150" height="56" rx="8" fill="#14171D" stroke="#2E3440"/>
+      <text x="93" y="42" text-anchor="middle" fill="#E8EAED" font-size="13" font-weight="700" font-family="sans-serif"><tspan data-lang="tr">Marka URL'si</tspan><tspan data-lang="en">Brand URL</tspan></text>
+      <text x="93" y="60" text-anchor="middle" fill="#6B7280" font-size="10.5" font-family="monospace">guardedFetch</text>
+      <line x1="168" y1="46" x2="212" y2="46" stroke="#6B7280" stroke-width="1.5" marker-end="url(#md)"/>
+
+      <rect x="214" y="18" width="220" height="56" rx="8" fill="#14171D" stroke="#2E3440"/>
+      <text x="324" y="42" text-anchor="middle" fill="#E8EAED" font-size="13" font-weight="700" font-family="sans-serif"><tspan data-lang="tr">Marka kimliği taslağı</tspan><tspan data-lang="en">Brand identity draft</tspan></text>
+      <text x="324" y="60" text-anchor="middle" fill="#9BA3AF" font-size="11" font-family="sans-serif"><tspan data-lang="tr">ton · renk · logo · değer önerisi</tspan><tspan data-lang="en">tone · colours · logo · value prop</tspan></text>
+      <path d="M324,74 L324,96 L70,96 L70,122" fill="none" stroke="#6B7280" stroke-width="1.5" marker-end="url(#md)"/>
+
+      <!-- hafiza -->
+      <rect x="606" y="18" width="242" height="56" rx="8" fill="#14171D" stroke="#58A6FF" stroke-opacity=".45"/>
+      <text x="727" y="42" text-anchor="middle" fill="#58A6FF" font-size="13" font-weight="700" font-family="sans-serif"><tspan data-lang="tr">Marka hafızası</tspan><tspan data-lang="en">Brand memory</tspan></text>
+      <text x="727" y="60" text-anchor="middle" fill="#6B7280" font-size="10.5" font-family="monospace">product_memory · FULLTEXT</text>
+      <path d="M727,74 L727,96 L486,96 L486,122" fill="none" stroke="#58A6FF" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#mb)"/>
+      <text x="606" y="90" text-anchor="middle" fill="#58A6FF" font-size="10.5" font-family="sans-serif"><tspan data-lang="tr">sonraki koşuyu besler</tspan><tspan data-lang="en">feeds the next run</tspan></text>
+
+      <!-- 7 ajan -->
+      <g font-family="sans-serif" text-anchor="middle">
+        <rect x="18"  y="124" width="104" height="64" rx="8" fill="#14171D" stroke="#3FB950" stroke-opacity=".5"/>
+        <rect x="139" y="124" width="104" height="64" rx="8" fill="#14171D" stroke="#3FB950" stroke-opacity=".5"/>
+        <rect x="260" y="124" width="104" height="64" rx="8" fill="#14171D" stroke="#3FB950" stroke-opacity=".5"/>
+        <rect x="381" y="124" width="104" height="64" rx="8" fill="#14171D" stroke="#3FB950" stroke-opacity=".5"/>
+        <rect x="502" y="124" width="104" height="64" rx="8" fill="#14171D" stroke="#3FB950" stroke-opacity=".5"/>
+        <rect x="623" y="124" width="104" height="64" rx="8" fill="#14171D" stroke="#3FB950" stroke-opacity=".5"/>
+        <rect x="744" y="124" width="104" height="64" rx="8" fill="#14171D" stroke="#3FB950" stroke-opacity=".5"/>
+
+        <text x="70"  y="150" fill="#E8EAED" font-size="12.5" font-weight="700">audience</text>
+        <text x="191" y="150" fill="#E8EAED" font-size="12.5" font-weight="700">research</text>
+        <text x="312" y="150" fill="#E8EAED" font-size="12.5" font-weight="700">core</text>
+        <text x="433" y="150" fill="#E8EAED" font-size="12.5" font-weight="700">strategy</text>
+        <text x="554" y="150" fill="#E8EAED" font-size="12.5" font-weight="700">seo</text>
+        <text x="675" y="150" fill="#E8EAED" font-size="12.5" font-weight="700">blog</text>
+        <text x="796" y="150" fill="#E8EAED" font-size="12.5" font-weight="700">content</text>
+
+        <text x="70"  y="170" fill="#9BA3AF" font-size="10.5"><tspan data-lang="tr">kitle · persona</tspan><tspan data-lang="en">audience · personas</tspan></text>
+        <text x="191" y="170" fill="#9BA3AF" font-size="10.5"><tspan data-lang="tr">pazar · araçlar</tspan><tspan data-lang="en">market · tools</tspan></text>
+        <text x="312" y="170" fill="#9BA3AF" font-size="10.5"><tspan data-lang="tr">USP · konumlama</tspan><tspan data-lang="en">USP · positioning</tspan></text>
+        <text x="433" y="170" fill="#9BA3AF" font-size="10.5"><tspan data-lang="tr">kanal stratejisi</tspan><tspan data-lang="en">channel strategy</tspan></text>
+        <text x="554" y="170" fill="#9BA3AF" font-size="10.5"><tspan data-lang="tr">anahtar kelime</tspan><tspan data-lang="en">keywords · meta</tspan></text>
+        <text x="675" y="170" fill="#9BA3AF" font-size="10.5"><tspan data-lang="tr">uzun SEO yazısı</tspan><tspan data-lang="en">long-form article</tspan></text>
+        <text x="796" y="170" fill="#9BA3AF" font-size="10.5"><tspan data-lang="tr">gönderi + görsel</tspan><tspan data-lang="en">posts + images</tspan></text>
+      </g>
+      <g stroke="#3FB950" stroke-width="1.5">
+        <line x1="122" y1="156" x2="137" y2="156" marker-end="url(#mg)"/>
+        <line x1="243" y1="156" x2="258" y2="156" marker-end="url(#mg)"/>
+        <line x1="364" y1="156" x2="379" y2="156" marker-end="url(#mg)"/>
+        <line x1="485" y1="156" x2="500" y2="156" marker-end="url(#mg)"/>
+        <line x1="606" y1="156" x2="621" y2="156" marker-end="url(#mg)"/>
+        <line x1="727" y1="156" x2="742" y2="156" marker-end="url(#mg)"/>
+      </g>
+
+      <!-- ajan -> judge -->
+      <g stroke="#6B7280" stroke-width="1.2">
+        <line x1="70"  y1="188" x2="70"  y2="228" marker-end="url(#md)"/>
+        <line x1="191" y1="188" x2="191" y2="228" marker-end="url(#md)"/>
+        <line x1="312" y1="188" x2="312" y2="228" marker-end="url(#md)"/>
+        <line x1="433" y1="188" x2="433" y2="228" marker-end="url(#md)"/>
+        <line x1="554" y1="188" x2="554" y2="228" marker-end="url(#md)"/>
+        <line x1="675" y1="188" x2="675" y2="228" marker-end="url(#md)"/>
+        <line x1="796" y1="188" x2="796" y2="228" marker-end="url(#md)"/>
+      </g>
+
+      <!-- judge -->
+      <rect x="18" y="230" width="830" height="60" rx="8" fill="#14171D" stroke="#E3B341" stroke-opacity=".5"/>
+      <text x="433" y="256" text-anchor="middle" fill="#E3B341" font-size="13" font-weight="700" font-family="sans-serif"><tspan data-lang="tr">LLM hakem (judge) — her çıktı kaynak malzemesine göre puanlanır</tspan><tspan data-lang="en">LLM judge — every output is scored against its source material</tspan></text>
+      <text x="433" y="276" text-anchor="middle" fill="#9BA3AF" font-size="11" font-family="sans-serif"><tspan data-lang="tr">düşük skor → yeniden üret · bütçe kapısı · guardrail'ler · insan onayı (HITL)</tspan><tspan data-lang="en">low score → regenerate · budget gate · guardrails · human approval (HITL)</tspan></text>
+
+      <!-- judge -> hafiza -->
+      <path d="M848,260 L878,260 L878,46 L850,46" fill="none" stroke="#58A6FF" stroke-width="1.5" marker-end="url(#mb)"/>
+      <text x="868" y="316" text-anchor="end" fill="#58A6FF" font-size="10.5" font-family="monospace">memory.learn ↑</text>
+    </svg>
+  </div>
+
+  <div class="grid3" style="margin-top:20px">
+    <div class="card">
+      <h4><span data-lang="tr">Veri grafiği ≠ çalışma sırası</span><span data-lang="en">Data graph ≠ run order</span></h4>
+      <p><span data-lang="tr">Hangi ajanın kimi okuduğu tek bir tabloda tutulur; zincir bu grafiğin topolojik sırasıdır. İlk İngilizce koşuda <code>core</code> ajanı 5.3 aldı. Kök neden prompt değil grafikti: konumlama, pazar araştırmasını hiç görmeden yazılıyordu ve <code>research → core</code> ölü bir kenardı. Grafik yeniden çizildi, sıra değişti.</span><span data-lang="en">Who reads whom lives in one table; the chain is that graph's topological order. On the first English run the <code>core</code> agent scored 5.3. The root cause was the graph, not the prompt: positioning was being written without ever seeing the market research, and <code>research → core</code> was a dead edge. The graph was redrawn and the order changed.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Hakem + hafıza döngüsü</span><span data-lang="en">Judge + memory loop</span></h4>
+      <p><span data-lang="tr">Hakem, çıktıyı onu üreten girdilerle birlikte görür ve puanlar; eşik altı yeniden üretilir. Kullanıcı düzenlemeleri sürümlenir, geri bildirim ve skorlar markaya özel hafızaya yazılır. Aynı marka için ikinci koşu birincinin öğrendikleriyle başlar.</span><span data-lang="en">The judge sees an output together with the inputs that produced it and scores it; anything under the threshold is regenerated. User edits are versioned, and feedback and scores are written to a per-brand memory. The second run for a brand starts from what the first one learned.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Ölçülmüş maliyet</span><span data-lang="en">Measured cost</span></h4>
+      <p><span data-lang="tr">Her LLM çağrısı, token sayısı ve maliyetiyle birlikte iz (trace/span) olarak kaydedilir. Demo hesabındaki veri, gerçek modellerle bir kez koşturulmuş tek bir zincirdir: 6 ajan + 2 içerik + blog + 3 görsel, <b>$0.2413</b>. Bütçe kapısı limit aşılınca koşuyu durdurur.</span><span data-lang="en">Every LLM call is recorded as a trace/span with its token count and cost. The data in the demo account is one chain run once against real models: 6 agents + 2 content pieces + a blog + 3 images, <b>$0.2413</b>. A budget gate stops a run when the limit is crossed.</span></p>
+    </div>
+  </div>
+
+  <!-- MIMARI -->
+  <h3 style="font-size:1.15rem;margin:38px 0 10px" id="mimari">
+    <span data-lang="tr">Mimari</span><span data-lang="en">Architecture</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:20px">
+    <span data-lang="tr">npm workspaces üzerinde tek bir TypeScript monorepo: 5 uygulama, 12 paket. Kesin kural: <code>api</code> ve <code>worker</code> birbirini asla import etmez; ortak her şey <code>packages/*</code> altındadır. Veritabanı kendi barındırdığım MySQL 8.4 — satır düzeyi güvenlik olmadığı için yetkilendirme tamamen uygulama katmanındadır.</span>
+    <span data-lang="en">One TypeScript monorepo on npm workspaces: 5 apps, 12 packages. A hard rule: <code>api</code> and <code>worker</code> never import each other; everything shared lives under <code>packages/*</code>. The database is self-hosted MySQL 8.4 — there is no row-level security, so authorization lives entirely in the application layer.</span>
+  </p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr>
+        <th><span data-lang="tr">Uygulama</span><span data-lang="en">App</span></th>
+        <th><span data-lang="tr">Teknoloji</span><span data-lang="en">Stack</span></th>
+        <th><span data-lang="tr">Görev</span><span data-lang="en">Role</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td><b>api</b></td><td>Hono · Zod · Better Auth · Drizzle</td><td><span data-lang="tr">112 route, 5 yetki katmanı (anon / session / user / owner / admin), SSE, hız sınırı, denetim kaydı</span><span data-lang="en">112 routes, 5 authz layers (anon / session / user / owner / admin), SSE, rate limiting, audit log</span></td></tr>
+        <tr><td><b>worker</b></td><td>Node 22 · tsup</td><td><span data-lang="tr">dört kuyruk, 10 aşamalı adım döngüsü, hakem, bütçe kapısı, hafıza, saklama süresi süpürücüsü</span><span data-lang="en">four queues, a 10-stage step loop, judge, budget gate, memory, retention sweeper</span></td></tr>
+        <tr><td><b>panel</b></td><td>React 19 · Vite 8 · Tailwind 4</td><td><span data-lang="tr">müşteri SPA'sı — 14 route, TR/EN, pano + marka görünümü + “Mo” sohbeti</span><span data-lang="en">customer SPA — 14 routes, TR/EN, board + brand view + “Mo” chat</span></td></tr>
+        <tr><td><b>backoffice</b></td><td>React 19 · Radix · Recharts</td><td><span data-lang="tr">yönetim SPA'sı — 23 route: müşteri onayı, Prompt Studio, izler, maliyet/kalite, API anahtar kasası</span><span data-lang="en">admin SPA — 23 routes: customer approval, Prompt Studio, traces, cost/quality, API-key vault</span></td></tr>
+        <tr><td><b>landing</b></td><td>Next.js 16</td><td><span data-lang="tr">tanıtım sitesi — API ile hiç konuşmaz, CTA'lar panele derin bağlanır</span><span data-lang="en">marketing site — never talks to the API, CTAs deep-link into the panel</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid2" style="margin-top:20px;grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr))">
+    <div class="card">
+      <h4><span data-lang="tr">Dört bağımsız worker havuzu</span><span data-lang="en">Four independent worker pools</span></h4>
+      <p><span data-lang="tr">Ajan koşuları, görsel işleri, genel işler (e-posta, dışa aktarım, silme) ve toplu değerlendirmeler ayrı slot havuzlarında çalışır. Eskiden tek tur vardı ve dakikalar süren bir görsel işi bütün ajan hattını bekletiyordu. Bütçeler bilerek paylaşılmaz: <code>resvg</code> ana iş parçacığında senkron çalışır, 2 vCPU'da fazladan görsel slotu verim kazandırmaz, yalnızca ajanların I/O'sunu geciktirir.</span><span data-lang="en">Agent runs, image jobs, general jobs (mail, export, purge) and batch evaluations run in separate slot pools. There used to be a single round, and a multi-minute image job stalled the whole agent pipeline. Budgets are deliberately not shared: <code>resvg</code> rasterises synchronously on the main thread, so on 2 vCPUs extra image slots buy no throughput and only delay the agents' I/O.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Düzgün kapanış ve yetim koşular</span><span data-lang="en">Graceful drain and orphaned runs</span></h4>
+      <p><span data-lang="tr">SIGTERM'de worker yeni iş almayı keser ve 20 sn içinde elindekini bitirir (görsel sağlayıcı iptal sinyalini yok saydığı için 10 değil 20). 30 sn'lik kalp atışları, 60 sn'de takılma tespiti ve sahipsiz kalan koşuları geri alan bir toplayıcı var. Hesap ve marka silme iki aşamalıdır: önce dondur, 7/14 gün sonra kalıcı sil.</span><span data-lang="en">On SIGTERM the worker stops claiming and finishes what it holds within 20 s (20, not 10, because the image provider ignores abort signals). There are 30 s heartbeats, stall detection at 60 s, and a reaper that reclaims orphaned runs. Account and brand deletion is two-phase: freeze first, purge after 7/14 days.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Elle yazılmış tip yerine tip köprüsü</span><span data-lang="en">A type bridge instead of hand-written types</span></h4>
+      <p><span data-lang="tr">İki arayüz de API'ye Hono'nun tipli RPC istemcisiyle (<code>hc&lt;AppType&gt;</code>) bağlanır; yanıt tipleri route'un kendisinden türetilir. Elle yazılmış <b>117 yanıt tipini</b> tek seferde silmek, o güne kadar sessizce yanlış çalışan <b>üç canlı hatayı</b> derleme hatası olarak ortaya çıkardı.</span><span data-lang="en">Both front ends reach the API through Hono's typed RPC client (<code>hc&lt;AppType&gt;</code>); response types are derived from the route itself. Deleting <b>117 hand-written response types</b> in one pass surfaced <b>three live bugs</b> that had been silently wrong, as compile errors.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Görsel üretimi</span><span data-lang="en">Image generation</span></h4>
+      <p><span data-lang="tr">Sosyal medya görselleri iki yoldan gelir: marka renkleri ve şablon yuvalarıyla <code>satori</code> + <code>resvg</code> kompozisyonu, ya da fal.ai üzerinden üretim (yedek sağlayıcıyla). İndirilen her dış görsel, URL taramasıyla aynı SSRF korumalı istemciden geçer.</span><span data-lang="en">Social images come two ways: <code>satori</code> + <code>resvg</code> composition with the brand's colours and template slots, or generation through fal.ai (with a fallback provider). Every downloaded external image goes through the same SSRF-guarded client as URL scraping.</span></p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ==================== DEMO HESABI ==================== -->
+<section style="border-top:none;padding-top:0">
+<div class="wrap">
+  <h3 style="font-size:1.15rem;margin:0 0 10px" id="demo">
+    <span data-lang="tr">Salt-okunur demo hesabı — “seyirci kapısı”</span><span data-lang="en">The read-only demo account — “the spectator gate”</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:20px">
+    <span data-lang="tr">Bu sayfadaki canlı bağlantıları verebilmek için tasarlandı. Soru şuydu: bir yabancıya, yönetim paneli dahil her ekranı gösterip <b>hiçbir şeyi</b> değiştirememesini ve <b>tek kuruş</b> harcatamamasını nasıl garanti ederim? Cevap 80'den fazla butonu tek tek kapatmak değil, tek bir sunucu kapısı oldu.</span>
+    <span data-lang="en">It was designed so the live links on this page could exist. The question: how do I show a stranger every screen, backoffice included, while guaranteeing they can change <b>nothing</b> and spend <b>not a cent</b>? The answer was not disabling 80+ buttons one by one, but a single server-side gate.</span>
+  </p>
+
+  <div class="grid2">
+    <div class="card">
+      <h4><span data-lang="tr">Rol değil, üçüncü bir eksen</span><span data-lang="en">Not a role — a third axis</span></h4>
+      <p><span data-lang="tr"><code>role</code> neyi görebileceğini, <code>status</code> içeri alınıp alınmadığını, yeni <code>read_only</code> bayrağı ise gördüğünü değiştirip değiştiremeyeceğini söyler. Bir <code>viewer</code> rolü eklemek bütün <code>isAdmin()</code> kontrollerini ve müşteri filtrelerini kirletir, üstelik “salt-okunur müşteri”yi yine ifade edemezdi. Kanıtı: mevcut rol testlerine dokunulmadı ve yeşil kaldılar.</span><span data-lang="en"><code>role</code> says what you may see, <code>status</code> whether you are let in, and the new <code>read_only</code> flag whether you may change what you see. A <code>viewer</code> role would have polluted every <code>isAdmin()</code> check and customer filter, and still could not express a “read-only customer”. The proof: the existing role tests were left untouched and stayed green.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Yönlendirmeden önce tek kapı</span><span data-lang="en">One gate, before routing</span></h4>
+      <p><span data-lang="tr">65 satırlık bir middleware, kimlik doğrulama işleyicisinden ve bütün route'lardan önce çalışır. Güvenli metotlar (GET/HEAD/OPTIONS) oturuma bile bakılmadan geçer — 60 okuma route'una maliyeti sıfır. Geri kalanlarda hesap salt-okunursa <code>403 read_only</code>. Kapı yönlendirmeden önce olduğu için var olmayan bir yol da aynı cevabı alır: neyin var olduğu bile sızmaz.</span><span data-lang="en">A 65-line middleware runs before the auth handler and every route. Safe methods (GET/HEAD/OPTIONS) pass without even a session lookup — zero cost on the 60 read routes. For the rest, a read-only account gets <code>403 read_only</code>. Because the gate sits before routing, a nonexistent path gets the same answer: not even what exists leaks.</span></p>
+    </div>
+  </div>
+
+  <div class="tablewrap" style="margin-top:20px">
+    <table>
+      <thead><tr>
+        <th style="width:22%"><span data-lang="tr">Demo hesabı…</span><span data-lang="en">The demo account…</span></th>
+        <th><span data-lang="tr">Kapsam</span><span data-lang="en">Scope</span></th>
+        <th style="width:20%"><span data-lang="tr">Sunucu cevabı</span><span data-lang="en">Server answer</span></th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td><b class="pass"><span data-lang="tr">yapabilir</span><span data-lang="en">can</span></b></td>
+          <td><span data-lang="tr">giriş, çıkış ve rolünün eriştiği bütün GET'ler: müşteriler, analizler, denetim kaydı, izler, maliyet/kalite panoları, değerlendirmeler, Prompt Studio</span><span data-lang="en">sign in, sign out, and every GET its role reaches: customers, analytics, audit log, traces, cost/quality dashboards, evaluations, Prompt Studio</span></td>
+          <td><code>200</code></td>
+        </tr>
+        <tr>
+          <td><b class="fail"><span data-lang="tr">yapamaz</span><span data-lang="en">cannot</span></b></td>
+          <td><span data-lang="tr">manifestteki GET olmayan 51 route'un tamamı; para harcatan 13 uç noktanın hepsi (hepsi POST olduğu için metot kuralı maliyet yüzeyini kendiliğinden kapatır); kimlik katmanının kendi yazmaları — parola/e-posta değiştirme, hesabı silme, diğer oturumları kapatma</span><span data-lang="en">all 51 non-GET routes in the manifest; all 13 money-spending endpoints (every one is a POST, so the method rule closes the cost surface by itself); the auth layer's own writes — change password/e-mail, delete account, revoke other sessions</span></td>
+          <td><code>403 read_only</code></td>
+        </tr>
+        <tr>
+          <td><b class="skip"><span data-lang="tr">göremez bile</span><span data-lang="en">cannot even see</span></b></td>
+          <td><span data-lang="tr">sağlayıcı API anahtarı kasası. Gizli değer zaten hiçbir uç noktadan dönmez; ama son dört hane, rotasyon tarihleri ve hangi sağlayıcıların kurulu olduğu da envanteri anlatır. Menüden de gizlenir.</span><span data-lang="en">the provider API-key vault. The secret is never returned by any endpoint anyway; but the last four characters, rotation dates and which providers are configured describe the inventory too. It is hidden from the menu as well.</span></td>
+          <td><code>404</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid3" style="margin-top:20px">
+    <div class="card">
+      <h4><span data-lang="tr">Kapı neden global?</span><span data-lang="en">Why is the gate global?</span></h4>
+      <p><span data-lang="tr">Demo hesabının parolasını değiştirebilen bir ziyaretçi, diğer bütün ziyaretçileri dışarıda bırakır. Bu yüzden kilit uygulama route'larında değil, kimlik kütüphanesinin uç noktalarını da kapsayacak şekilde en dışta durur. Yalnızca iki yazma geçer: giriş ve çıkış.</span><span data-lang="en">A visitor who could change the demo account's password would lock every other visitor out. So the lock does not sit on the application routes but at the very outside, covering the auth library's endpoints too. Exactly two writes survive: sign in and sign out.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Bayrak HTTP'den yazılamaz</span><span data-lang="en">The flag is unwritable over HTTP</span></h4>
+      <p><span data-lang="tr"><code>read_only</code> hiçbir istek şemasında yoktur; yalnızca sunucudaki iki CLI betiği değiştirebilir. Çalınmış bir admin oturumu bile demo hesabının kilidini açamaz. Sıra da önemlidir: hesap yazılabilir açılır, zincir gerçek bir markayla bir kez koşturulur, <i>sonra</i> kilitlenir — kilitli hesap kendi verisini üretemez.</span><span data-lang="en"><code>read_only</code> appears in no request schema; only two CLI scripts on the server can change it. Even a stolen admin session cannot unlock a demo account. Order matters too: the account is created writable, the chain is run once against a real brand, <i>then</i> it is locked — a locked account cannot generate its own data.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Butonlar bilerek açık</span><span data-lang="en">The buttons are deliberately live</span></h4>
+      <p><span data-lang="tr">Arayüzde kalıcı bir şerit durumu söyler (<code>role="status"</code> — olay değil, süregelen bir koşul), yazma denemesi açıklayıcı bir uyarıyla döner. 80'den fazla çağrı noktasını tek tek işaretlemek “nezaket, güvenlik değil” diye reddedildi: güvenlik sunucuda zaten var, sıfırlanacak bir veri de yok.</span><span data-lang="en">A permanent strip in the UI states the condition (<code>role="status"</code> — a standing state, not an event), and a write attempt comes back with an explanatory toast. Marking 80+ call sites individually was rejected as “manners, not security”: the security is already on the server, and there is no data to reset.</span></p>
+    </div>
+  </div>
+
+  <div class="finding" style="margin-top:20px">
+    <div class="fh"><span class="fid" style="color:var(--acc)">TEST</span>
+      <span><span data-lang="tr">Kilit nasıl kanıtlandı</span><span data-lang="en">How the lock was proven</span></span>
+      <span class="fenv">ADR-0015</span>
+    </div>
+    <div class="fb"><span data-lang="tr">Test, route'ları elle saymaz; API'nin <b>route manifestini</b> gezer: anonim olmayan her GET-dışı route <code>403</code>, anahtar kasası <code>404</code>, admin GET'leri normal, parola değiştirme kapalı, çıkış açık, anonim kayıt ve normal hesaplar etkilenmemiş. Üstüne iki tarayıcı senaryosu, iki temada axe taraması. Sonra <b>mutasyonla doğrulandı</b>: kapı <code>app.ts</code>'ten sökülünce 51 yazma uç noktası işleyicisine ulaştı ve 5 test kırıldı; geri takılınca yeşile döndü. Ayrıca belgedeki bir güvenlik iddiasına güvenmek yerine canlı veritabanına bakıldı: E2E test hesapları üretimde hiç var olmamıştı.</span><span data-lang="en">The test does not count routes by hand; it walks the API's <b>route manifest</b>: every non-anonymous non-GET route <code>403</code>, the key vault <code>404</code>, admin GETs normal, change-password closed, sign-out open, anonymous sign-up and normal accounts unaffected. On top, two browser scenarios with an axe scan in both themes. Then it was <b>mutation-verified</b>: with the gate removed from <code>app.ts</code>, 51 write endpoints reached their handlers and 5 tests broke; put back, green again. And instead of trusting a documented security claim, the live database was checked: the E2E test accounts had never existed in production.</span></div>
+  </div>
+</div>
+</section>
+
+<!-- ==================== KALITE KAPILARI ==================== -->
+<section style="border-top:none;padding-top:0">
+<div class="wrap">
+  <h3 style="font-size:1.15rem;margin:0 0 10px" id="kalite">
+    <span data-lang="tr">Kalite kapıları</span><span data-lang="en">Quality gates</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:20px">
+    <span data-lang="tr">Projenin QA tarafındaki ana fikri: bir kere ulaşılan kalite, onu tutan bir kapı yoksa geri kayar. CI üç iştir — gerçek bir MySQL 8.4 servisiyle birim/entegrasyon, üretim imajlarını ayağa kaldıran kabul testi ve Playwright E2E. Her kapı gerçek bir olaydan doğdu.</span>
+    <span data-lang="en">The project's core QA idea: quality reached once slides back unless a gate holds it. CI is three jobs — unit/integration against a real MySQL 8.4 service, an acceptance job that boots the production images, and Playwright E2E. Every gate was born from a real incident.</span>
+  </p>
+
+  <div class="finding">
+    <div class="fh"><span class="fid">A11Y</span>
+      <span><span data-lang="tr">“İlk satırı tara” hiçbir şeyi taramıyordu</span><span data-lang="en">“Scan the first row” was scanning nothing</span></span>
+      <span class="fenv">backoffice</span>
+    </div>
+    <div class="fb"><span data-lang="tr">Her ekran axe (WCAG 2 A+AA) ile taranır ve ihlal <b>build'i kırar</b> — çünkü daha önce ulaşılan “sıfır ihlal” beş haftada ~100 ihlale geri kaymıştı. Demo hesapları eklenince kapı gerçek bir hata yakaladı: “Hesabı kilitle” butonundaki kırmızı <code>#EF4444</code> beyaz üstünde <b>3.76:1</b> kontrast veriyordu (AA 4.5 ister); <code>#B91C1C</code> ile <b>6.47:1</b> oldu. Asıl ders kök nedendeydi: tarama listedeki <i>ilk</i> müşteriyi açıyordu, o da taramayı yapan adminin kendi hesabıydı ve kendi sayfasında bu butonlar çizilmiyordu. İki yeni hesap sıralamayı değiştirene kadar buton <b>hiç taranmamıştı</b>.</span><span data-lang="en">Every screen is scanned with axe (WCAG 2 A+AA) and a violation <b>fails the build</b> — because an earlier “zero violations” had slid back to ~100 in five weeks. When the demo accounts were added the gate caught a real bug: the red <code>#EF4444</code> on the “Lock account” button gave <b>3.76:1</b> contrast on white (AA needs 4.5); <code>#B91C1C</code> made it <b>6.47:1</b>. The real lesson was the root cause: the sweep opened the <i>first</i> customer in the list, which was the scanning admin's own account, on whose page those buttons are not drawn. Until two new accounts changed the sort order, the button had <b>never been scanned</b>.</span></div>
+  </div>
+
+  <div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr))">
+    <div class="card">
+      <h4><span data-lang="tr">İki yönlü route manifesti</span><span data-lang="en">A two-way route manifest</span></h4>
+      <p><span data-lang="tr">112 route'un her biri, gereken asgari yetki katmanıyla tek bir tabloda durur. Test bunu canlı router'la <b>iki yönde</b> karşılaştırır: manifestte olmayan yeni bir route da, router'da olmayan bir satır da CI'ı kırar. Aynı tablo yetki testlerini ve salt-okunur testini sürer; uç nokta dokümanı ondan üretilir.</span><span data-lang="en">Each of the 112 routes sits in one table with its minimum required authz layer. A test compares it to the live router <b>in both directions</b>: a new route missing from the manifest and a line missing from the router both turn CI red. The same table drives the authz tests and the read-only test; the endpoint docs are generated from it.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Bundle bütçesi</span><span data-lang="en">Bundle budget</span></h4>
+      <p><span data-lang="tr">Kritik yol (giriş + statik import'lar, gzip) her build'de ölçülür. Route bazlı bölme yönetim panelini <b>361 → 144 kB</b>, müşteri panelini <b>229 → 164 kB</b>'a indirdi; bütçe (165 / 190 kB) tek bir dikkatsiz statik import'un bunu sessizce geri almasını engeller. Deploy sonrası eski chunk 404'ü tam bir kez yeniden yüklemeyle toparlanır.</span><span data-lang="en">The critical path (entry + static imports, gzip) is measured on every build. Route splitting took the backoffice from <b>361 → 144 kB</b> and the panel from <b>229 → 164 kB</b>; the budget (165 / 190 kB) keeps one careless static import from silently undoing it. A stale-chunk 404 after a deploy recovers with exactly one reload.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Migration kayması ve kabul testi</span><span data-lang="en">Migration drift and acceptance</span></h4>
+      <p><span data-lang="tr">CI şemadan migration üretir ve fark çıkarsa kırılır — bir migration'ın snapshot zincirini bozup teşhisi bir gün sürdükten sonra eklendi. Kabul işi gerçek üretim imajlarını derler, boş veritabanına migration'ları uygular, sağlık ucunu ve bir worker turunu doğrular: “imaj derleniyor ama açılmıyor” sınıfını hiçbir birim testi görmez.</span><span data-lang="en">CI generates migrations from the schema and fails on any diff — added after one migration broke the snapshot chain and took a day to diagnose. The acceptance job builds the real production images, applies migrations to an empty database, and checks the health endpoint and one worker poll: no unit test sees the “image builds but won't boot” class.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Ücretsiz uçtan uca koşular</span><span data-lang="en">Free end-to-end runs</span></h4>
+      <p><span data-lang="tr">Sahte bir LLM sunucusu iki sağlayıcının da yerine geçer; görsel üretimi test koduyla değil <b>veritabanı ayarıyla</b> kapatılır. Böylece kabukta gerçek anahtarlar dursa bile bir E2E koşusu ücretli bir API'ye fiziksel olarak ulaşamaz. 6 spec dosyasında 17 senaryo, 17/17 geçiyor.</span><span data-lang="en">A mock LLM server stands in for both providers; image generation is switched off by a <b>database setting</b>, not a test-only branch. So even with real keys exported in the shell, an E2E run physically cannot reach a paid API. 17 scenarios across 6 spec files, 17/17 passing.</span></p>
+    </div>
+  </div>
+
+  <div class="pull">
+    <span data-lang="tr">“Yeşil bir test hiçbir şey kanıtlamaz.” Bir regresyon kilidi, düzeltme geri alınıp testin <b>doğru nedenle</b> kırıldığı görülmeden kabul edilmez.</span>
+    <span data-lang="en">“A green test proves nothing.” A regression lock is not accepted until the fix is reverted and the test is seen to fail <b>for the right reason</b>.</span>
+    <span class="who"><span data-lang="tr">— ADR-0012, projenin ev kuralı</span><span data-lang="en">— ADR-0012, the project's house rule</span></span>
+  </div>
+
+  <h3 style="font-size:1.05rem;margin:34px 0 10px">
+    <span data-lang="tr">Güvenlik</span><span data-lang="en">Security</span>
+  </h3>
+  <div class="grid3">
+    <div class="card">
+      <h4><span data-lang="tr">404, 403 değil</span><span data-lang="en">404, not 403</span></h4>
+      <p><span data-lang="tr">Sahiplik, her kaynakta <code>product.user_id = user.id</code> yüklemiyle denetlenir. Başkasının kaynağı “yasak” değil “yok” döner; var olduğu bilgisi sızmaz. CSRF/origin kapısı, salt-okunur kapısıyla aynı güvenli-metot kümesini paylaşır.</span><span data-lang="en">Ownership is checked on every resource with the predicate <code>product.user_id = user.id</code>. Someone else's resource returns “not found”, not “forbidden”; its existence does not leak. The CSRF/origin gate shares its safe-method set with the read-only gate.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">SSRF ve <code>javascript:</code></span><span data-lang="en">SSRF and <code>javascript:</code></span></h4>
+      <p><span data-lang="tr">Kullanıcının verdiği her URL tek bir <code>guardedFetch</code> paketinden geçer. <code>z.url()</code> <code>javascript:</code> şemasını kabul ettiği için API özel bir <code>httpUrl()</code> kullanır; arayüz de saklanan URL'leri güvenli bir sarmalayıcıdan geçirir — React'in <code>href</code> koruması <code>window.open</code>'ı kapsamaz.</span><span data-lang="en">Every user-supplied URL goes through a single <code>guardedFetch</code> package. Because <code>z.url()</code> accepts the <code>javascript:</code> scheme, the API uses a custom <code>httpUrl()</code>; the UI also routes stored URLs through a safe wrapper — React's <code>href</code> protection does not cover <code>window.open</code>.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Şifreli anahtar kasası</span><span data-lang="en">Encrypted key vault</span></h4>
+      <p><span data-lang="tr">Sağlayıcı API anahtarları veritabanında şifreli durur ve yönetim panelinden <b>yeniden deploy etmeden</b> döndürülür; ortam değişkeni yalnızca yedek yoldur. Kimlik kütüphanesinin 15 ayrıcalıklı admin ucu açıkça kapatılmıştır.</span><span data-lang="en">Provider API keys are stored encrypted in the database and rotated from the backoffice <b>without a redeploy</b>; the environment variable is only the fallback path. The auth library's 15 privileged admin endpoints are explicitly blocked.</span></p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ==================== EKRANLAR ==================== -->
+<section style="border-top:none;padding-top:0">
+<div class="wrap">
+  <h3 style="font-size:1.15rem;margin:0 0 10px" id="ekranlar">
+    <span data-lang="tr">Ekranlar</span><span data-lang="en">Screens</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:20px">
+    <span data-lang="tr">Görüntüler canlı sistemden, İngilizce arayüzle alındı; üç yüzey de TR/EN çalışır (panelde iki dil dosyası eşlik testiyle tutulur). Demo verisindeki marka, zincirin gerçek bir siteyle bir kez koşturulmasından gelir. Büyütmek için tıklayın.</span>
+    <span data-lang="en">Captured from the live system with the English UI; all three surfaces run in TR/EN (in the panel the two language files are held together by a parity test). The brand in the demo data comes from running the chain once against a real site. Click to enlarge.</span>
+  </p>
+
+  <h3 style="font-size:1.05rem;margin:26px 0 12px"><span data-lang="tr">Müşteri paneli</span><span data-lang="en">Customer panel</span></h3>
+  <div class="gallery">
+    <div class="shot">
+      <a href="../../assets/img/moflow-panel-workspace.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/moflow-panel-workspace.jpg" alt="Moflow panel product workspace with agent outputs" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Marka çalışma alanı</span><span data-lang="en">Brand workspace</span></b>
+        <span data-lang="tr">Adımlar, üretilen personalar ve rakipler üstte; altta “Mo” sohbeti ile Marka / Strateji / SEO çıktı sütunları. Her kart onaylanır, düzenlenir (sürümlenir) ya da yeniden üretilir.</span>
+        <span data-lang="en">Steps, generated personas and competitors on top; below, the “Mo” chat next to the Brand / Strategy / SEO output columns. Each card is approved, edited (versioned) or regenerated.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/moflow-panel-workflows.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/moflow-panel-workflows.jpg" alt="Moflow panel workflows list" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">İş akışları</span><span data-lang="en">Workflows</span></b>
+        <span data-lang="tr">Tek zincirin koşuları: kitle analizi, araştırma, ürün gücü, strateji, SEO, blog ve platform içeriği — dört dakika içinde tamamlanmış. Durum ve ajan filtreleri.</span>
+        <span data-lang="en">The runs of one chain: audience analysis, research, product strength, strategy, SEO, blog and platform content — completed within four minutes. Status and agent filters.</span>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-size:1.05rem;margin:30px 0 12px"><span data-lang="tr">Yönetim paneli</span><span data-lang="en">Backoffice</span></h3>
+  <div class="gallery">
+    <div class="shot">
+      <a href="../../assets/img/moflow-backoffice-dashboard.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/moflow-backoffice-dashboard.jpg" alt="Moflow backoffice dashboard" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Operasyon panosu</span><span data-lang="en">Operations dashboard</span></b>
+        <span data-lang="tr">Aylık harcama, token toplamı, worker durumu ve kuyruk derinlikleri, çalışan API sürümü, onay bekleyen kayıtlar ve koşu başına maliyetiyle son iş akışları.</span>
+        <span data-lang="en">Monthly spend, token total, worker status and queue depths, the running API build, registrations awaiting approval, and recent workflows with per-run cost.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/moflow-backoffice-customers.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/moflow-backoffice-customers.jpg" alt="Moflow backoffice customer management" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Müşteri yönetimi</span><span data-lang="en">Customer management</span></b>
+        <span data-lang="tr">Kapalı betanın onay kuyruğu: bekleyen / aktif / reddedilen sekmeleri, müşteri başına ürün, iş akışı ve harcama. Sunucu tarafı sayfalama ve arama.</span>
+        <span data-lang="en">The closed beta's approval queue: awaiting / active / declined tabs, with products, workflows and spend per customer. Server-side pagination and search.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/moflow-backoffice-prompt-studio.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/moflow-backoffice-prompt-studio.jpg" alt="Moflow backoffice Prompt Studio" loading="lazy"></a>
+      <div class="cap">
+        <b>Prompt Studio</b>
+        <span data-lang="tr">Dokuz prompt rolü (7 ajan + hakem + planlayıcı), A/B varyantları, sürüm geçmişi ve kopyalanabilir yer tutucular. Prompt gövdesi bu görüntüde bilerek bulanıklaştırıldı.</span>
+        <span data-lang="en">Nine prompt roles (7 agents + judge + planner), A/B variants, version history and copyable placeholders. The prompt body is deliberately blurred in this capture.</span>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-size:1.05rem;margin:30px 0 12px"><span data-lang="tr">Tanıtım sitesi</span><span data-lang="en">Landing site</span></h3>
+  <div class="gallery" style="grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr))">
+    <div class="shot">
+      <a href="../../assets/img/moflow-landing-hero.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/moflow-landing-hero.jpg" alt="Moflow landing page hero" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Açılış</span><span data-lang="en">Hero</span></b>
+        <span data-lang="tr">“Bir URL yeter.” URL alanı doğrudan panelin kayıt akışına derin bağlanır; kapalı beta ve tek tek onay açıkça söylenir.</span>
+        <span data-lang="en">“Just a URL.” The URL field deep-links straight into the panel's sign-up flow; the closed beta and one-by-one approval are stated up front.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/moflow-landing-how-it-works.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/moflow-landing-how-it-works.jpg" alt="Moflow landing page how it works section" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Nasıl çalışır</span><span data-lang="en">How it works</span></b>
+        <span data-lang="tr">Dört adım: markanı ekle, hedefini belirle, AI üretsin, yayınla ve öğren. Altında gerçek bir örnek çıktı bölümü.</span>
+        <span data-lang="en">Four steps: add your brand, set your goal, AI creates, publish and learn. A real sample-output section follows.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/moflow-landing-about.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/moflow-landing-about.jpg" alt="Moflow landing page about section" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">Hakkında</span><span data-lang="en">About</span></b>
+        <span data-lang="tr">Yedi ajanlı hat ve AI hakem, teknik olmayan bir okur için anlatılır; son söz her zaman kullanıcıdadır.</span>
+        <span data-lang="en">The seven-agent pipeline and the AI judge, explained for a non-technical reader; the user always has the last word.</span>
+      </div>
+    </div>
+    <div class="shot">
+      <a href="../../assets/img/moflow-landing-contact.jpg" target="_blank" rel="noopener" class="zoom"><img src="../../assets/img/moflow-landing-contact.jpg" alt="Moflow landing page contact section and footer" loading="lazy"></a>
+      <div class="cap">
+        <b><span data-lang="tr">İletişim ve alt bilgi</span><span data-lang="en">Contact and footer</span></b>
+        <span data-lang="tr">Beta başvurusu için ayrı form yok: hesap aç, e-postanı doğrula, onay bekle. Gizlilik, koşullar ve veri koruma sayfaları. E-posta adresi bu görüntüde bulanıklaştırıldı.</span>
+        <span data-lang="en">No separate beta form: create an account, verify your e-mail, wait for approval. Privacy, terms and data-protection pages. The e-mail address is blurred in this capture.</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ==================== ALTYAPI ==================== -->
+<section style="border-top:none;padding-top:0">
+<div class="wrap">
+  <h3 style="font-size:1.15rem;margin:0 0 10px" id="altyapi">
+    <span data-lang="tr">Altyapı ve operasyon</span><span data-lang="en">Infrastructure and operations</span>
+  </h3>
+  <p style="color:var(--ink2);font-size:14.5px;max-width:74ch;margin-bottom:20px">
+    <span data-lang="tr">Her şey tek bir VM'de Docker Compose ile koşar; önünde otomatik TLS'li Caddy vardır. API, worker ve tanıtım sitesi imajları git SHA'sıyla etiketlenir — panoda görünen sürüm odur.</span>
+    <span data-lang="en">Everything runs on a single VM under Docker Compose, behind Caddy with automatic TLS. The API, worker and landing images are tagged with the git SHA — that is the build shown on the dashboard.</span>
+  </p>
+
+  <div class="grid2">
+    <div class="card">
+      <h4><span data-lang="tr">Çalışma anında şema farkındalığı</span><span data-lang="en">Schema awareness at runtime</span></h4>
+      <p><span data-lang="tr">API açılışta ve sağlık ucunda şema sürümünü raporlar: <code>ok</code>, <code>behind</code>, <code>ahead</code> (şu an <code>19/19</code>). Geride kalmak sağlık kontrolünü bilerek <b>düşürmez</b>: Caddy o uca bakar, sert bir hata unutulmuş bir migration'ı tam kesintiye çevirirdi.</span><span data-lang="en">The API reports the schema version at boot and on the health endpoint: <code>ok</code>, <code>behind</code>, <code>ahead</code> (currently <code>19/19</code>). Being behind deliberately does <b>not</b> fail the health check: Caddy waits on that endpoint, so a hard failure would turn a forgotten migration into a total outage.</span></p>
+    </div>
+    <div class="card">
+      <h4><span data-lang="tr">Yedek ve saklama</span><span data-lang="en">Backups and retention</span></h4>
+      <p><span data-lang="tr">Gecelik cron, veritabanı dökümünü, dosyaları ve şifreli ortam dosyasını sağlama toplamlarıyla paketler ve kendini doğrular. Telemetri (izler, olaylar, kullanım kayıtları) saklama süresi dolunca worker tarafından süpürülür; haftalık rapor e-postayla gelir.</span><span data-lang="en">A nightly cron bundles the database dump, files and the encrypted env file with checksums, and verifies itself. Telemetry (traces, events, usage logs) is swept by the worker once its retention period ends; a weekly report arrives by e-mail.</span></p>
+    </div>
+  </div>
+
+  <div class="tablewrap" style="margin-top:20px">
+    <table>
+      <thead><tr>
+        <th><span data-lang="tr">Tarih</span><span data-lang="en">Date</span></th>
+        <th><span data-lang="tr">Kilometre taşı</span><span data-lang="en">Milestone</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="num">2026-02</td><td><span data-lang="tr">ilk commit; üç ajanlı prototip dönemi</span><span data-lang="en">first commit; the three-agent prototype era</span></td></tr>
+        <tr><td class="num">2026-09-02</td><td><span data-lang="tr">backend/altyapı fazı son güvenlik kapısıyla kapandı</span><span data-lang="en">backend/infra phase closed with a final security gate</span></td></tr>
+        <tr><td class="num">2026-09-03</td><td><span data-lang="tr">arayüz fazı kapandı; aynı gece ilk üretim deploy'u — kapalı beta</span><span data-lang="en">front-end phase closed; first production deploy the same night — closed beta</span></td></tr>
+        <tr><td class="num">2026-09-08/09</td><td><span data-lang="tr">yönetim operasyonu, platform sertleştirme, kalite kapıları (974 → 1.153 test)</span><span data-lang="en">backoffice operations, platform hardening, quality gates (974 → 1,153 tests)</span></td></tr>
+        <tr><td class="num">2026-09-10</td><td><span data-lang="tr">ortak arayüz çekirdeği, genel iş kuyruğu + e-posta, route bölme, bundle bütçesi</span><span data-lang="en">shared front-end core, general job queue + mail, route splitting, bundle budget</span></td></tr>
+        <tr><td class="num">2026-09-18</td><td><span data-lang="tr">salt-okunur demo hesabı canlıda — migration 19/19, E2E 17/17</span><span data-lang="en">read-only demo account live — migrations 19/19, E2E 17/17</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <b><span data-lang="tr">Bilinen eksikler:</span><span data-lang="en">Known gaps:</span></b>
+    <span data-lang="tr">Fiyat planları bir katalogdur, arkasında henüz ödeme sağlayıcı yok. Alan adı alınmadı. Tek VM demek yüksek erişilebilirlik yok demek; zincir dalları paralel değil sırayla koşuyor çünkü koşu tablosunda tek bir üst-koşu sütunu var. Demo admin gerçek müşteri e-postalarını maskesiz görür — bugün güvenli, çünkü sistemde demo dışı gerçek kullanıcı yok; ilk beta kullanıcısıyla yeniden açılacak bir karar. Bunların hepsi yol haritasında yazılı.</span>
+    <span data-lang="en">The pricing plans are a catalogue with no payment provider behind them yet. No domain has been bought. A single VM means no high availability; the chain's branches run serially rather than in parallel because the run table has a single parent-run column. The demo admin sees customer e-mails unmasked — safe today because there are no real non-demo users, and a decision to reopen with the first beta user. All of it is written into the roadmap.</span>
+  </div>
+</div>
+</section>
+
+<!-- ==================== PROJE NAV ==================== -->
+<section style="border-top:none;padding-top:0">
+<div class="wrap">
+  <div class="pnav">
+    <a href="../platform/">
+      <div class="k">← <span data-lang="tr">Geri</span><span data-lang="en">Back</span></div>
+      <div class="t"><span data-lang="tr">Slot Oyun Platformu</span><span data-lang="en">Slot Game Platform</span></div>
+    </a>
+    <a class="next" href="../../#projeler">
+      <div class="k"><span data-lang="tr">Portföy</span><span data-lang="en">Portfolio</span> →</div>
+      <div class="t"><span data-lang="tr">Tüm projeler</span><span data-lang="en">All projects</span></div>
+    </a>
+  </div>
+</div>
+</section>
+
+<footer>
+  <div class="wrap fgrid">
+    <div>© 2026 Orhun Baykan</div>
+    <div style="color:var(--ink3)"><span data-lang="tr">QA / Test Uzmanı · İstanbul</span><span data-lang="en">QA / Test Specialist · Istanbul</span></div>
+    <div class="sp"></div>
+    <div><a href="#" style="color:var(--ink3)"><span data-lang="tr">Başa dön ↑</span><span data-lang="en">Back to top ↑</span></a></div>
+  </div>
+</footer>
+
+<script src="../../assets/js/site.js"></script>
+</body>
+</html>

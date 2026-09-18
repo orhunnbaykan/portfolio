@@ -1,15 +1,18 @@
 # Portföy — Orhun Baykan
 
 İki dilli (TR/EN), tamamen bağımsız, statik bir portföy sitesi.
-Harici CDN/font bağımlılığı yok — GitHub Pages'te olduğu gibi çalışır.
+Harici CDN/font bağımlılığı yok — GitHub Pages'te olduğu gibi çalışır
+(tek istisna: `games/` altındaki oyunlar kendi fontlarını Google Fonts'tan çeker).
 
 ## İçerik
 
 ```
-index.html                    Ana sayfa: hero, metrikler, proje özetleri, case study, yetkinlik, deneyim, CV
+index.html                    Ana sayfa: hero, metrikler, proje özetleri, HTML oyunları, case study, yetkinlik, deneyim, CV
 projects/otomasyon/index.html Proje 01 detay sayfası — Hibrit Mobil Test Otomasyonu
 projects/platform/index.html  Proje 02 detay sayfası — Slot Oyun Platformu
-assets/css/site.css           Ortak stil (üç sayfa da bunu kullanır)
+projects/moflow/index.html    Proje 03 detay sayfası — Moflow, AI Pazarlama Ekibi
+games/<oyun>/index.html       Tek dosyalık HTML oyunları (site.css/site.js kullanmaz; ana sayfadaki `#oyunlar` kartlarından açılır)
+assets/css/site.css           Ortak stil (ana sayfa ve proje sayfaları bunu kullanır)
 assets/fonts/                 Self-host woff2 fontlar — JetBrains Mono + IBM Plex Sans (CDN yok)
 assets/js/site.js             Dil anahtarı, mobil menü, hero terminal animasyonu, lightbox
 assets/img/                   Ekran görüntüleri
